@@ -1,0 +1,21 @@
+{
+  "login": {
+    "userName": {
+      "required_userName": "إسم المستخدم مطلوب",
+      "min_userName": "إسم المستخدم يجب أن يكون حرفين على الأقل"
+    },
+    "email": {
+      "required_email": "الإيميل مطلوب",
+      "type_is_email": "الإيميل غير صالح"
+    },
+    "password": {
+      "required_password": "كلمة السر مطلوبة",
+      "min_password": "كلمة السر يجب أن تكون 8 محارف على الأقل",
+      "regex_password": "كلمة السر يجب أن تكون 8 محارف على الأقل وتحتوي: أحرف صغيرة, أحرف كبيرة, أرقام, محارف خاصة"
+    },
+    "resetCode": {
+      "required_resetCode": "الكود مطلوب",
+      "min_resetCode": "يجب أن يكون الكود مكون من 4 أرقام"
+    }
+  }
+}

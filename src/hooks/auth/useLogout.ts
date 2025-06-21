@@ -1,0 +1,39 @@
+import { useMutateData, useTypedTranslation, useAuthContext } from "@/hooks";
+import axios, { setAuthToken } from "@/api/axiosInstance";
+import { logoutRoute } from "@/api/routes";
+import { useNavigate } from "react-router-dom";
+const useLogout = () => {
+  const { setAuth, auth } = useAuthContext();
+  const { t } = useTypedTranslation();
+  const navigate = useNavigate();
+
+  const logoutMutation = useMutateData({
+    mutationFn: () => axios.post(logoutRoute),
+    onSuccessFn(data) {
+      console.log("data from on success", data);
+      setAuth(null);
+      setAuthToken("");
+      navigate("/");
+    },
+  });
+
+  const logoutHandler = async () => {
+    await logoutMutation.mutateAsync({});
+  };
+  const btnText = auth?.AccessToken ? t("auth:signout") : t("auth:signin");
+
+  const handleLoginOrLogout = () => {
+    auth?.AccessToken ? logoutHandler() : navigate("/auth");
+  };
+  return {
+    error: logoutMutation.error,
+    isError: logoutMutation.isError,
+    isLoading: logoutMutation.isLoading,
+    isSuccess: logoutMutation.isSuccess,
+    btnText,
+    logoutHandler,
+    handleLoginOrLogout,
+  };
+};
+
+export default useLogout;

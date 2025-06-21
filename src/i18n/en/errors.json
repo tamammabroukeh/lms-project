@@ -1,0 +1,21 @@
+{
+  "login": {
+    "userName": {
+      "required_userName": "User name is required",
+      "min_userName": "User name must be at least 2 characters"
+    },
+    "email": {
+      "required_email": "Email is required",
+      "type_is_email": "Your email isn`t valid"
+    },
+    "password": {
+      "required_password": "Password is required",
+      "min_password": "Password must be at least 8 characters long",
+      "regex_password": "Password must be at least 8 characters long and contains: small letters, capital letters, numbers and special characters"
+    },
+    "resetCode": {
+      "required_resetCode": "Code is required",
+      "min_resetCode": "your code must be 4 characters long"
+    }
+  }
+}
