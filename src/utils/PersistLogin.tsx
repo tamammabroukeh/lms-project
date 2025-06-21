@@ -20,9 +20,10 @@ export default function PersistLogin() {
       setAuthToken(data.data.token);
       setLoading(false);
     },
-    onErrorFn(error){
+    onErrorFn(error) {
+      console.log("error", error);
       navigate("/auth", { replace: true });
-    }
+    },
   });
 
   useEffect(() => {
