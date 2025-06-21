@@ -87,9 +87,9 @@ function App() {
         {
           path: "/instructor",
           element: (
-            <SuspenseFallback>
+            // <SuspenseFallback>
               <InstructorDashboardpage />
-            </SuspenseFallback>
+            // </SuspenseFallback>
           ),
         },
         {

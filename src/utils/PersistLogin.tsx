@@ -6,7 +6,7 @@ import { refreshRoute } from "@/api/routes";
 
 export default function PersistLogin() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { setAuth } = useAuthContext();
   const token = localStorage.getItem("token");
   console.log(token);
@@ -18,9 +18,11 @@ export default function PersistLogin() {
       console.log("data", data);
       setAuth(data.data);
       setAuthToken(data.data.token);
-      navigate("/auth", { replace: true });
       setLoading(false);
     },
+    onErrorFn(error){
+      navigate("/auth", { replace: true });
+    }
   });
 
   useEffect(() => {
