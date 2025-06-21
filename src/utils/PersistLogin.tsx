@@ -12,7 +12,7 @@ export default function PersistLogin() {
   console.log(token);
 
   const refreshMutation = useMutateData({
-    mutationFn: () => axios.post(refreshRoute),
+    mutationFn: () => axios.get(refreshRoute),
     onSuccessFn(data, variables) {
       console.log("variables", variables);
       console.log("data", data);
