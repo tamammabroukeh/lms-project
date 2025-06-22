@@ -12,7 +12,7 @@ import { useMemo } from "react";
 function AuthPage() {
   const [activeTab, setActiveTab] = useLocalStorage<string>(
     "auth-tab",
-    "Sign In"
+    localStorage.getItem("auth-tab") ?? "Sign In"
   );
   const { t } = useTypedTranslation();
 

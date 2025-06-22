@@ -4,8 +4,8 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 const RequireAuth = ({ allowedRoles }: { allowedRoles: string[] }) => {
   const location = useLocation();
   const { auth } = useAuthContext();
-
-  if (!auth?.AccessToken && !location.pathname.includes("/auth")) {
+  console.log("auth", auth)
+  if (!auth?.accessToken && !location.pathname.includes("/auth")) {
     return <Navigate to="/auth" />;
   }
 

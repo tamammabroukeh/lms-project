@@ -1,44 +1,38 @@
-// import InstructorCourses from "@/components/instructor-view/courses";
-// import InstructorDashboard from "@/components/instructor-view/dashboard";
+import InstructorCourses from "@/components/instructor-view/courses";
+import InstructorDashboard from "@/components/instructor-view/dashboard";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 // import { AuthContext } from "@/context/auth-context";
 // import { InstructorContext } from "@/context/instructor-context";
 import { useAuthContext } from "@/hooks/auth/useAuth";
 import useLogout from "@/hooks/auth/useLogout";
-// import { fetchInstructorCourseListService } from "@/services";
+import useGetAllCourses from "@/hooks/course/useGetAllCourses";
 import { BarChart, Book, LogOut } from "lucide-react";
-import { useEffect, useState } from "react";
-// import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 
 function InstructorDashboardpage() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const { logoutHandler } = useLogout();
   const { setAuth } = useAuthContext();
-  // const { instructorCoursesList, setInstructorCoursesList } =
-  //   useContext(InstructorContext);
-
-  async function fetchAllCourses() {
-    // const response = await fetchInstructorCourseListService();
-    // if (response?.success) setInstructorCoursesList(response?.data);
-  }
-
-  useEffect(() => {
-    fetchAllCourses();
-  }, []);
+  const {data,error,isError,isFetching,isLoading,isSuccess} = useGetAllCourses()
+  console.log("error",error)
+  console.log("isError",isError)
+  console.log("isFetching",isFetching)
+  console.log("isLoading",isLoading)
+  console.log("isSuccess",isSuccess)
 
   const menuItems = [
     {
       icon: BarChart,
       label: "Dashboard",
       value: "dashboard",
-      // component: <InstructorDashboard listOfCourses={instructorCoursesList} />,
+      // component: <InstructorDashboard listOfCourses={data} />,
     },
     {
       icon: Book,
       label: "Courses",
       value: "courses",
-      // component: <InstructorCourses listOfCourses={instructorCoursesList} />,
+      component: <InstructorCourses listOfCourses={data} />,
     },
     {
       icon: LogOut,
@@ -54,8 +48,6 @@ function InstructorDashboardpage() {
     localStorage.clear();
     setAuth(null);
   }
-
-  // console.log(instructorCoursesList, "instructorCoursesList");
 
   return (
     <div className="flex h-full min-h-screen bg-gray-100">
@@ -86,7 +78,7 @@ function InstructorDashboardpage() {
           <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             {menuItems.map((menuItem) => (
-              <TabsContent value={menuItem.value}>
+              <TabsContent key={menuItem.value} value={menuItem.value}>
                 {menuItem.component !== null ? menuItem.component : null}
               </TabsContent>
             ))}

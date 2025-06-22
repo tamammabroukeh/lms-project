@@ -38,7 +38,7 @@ function InstructorCourses({ listOfCourses }) {
             setCurrentEditedCourseId(null);
             setCourseLandingFormData(courseLandingInitialFormData);
             setCourseCurriculumFormData(courseCurriculumInitialFormData);
-            navigate("/instructor/create-new-course");
+            navigate("/instructor/add-new-course");
           }}
           className="p-6"
         >

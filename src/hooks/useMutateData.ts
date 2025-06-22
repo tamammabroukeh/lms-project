@@ -166,8 +166,8 @@ export const useMutateData = <
         (error as any)?.response?.status === 500
       ) {
         if (
-          (error as any)?.response?.errors &&
-          typeof (error as any)?.response?.errors !== "string"
+          (error as any)?.response?.data?.errors &&
+          typeof (error as any)?.response?.data?.errors !== "string"
         ) {
           console.log("hereeee");
           const {

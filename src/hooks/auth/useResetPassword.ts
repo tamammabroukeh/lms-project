@@ -9,6 +9,7 @@ import AuthData from "@/data/auth";
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { createAstrics } from "@/utils/helpers";
+import { objToFormData } from "@/utils/objToFormData";
 const useResetPassword = () => {
   const { t } = useTypedTranslation();
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const useResetPassword = () => {
     onSuccessFn(data) {
       console.log("data from on success", data);
       form.reset();
-      navigate("/");
+      navigate("/auth");
     },
     onErrorFn(errorMessage, variables) {
       console.log("errorMessage", errorMessage);
@@ -36,8 +37,8 @@ const useResetPassword = () => {
   });
 
   const submitHandler: SubmitHandler<ResetPassType> = async (data) => {
-    // const formData = objToFormData(data);
-    await resetPassMutation.mutateAsync(data);
+    const formData = objToFormData(data);
+    await resetPassMutation.mutateAsync(formData);
   };
   // tammammb367@gmail.com
   let splitEmail = getParam("email")?.split("@");

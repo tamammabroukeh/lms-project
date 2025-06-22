@@ -12,7 +12,7 @@ import { DollarSign, Users } from "lucide-react";
 // @ts-ignore
 function InstructorDashboard({ listOfCourses }) {
   function calculateTotalStudentsAndProfit() {
-    const { totalStudents, totalProfit, studentList } = listOfCourses.reduce(
+    const { totalStudents, totalProfit, studentList } = listOfCourses?.reduce(
       // @ts-ignore
       (acc, course) => {
         const studentCount = course.students.length;

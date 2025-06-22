@@ -6,7 +6,7 @@ const useLogout = () => {
   const { setAuth, auth } = useAuthContext();
   const { t } = useTypedTranslation();
   const navigate = useNavigate();
-
+  console.log("auth",auth)
   const logoutMutation = useMutateData({
     mutationFn: () => axios.post(logoutRoute),
     onSuccessFn(data) {
@@ -20,10 +20,10 @@ const useLogout = () => {
   const logoutHandler = async () => {
     await logoutMutation.mutateAsync({});
   };
-  const btnText = auth?.AccessToken ? t("auth:signout") : t("auth:signin");
+  const btnText = auth?.accessToken ? t("auth:signout") : t("auth:signin");
 
   const handleLoginOrLogout = () => {
-    auth?.AccessToken ? logoutHandler() : navigate("/auth");
+    auth?.accessToken ? logoutHandler() : navigate("/auth");
   };
   return {
     error: logoutMutation.error,

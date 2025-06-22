@@ -93,11 +93,11 @@ function App() {
           ),
         },
         {
-          path: "/instructor/create-new-course",
+          path: "/instructor/add-new-course",
           element: (
-            <SuspenseFallback>
+            // <SuspenseFallback>
               <AddNewCoursePage />
-            </SuspenseFallback>
+            // </SuspenseFallback>
           ),
         },
         {

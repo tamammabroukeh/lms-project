@@ -1,0 +1,47 @@
+.flex__column {
+	display: flex;
+	gap: 8px;
+	flex-direction: column;
+	align-items: center;
+}
+
+.files__list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	margin-top: 15px;
+}
+.image__content {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.image__container {
+	position: relative;
+	width: 50px;
+	height: 50px;
+
+	border-radius: 2px;
+	background-color: rgba(255, 255, 255, 0.1);
+}
+
+.overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.progress {
+	position: absolute;
+	width: 80px;
+	bottom: 15px;
+	left: 10px;
+}
+
+.progress__color {
+	background-color: #668ad7 !important;
+}

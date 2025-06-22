@@ -3,13 +3,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutateData, useTypedTranslation, useAuthContext } from "@/hooks";
 import axios, { setAuthToken } from "@/api/axiosInstance";
-// import { objToFormData } from "@/utils/objToFormData";
 import { loginRoute, registerRoute } from "@/api/routes";
 import { IActiveTab } from "@/interfaces";
 import { initialSignInFormData, initialSignUpFormData } from "@/data/auth";
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-// import { useMutation } from "react-query";
+import { objToFormData } from "@/utils/objToFormData";
 const useLogin = ({ activeTab }: IActiveTab) => {
   const { setAuth } = useAuthContext();
   const { t } = useTypedTranslation();
@@ -32,10 +31,11 @@ const useLogin = ({ activeTab }: IActiveTab) => {
       console.log("variables from on success", variables);
       console.log("data from on success", data);
       setAuth(data?.data);
-      localStorage.setItem("token", data?.data?.AccessToken);
-      setAuthToken(data?.data?.AccessToken);
+      localStorage.setItem("token", data?.data?.accessToken);
+      setAuthToken(data?.data?.accessToken);
       form.reset();
-      data?.data?.AccessToken && navigate("/");
+      console.log("data?.data?.accessToken",data?.data?.accessToken)
+      data?.data?.accessToken && navigate("/");
     },
   });
 
@@ -43,14 +43,8 @@ const useLogin = ({ activeTab }: IActiveTab) => {
     data
   ) => {
     console.log(data);
-    // const formData = objToFormData(data);
-    await authMutation.mutateAsync(data);
-    // authMutation.mutateAsync(formData);
-    // const response = await axios.post(
-    //   isLoginTab ? loginRoute : registerRoute,
-    //   data
-    // );
-    // console.log("response", response);
+    const formData = objToFormData(data);
+    await authMutation.mutateAsync(formData);
     // console.log(authMutation.data?.data);
     // formData.forEach((value, key) => {
     //   console.log(key, value);

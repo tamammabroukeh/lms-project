@@ -11,6 +11,7 @@ import { IReusableCard } from "./components/Card";
 import { IChildren } from "./shared";
 import { IReusableSelect } from "./components/Select";
 import { IReusableButton } from "./components/Button";
+import { IReusableDialog } from "./components/Dialog";
 
 export type {
   ISignFormControls,
@@ -28,5 +29,8 @@ export type { IReusableCard };
 export type { IReusableSelect };
 
 export type { IReusableButton };
+
+export type { IReusableDialog };
+
 
 export type { IChildren };

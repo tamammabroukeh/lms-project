@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutateData, useSearchParams, useTypedTranslation } from "@/hooks";
 import axios from "@/api/axiosInstance";
-// import { objToFormData } from "@/utils/objToFormData";
+import { objToFormData } from "@/utils/objToFormData";
 import { ForgotPassRoute } from "@/api/routes";
 import AuthData, { initialSignInFormData } from "@/data/auth";
 import { useMemo } from "react";
@@ -38,8 +38,8 @@ const useForgotPassword = () => {
   });
 
   const submitHandler: SubmitHandler<ForgotPassType> = async (data) => {
-    // const formData = objToFormData(data);
-    await forgotPassMutation.mutateAsync({ email: data.userEmail });
+    const formData = objToFormData({ email: data.userEmail });
+    await forgotPassMutation.mutateAsync(formData);
   };
 
   const handleResendCode = async () => {
