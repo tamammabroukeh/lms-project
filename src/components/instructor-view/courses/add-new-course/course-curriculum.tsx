@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import VideoPlayer from "@/components/video-player";
 import { courseCurriculumInitialFormData, ICourseurriculumInitialFormData } from "@/config";
-import { InstructorContext } from "@/context/instructor-context";
+// import { InstructorContext } from "@/context/instructor-context";
 import { IFiles } from "@/interfaces/FileUploader";
 import {
   mediaBulkUploadService,
@@ -17,7 +17,7 @@ import {
   mediaUploadService,
 } from "@/services";
 import { Upload } from "lucide-react";
-import { ChangeEvent, FormEvent, useContext, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 
 function CourseCurriculum() {
   const [mediaUploadProgress, setMediaUploadProgress] = useState(false)
@@ -135,6 +135,7 @@ function CourseCurriculum() {
     function areAllCourseCurriculumFormDataObjectsEmpty(arr:ICourseurriculumInitialFormData[]) {
       return arr.every((obj) => {
         return Object.entries(obj).every(([key, value]) => {
+          console.log("key",key)
           if (typeof value === "boolean") {
             return true;
           }
@@ -260,7 +261,7 @@ function CourseCurriculum() {
             ) : null}
             <div className="mt-4 space-y-4">
               {courseCurriculumFormData.map((curriculumItem, index) => (
-                <div className="border p-5 rounded-md">
+                <div key={curriculumItem.public_id} className="border p-5 rounded-md">
                   <div className="flex gap-5 items-center">
                     <h3 className="font-semibold">Lecture {index + 1}</h3>
                     <Input

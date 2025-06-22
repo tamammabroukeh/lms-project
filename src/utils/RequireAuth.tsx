@@ -26,7 +26,7 @@ const RequireAuth = ({ allowedRoles }: { allowedRoles: string[] }) => {
   //   return <Navigate to="/instructor" />;
   // }
 
-  const content = auth?.roles.some((role) => allowedRoles.includes(role)) ? (
+  const content = auth?.userData?.roles.some((role) => allowedRoles.includes(role)) ? (
     <Outlet />
   ) : (
     <Navigate to="/auth" state={{ from: location }} replace />
