@@ -1,5 +1,5 @@
 import InstructorCourses from "@/components/instructor-view/courses";
-import InstructorDashboard from "@/components/instructor-view/dashboard";
+// import InstructorDashboard from "@/components/instructor-view/dashboard";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 // import { AuthContext } from "@/context/auth-context";
