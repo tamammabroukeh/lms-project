@@ -2,19 +2,16 @@ import { Dialog, DialogHeader, DialogFooter, DialogTitle, DialogDescription, Dia
 import { IReusableDialog } from "@/interfaces";
 
 const ReusableDialog = ({
-	isOpen,
+	isOpen = false,
 	dialogHeader= {title:"", description:""},
 	dialogBody = null,
 	dialogFooter = null,
 	contentClassName = "max-w-fit",
     triggerComponent,
-	setIsOpen
+	closeDialog
 }:IReusableDialog) => {
 	return (
-		<Dialog 
-		onOpenChange={(value) => setIsOpen(value)}
-		 open={isOpen}
-		 >
+		<Dialog onOpenChange={closeDialog} open={isOpen}>
              {triggerComponent && <DialogTrigger asChild>
 				{triggerComponent}
             </DialogTrigger>}
