@@ -1,8 +1,8 @@
 import InstructorCourses from "@/components/instructor-view/courses";
+import InstructorDashboard from "@/components/instructor-view/dashboard";
 import LanguageSelector from "@/components/LanguageSelector";
-import { Flex } from "@/components/Reusable-Components";
+import { Flex, ReusableButton } from "@/components/Reusable-Components";
 // import InstructorDashboard from "@/components/instructor-view/dashboard";
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 // import { AuthContext } from "@/context/auth-context";
 // import { InstructorContext } from "@/context/instructor-context";
@@ -14,9 +14,10 @@ import { useState } from "react";
 
 function InstructorDashboardpage() {
   const [activeTab, setActiveTab] = useState("dashboard");
-  const { logoutHandler } = useLogout();
+  const { logoutHandler, isLoading } = useLogout();
   const { setAuth } = useAuthContext();
-  const {data,error,isError,isFetching,isLoading,isSuccess} = useGetAllCourses()
+  const {data,error,isError,isFetching,isSuccess} = useGetAllCourses()
+  console.log("data",data)
   console.log("error",error)
   console.log("isError",isError)
   console.log("isFetching",isFetching)
@@ -58,7 +59,9 @@ function InstructorDashboardpage() {
           <h2 className="text-2xl font-bold mb-4">Instructor View</h2>
           <nav>
             {menuItems.map((menuItem) => (
-              <Button
+              <ReusableButton
+              btnText={menuItem.label}
+                isLoading={menuItem.value === "logout" && isLoading}
                 className="w-full justify-start mb-2"
                 key={menuItem.value}
                 variant={activeTab === menuItem.value ? "secondary" : "ghost"}
@@ -69,8 +72,7 @@ function InstructorDashboardpage() {
                 }
               >
                 <menuItem.icon className="mr-2 h-4 w-4" />
-                {menuItem.label}
-              </Button>
+              </ReusableButton>
             ))}
           </nav>
         </div>

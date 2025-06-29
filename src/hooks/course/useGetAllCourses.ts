@@ -1,20 +1,20 @@
 import { useFetchData } from "@/hooks";
 import axios from "@/api/axiosInstance";
-import { studentCoursesRoute } from "@/api/routes";
+import { courseRoute } from "@/api/routes";
 import { useLocation } from "react-router-dom";
 const useGetAllCourses = () => {
   const location = useLocation()
   const {data,isError,error,isFetching,isLoading,isSuccess} = useFetchData({
-		queryKey: ["getStudentCourses"],
-    queryFn: () => axios.get(studentCoursesRoute),
+		queryKey: ["getCourses"],
+    queryFn: () => axios.get(courseRoute),
     keepPreviousData:true,
     onSuccessFn(data) {
-      console.log("data from on success", data);
+      console.log("get courses", data);
     },
     onErrorFn(errorMessage) {
       console.log("errorMessage", errorMessage);
     },
-		enableCondition: location.pathname.includes("course"),
+		enableCondition: location.pathname.includes("instructor"),
 
   });
 

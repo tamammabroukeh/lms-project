@@ -72,9 +72,11 @@ export default function CourseCover({findCategory,findLevel,files, setFiles, isO
                 <h3 className="text-lg font-semibold mb-4">{t("course:course_summary")}</h3>
                 <div className="space-y-2 text-sm">
                     <p><strong>{t("course:lectures")}:</strong> {lectureLength} {t("course:lectures_added")}</p>
-                    <p><strong>{t("course:title")}:</strong> {form.watch('titleCourseEN') || 'Not set'}</p>
-                    <p><strong>{t("course:category")}:</strong> {(currentLang ? findCategory?.title?.en : findCategory?.title?.ar) || currentLang ? 'Not set' : "لم يتم اختياره"}</p>
-                    <p><strong>{t("course:level")}:</strong> {(currentLang ? findLevel?.title?.en : findLevel?.title?.ar) || currentLang ? 'Not set' : "لم يتم اختياره"}</p>
+                    <p><strong>{t("course:title")}:</strong> {form.watch('titleCourseEN') || (currentLang ? 'Not set' : "لم يتم اختياره")}</p>
+                    <p><strong>{t("course:category")}:</strong> {form.watch("category") || (currentLang ? 'Not set' : "لم يتم اختياره")}</p>
+                    {/* <p><strong>{t("course:category")}:</strong> {(currentLang ? findCategory?.title?.en : findCategory?.title?.ar) || currentLang ? 'Not set' : "لم يتم اختياره"}</p> */}
+                    <p><strong>{t("course:level")}:</strong> {form.watch("level") || (currentLang ? 'Not set' : "لم يتم اختياره")}</p>
+                    {/* <p><strong>{t("course:level")}:</strong> {(currentLang ? findLevel?.title?.en : findLevel?.title?.ar) || currentLang ? 'Not set' : "لم يتم اختياره"}</p> */}
                     <p><strong>{t("course:price")}:</strong> ${form.watch('price') || 0}</p>
                 </div>
             </div>

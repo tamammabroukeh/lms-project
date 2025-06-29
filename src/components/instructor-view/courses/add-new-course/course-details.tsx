@@ -121,7 +121,7 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                                 <SelectContent>
                                     {(categories as ICategory[])?.map((category) => {
                                         const { title: {en, ar} } = category;
-                                        return <SelectItem key={category._id} value={category._id}>
+                                        return <SelectItem key={category._id} value={currentLang ? category.title.en : category.title.ar}>
                                             {currentLang ? en : ar}
                                         </SelectItem>
                                         }
@@ -147,7 +147,7 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                                 <SelectContent>
                                     {(levels as ILevel[])?.map((level) => {
                                         const { title: {en, ar} } = level;
-                                        return <SelectItem key={level._id} value={level._id}>
+                                        return <SelectItem key={level._id} value={currentLang ? level.title.en : level.title.ar}>
                                                 {currentLang ? en : ar}
                                             </SelectItem>
                                         }
@@ -193,8 +193,8 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                                 </FormControl>
                                 <SelectContent>
                                     {currentLang ? <>
-                                        <SelectItem value="ar">Arabic</SelectItem>
-                                        <SelectItem value="en">English</SelectItem>
+                                        <SelectItem value="Arabic">Arabic</SelectItem>
+                                        <SelectItem value="English">English</SelectItem>
                                         <SelectItem value="both">both of them</SelectItem> 
                                     
                                     </>

@@ -11,7 +11,7 @@ const ResetPassRoute = userRoute + "/reset-password";
 // courses
 const courseRoute = "/course"
 const createCourseRoute = courseRoute + "/add-course"
-const studentCoursesRoute = courseRoute + "/student"
+const studentCoursesRoute = courseRoute
 const courseCategoriesRoute = courseRoute + "/categories"
 const courseLevelsRoute = courseRoute + "/levels"
 
@@ -24,7 +24,7 @@ const deleteFileAfteruploadingRoute = uploadRoute+"/file"
 const cancelUploadRoute = uploadRoute+"/cancel"
 
 export {
-  registerRoute,
+  registerRoute,courseRoute,
   loginRoute,
   logoutRoute,
   refreshRoute,
