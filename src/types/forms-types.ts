@@ -11,3 +11,4 @@ export type TAuthData = {
   userName: string;
   userEmail: string;
   password: string;
+}
