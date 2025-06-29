@@ -1,4 +1,4 @@
-// import React, { useState, useEffect, useRef } from "react";
+// import React, { useState, useEffect, useRef } from "react";More actions
 // import { useDropzone } from "react-dropzone";
 // import FilesList from "./FilesList";
 // import styles from "./FileUploader.module.css";
@@ -618,7 +618,7 @@
 //         name: val.file_name,
 //         mimeType: val.mime_type,
 //       }));
-      
+
 //       // if (JSON.stringify(mappedFiles) !== JSON.stringify(files)) {
 //         setFiles(mappedFiles);
 //       // }
@@ -752,7 +752,7 @@
 //       formData.append("chunk_number", (chunkNumber + 1).toString());
 //       formData.append("total_chunks", totalChunks.toString());
 //       formData.append("upload_id", uploadId);
-      
+
 //       if (!customFormData) {
 //         formData.append("folder", folderId);
 //       } else {
@@ -789,7 +789,7 @@
 //         remainingTime = calculateRemainingTime(totalUploadedBytes, totalFileSize, uploadSpeed);
 //         chunkProgressArray[chunkNumber] = Math.round((event.loaded / event.total) * 100);
 //         uploadedBytesArray[chunkNumber] = event.loaded;
-        
+
 //         overallProgress = calculateOverallProgress(chunkProgressArray);
 //         onUploadProgress(uploadId, overallProgress, totalUploadedBytes, totalFileSize, remainingTime);
 //       });
@@ -880,7 +880,7 @@
 //         return updated;
 //       });
 //     }
-    
+
 //     if (progressRef.current[uploadId]?.progress !== 100) {
 //       cancelUploadMutation.mutate({ upload_id: uploadId });
 //     }
@@ -928,14 +928,14 @@
 //         toast.warning(("Multiple files not allowed"));
 //         return;
 //       }
-      
+
 //       acceptedFiles.forEach(file => {
 //         const uploadId = uuid();
 //         const controller = new AbortController();
-        
+
 //         setAbortControllers(prev => ({ ...prev, [uploadId]: controller }));
 //         pausedFilesRef.current[uploadId] = false;
-        
+
 //         processFile(file, controller.signal, uploadId);
 //       });
 //     }, [files.length, processFile, singleFile, t]),
@@ -1005,7 +1005,7 @@
 //           </RFlex>
 //         </div>
 //       </div>
-      
+
 //       <FilesList
 //         files={files}
 //         pausedFiles={pausedFilesRef.current}
@@ -1014,7 +1014,7 @@
 //         pauseFile={pauseFile}
 //         resumeFile={resumeFile}
 //       />
-      
+
 //       <RFlex classes="w-full mt-4">
 //         {!hideCancelButton && (
 //           <Button
@@ -1085,6 +1085,7 @@ function FileUploader({
     // @ts-ignore
 	folderId,
 	customAPI = "",
+
 	apiMethod = "POST",
     // @ts-ignore
 	successCallback,
@@ -1228,7 +1229,7 @@ function FileUploader({
 			}
 
 			// Check the paused state from the ref
-      
+
         // @ts-ignore
 			if (pausedFilesRef.current[uploadId]) {
 				console.log(`Upload for ${uploadId} is paused.`);
@@ -1294,6 +1295,16 @@ function FileUploader({
 			formData.append("chunkNumber", chunkNumber);
 			formData.append("totalChunks", totalChunks);
 			formData.append("uploadId", uploadId);
+
+
+
+
+
+
+
+
+
+
 			for (const [key, value] of formData.entries()) {
 				console.log("formData 123", key, value);
 			}
@@ -1503,6 +1514,7 @@ function FileUploader({
 		display: "flex",
 		flexDirection: "column",
 		alignItems: "center",
+
 		borderWidth: 2,
 		borderRadius: 8,
 		borderColor: "#668AD7",
@@ -1605,7 +1617,7 @@ function FileUploader({
 						{("done")}
 					</Button>
 				)}
-			</RFlex>
+			</RFlex>More actions
 		</section>
 	);
 }

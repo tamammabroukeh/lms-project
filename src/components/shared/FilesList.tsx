@@ -1,4 +1,4 @@
-// import styles from "./FileUploader.module.css";
+// import styles from "./FileUploader.module.css";More actions
 // import {
 // 	imageTypes,
 // 	fileTypes,
@@ -447,7 +447,7 @@
 //         const fileName = fileObj?.file?.name ?? fileObj?.name ?? "Untitled";
 //         const fileSize = fileObj?.file?.size ?? 0;
 //         const uploadId = fileObj.uploadId ?? `file-${index}`;
-        
+
 //         const fileProgress = progress[uploadId] ?? {};
 //         const { 
 //           progress: percentage = 0, 
@@ -584,7 +584,7 @@ import {
 } from "@/config/mimeTypes";
 import RFlex from "@/components/Reusable-Components/Reusable-Flex";
 import { formatFileSize } from "@/utils/formatFileSize";
-import { CircleCheck, EyeClosed, Pause, PauseCircle, PauseIcon, Play, PlayCircle } from "lucide-react";
+import { CircleCheck, PauseCircle, PlayCircle } from "lucide-react";
 
 	        // @ts-ignore
 const RFilesList = ({ files,parentFiles, pausedFiles, progress, removeFile, pauseFile, resumeFile }) => {      

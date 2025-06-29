@@ -32,6 +32,7 @@ const useLogin = ({ activeTab }: IActiveTab) => {
       console.log("data from on success", data);
       setAuth(data?.data);
       localStorage.setItem("token", data?.data?.accessToken);
+
       form.reset();
       console.log("data?.data?.accessToken",data?.data?.accessToken)
       data?.data?.accessToken && navigate("/");

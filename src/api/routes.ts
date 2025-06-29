@@ -10,12 +10,18 @@ const ResetPassRoute = userRoute + "/reset-password";
 
 // courses
 const courseRoute = "/course"
+const createCourseRoute = courseRoute + "/add-course"
 const studentCoursesRoute = courseRoute + "/student"
+const courseCategoriesRoute = courseRoute + "/categories"
+const courseLevelsRoute = courseRoute + "/levels"
 
 // instructor
 const instructorRoute = "/instructor"
 
-const cancelUploadRoute = "/cancel-upload"
+// upload files
+const uploadRoute = "/upload"
+const deleteFileAfteruploadingRoute = uploadRoute+"/file"
+const cancelUploadRoute = uploadRoute+"/cancel"
 
 export {
   registerRoute,
@@ -26,8 +32,8 @@ export {
   ResetPassRoute,
 };
 
-export {studentCoursesRoute}
+export {studentCoursesRoute ,courseLevelsRoute, courseCategoriesRoute,createCourseRoute}
 
 export {instructorRoute}
 
-export {cancelUploadRoute}
+export {cancelUploadRoute, deleteFileAfteruploadingRoute}

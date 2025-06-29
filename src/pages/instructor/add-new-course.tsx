@@ -2,9 +2,9 @@ import { Form } from "@/components/ui/form";
 import { ArrowLeft } from "lucide-react";
 import { ReusableButton, ReusableTabs } from "@/components/Reusable-Components";
 import useCreateCourse from "@/hooks/course/useCreateCourse";
+import CourseCover from "@/components/instructor-view/courses/add-new-course/course-cover";
 import CourseLectures from "@/components/instructor-view/courses/add-new-course/course-lectures";
 import CourseDetails from "@/components/instructor-view/courses/add-new-course/course-details";
-import CourseCover from "@/components/instructor-view/courses/add-new-course/course-cover";
 const AddNewCoursePage = () => {
   const { activeTab, handleTabChange, t, form, navigate, submitHandler, isLoading, files, handleAddDataToList, handleAddLecture, handleCancelReplace, handleCoverImageUpload, handleDeleteLecture, handleReplaceVideo, isOpen, setFiles, currentLecture, lectures, isCurrentLectureValid, isReplacing, replacingIndex, setCurrentLecture, setIsOpen, coverImagePreview, getParam, isLoadingCancel, image, handleDeleteImage, categories, levels, findLevel, findCategory } = useCreateCourse()
   console.log("current lecture", currentLecture)

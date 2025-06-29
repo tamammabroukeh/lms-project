@@ -18,6 +18,7 @@ export default function PersistLogin() {
       console.log("variables", variables);
       console.log("data", data);
       setAuth(data.data);
+
       setLoading(false);
     },
     onErrorFn(error) {

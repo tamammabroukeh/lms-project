@@ -12,6 +12,7 @@ const useLogout = () => {
     onSuccessFn(data) {
       console.log("data from on success", data);
       setAuth(null);
+
       navigate("/");
     },
   });
