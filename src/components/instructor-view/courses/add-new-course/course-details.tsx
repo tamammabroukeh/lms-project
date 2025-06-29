@@ -3,15 +3,16 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/comp
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from '@/components/ui/textarea';
-import { useCurrentLangIsEnglish } from '@/hooks';
+import { useCurrentLangIsEnglish, useTypedTranslation } from '@/hooks';
 import { ICategory, ICourseDetails, ILevel } from '@/interfaces/course';
 export default function CourseDetails({ form, categories, levels }: ICourseDetails) {
     const currentLang = useCurrentLangIsEnglish()
+    const {t} = useTypedTranslation()
     console.log("data", categories)
     console.log("levels", levels)
     return (
         <ReusableCard
-            title="Course Information"
+            title={t("course:course_information")}
             styleForCard="shadow-lg"
             titleStyle="text-3xl font-bold text-blue-950"
             styleForContent="space-y-6"
@@ -23,9 +24,9 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                     name="titleCourseAR"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Course Title in Arabic</FormLabel>
+                            <FormLabel>{t("course:course_title_in_arabic")}</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder="عنوان الدورة بالعربية" />
+                                <Input {...field} placeholder={t("course:course_title_in_arabic")} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -36,9 +37,9 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                     name="titleCourseEN"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Course Title in English</FormLabel>
+                            <FormLabel>{t("course:course_title_in_english")}</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder="Course title in English" />
+                                <Input {...field} placeholder={t("course:course_title_in_english")} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -52,9 +53,9 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                     name="subTitleCourseAR"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Subtitle in Arabic</FormLabel>
+                            <FormLabel>{t("course:sub_title_in_arabic")}</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder="العنوان الفرعي بالعربية" />
+                                <Input {...field} placeholder={t("course:sub_title_in_arabic")} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -65,9 +66,9 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                     name="subTitleCourseEN"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Subtitle in English</FormLabel>
+                            <FormLabel>{t("course:sub_title_in_english")}</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder="Course subtitle in English" />
+                                <Input {...field} placeholder={t("course:sub_title_in_english")} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -81,9 +82,9 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                     name="descriptionAR"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Description in Arabic</FormLabel>
+                            <FormLabel>{t("course:description_in_arabic")}</FormLabel>
                             <FormControl>
-                                <Textarea {...field} placeholder="وصف الدورة بالعربية" rows={4} />
+                                <Textarea {...field} placeholder={t("course:description_in_arabic")} rows={4} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -94,9 +95,9 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                     name="descriptionEN"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Description in English</FormLabel>
+                            <FormLabel>{t("course:description_in_english")}</FormLabel>
                             <FormControl>
-                                <Textarea {...field} placeholder="Course description in English" rows={4} />
+                                <Textarea {...field} placeholder={t("course:description_in_english")} rows={4} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -110,11 +111,11 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                     name="category"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Course Category</FormLabel>
+                            <FormLabel>{t("course:course_category")}</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                 <FormControl>
                                     <SelectTrigger>
-                                        <SelectValue placeholder="اختر الفئة" />
+                                        <SelectValue placeholder={t("course:course_category")} />
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
@@ -136,11 +137,11 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                     name="level"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Course Level</FormLabel>
+                            <FormLabel>{t("course:course_level")}</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                 <FormControl>
                                     <SelectTrigger>
-                                        <SelectValue placeholder="اختر المستوى" />
+                                        <SelectValue placeholder={t("course:course_level")} />
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
@@ -165,7 +166,7 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                     name="price"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Price in ($)</FormLabel>
+                            <FormLabel>{t("course:price")} ($)</FormLabel>
                             <FormControl>
                                 <Input
                                     {...field}
@@ -183,11 +184,11 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                     name="primaryLanguage"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Primary Language</FormLabel>
+                            <FormLabel>{t("course:primary_language")}</FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                 <FormControl>
                                     <SelectTrigger>
-                                        <SelectValue placeholder="اختر اللغة الأساسية" />
+                                        <SelectValue placeholder={t("course:primary_language")} />
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
@@ -219,9 +220,9 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                     name="objectivesAR"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Objectives in Arabic</FormLabel>
+                            <FormLabel>{t("course:objectives_in_arabic")}</FormLabel>
                             <FormControl>
-                                <Textarea {...field} placeholder="أهداف الدورة بالعربية" rows={4} />
+                                <Textarea {...field} placeholder={t("course:objectives_in_arabic")} rows={4} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -232,9 +233,9 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                     name="objectivesEN"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Objectives in English</FormLabel>
+                            <FormLabel>{t("course:objectives_in_english")}</FormLabel>
                             <FormControl>
-                                <Textarea {...field} placeholder="Course objectives in English" rows={4} />
+                                <Textarea {...field} placeholder={t("course:objectives_in_english")} rows={4} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -248,9 +249,9 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                     name="welcomeMessageAR"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Welcome Message in Arabic</FormLabel>
+                            <FormLabel>{t("course:welcome_in_arabic")}</FormLabel>
                             <FormControl>
-                                <Textarea {...field} placeholder="رسالة الترحيب بالعربية" rows={3} />
+                                <Textarea {...field} placeholder={t("course:welcome_in_arabic")} rows={3} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -261,9 +262,9 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                     name="welcomeMessageEN"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Welcome Message in English</FormLabel>
+                            <FormLabel>{t("course:welcome_in_english")}</FormLabel>
                             <FormControl>
-                                <Textarea {...field} placeholder="Welcome message in English" rows={3} />
+                                <Textarea {...field} placeholder={t("course:welcome_in_english")} rows={3} />
                             </FormControl>
                             <FormMessage />
                         </FormItem>

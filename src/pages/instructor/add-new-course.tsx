@@ -13,12 +13,12 @@ const AddNewCoursePage = () => {
   return (
     <div className="min-h-screen p-6">
       <div className="max-w-6xl mx-auto">
-        <ReusableButton variant={"link"} btnText="Back To Dashboard" isLoading={false} onClick={() => navigate("/dashboard")} className="bg-blue-500 text-white rounded-lg px-3 py-2">
+        <ReusableButton variant={"link"} btnText={t("course:back_to_dashboard")} isLoading={false} onClick={() => navigate("/instructor")} className="bg-blue-500 text-white rounded-lg px-3 py-2">
           <ArrowLeft />
         </ReusableButton>
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-blue-950 mb-2">Create Your Course</h1>
-          <p className="text-lg text-gray-600">Create and manage your course content</p>
+          <h1 className="text-4xl font-bold text-blue-950 mb-2">{t("course:create_Your_Course")}</h1>
+          <p className="text-lg text-gray-600">{t("course:create_and_manage_your_course_content")}</p>
         </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(submitHandler)} className="space-y-6">
@@ -31,8 +31,8 @@ const AddNewCoursePage = () => {
               onValueChange={handleTabChange}
               tabTriggerValues={[
                 { title: t("course:content"), value: "lectures" },
-                { title: t("course:course-landing-page"), value: "details" },
-                { title: t("course:settings"), value: "cover" },
+                { title: t("course:course_information"), value: "details" },
+                { title: t("course:course_cover_image"), value: "cover" },
               ]}
               tabContentValues={[
                 {

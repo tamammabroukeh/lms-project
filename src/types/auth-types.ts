@@ -4,7 +4,7 @@ export type TLoginResponse = {
     enrolledCourses:string[];
     userName: string;
     userEmail: string;
-    roles: string[];
+    role: string;
     gender: string;
     age:number;
     profileImage:string;

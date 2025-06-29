@@ -35,7 +35,7 @@ const useLogin = ({ activeTab }: IActiveTab) => {
 
       form.reset();
       console.log("data?.data?.accessToken",data?.data?.accessToken)
-      data?.data?.accessToken && navigate("/");
+      data?.data?.accessToken && navigate("/redirect", { replace: true });
     },
   });
 

@@ -3,39 +3,40 @@ import FileUploader from "@/components/shared/FileUploader";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { useTypedTranslation } from "@/hooks";
 import { ICourseLectures } from "@/interfaces/course";
 import { Trash2, Upload, Video } from "lucide-react";
 import ReactPlayer from "react-player";
 
 const CourseLectures = ({ files, handleAddDataToList, setFiles, isOpen, isReplacing, setIsOpen, setCurrentLecture, currentLecture, lectures, handleAddLecture, handleCancelReplace, handleDeleteLecture, handleReplaceVideo, isCurrentLectureValid, replacingIndex, getParam, isLoadingCancel
 }: ICourseLectures) => {
-
+  const {t} = useTypedTranslation()
   return (
     <>
       <ReusableCard
-        title="Add New Lecture"
+        title={t("course:add_new_lecture")}
         titleStyle="text-3xl font-bold text-blue-950"
         styleForCard="shadow-lg"
         styleForContent="space-y-4"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <Label htmlFor="lectureNameArabic">Lecture Title in Arabic</Label>
+            <Label htmlFor="lectureNameArabic">{t("course:lecture_title_in_arabic")}</Label>
             <Input
               id="lectureNameArabic"
               value={currentLecture.lectureTitleAR}
               onChange={(e) => setCurrentLecture({ ...currentLecture, lectureTitleAR: e.target.value })}
-              placeholder="عنوان المحاضرة بالعربية"
+              placeholder={t("course:lecture_title_in_arabic")}
               className="mt-1"
             />
           </div>
           <div>
-            <Label htmlFor="lectureNameEnglish">Lecture Title in English</Label>
+            <Label htmlFor="lectureNameEnglish">{t("course:lecture_title_in_english")}</Label>
             <Input
               id="lectureNameEnglish"
               value={currentLecture.lectureTitleEN}
               onChange={(e) => setCurrentLecture({ ...currentLecture, lectureTitleEN: e.target.value })}
-              placeholder="Lecture title in English"
+              placeholder={t("course:lecture_title_in_english")}
               className="mt-1"
             />
           </div>
@@ -46,11 +47,11 @@ const CourseLectures = ({ files, handleAddDataToList, setFiles, isOpen, isReplac
             checked={currentLecture.freePreview}
             onCheckedChange={(checked) => setCurrentLecture({ ...currentLecture, freePreview: checked })}
           />
-          <Label>Free Lecture</Label>
+          <Label>{t("course:free_lecture")}</Label>
         </div>
 
         <div>
-          <Label>Upload Video</Label>
+          <Label>{t("course:upload_video")}</Label>
           {!currentLecture.videoUrl && <ReusableDialog
             isOpen={isOpen && !isReplacing}
             {...{ setIsOpen }}
@@ -61,7 +62,7 @@ const CourseLectures = ({ files, handleAddDataToList, setFiles, isOpen, isReplac
                 <label htmlFor="video-upload-current">
                   <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500 transition-colors">
                     <Video className="mx-auto h-12 w-12 text-gray-400 mb-2" />
-                    <p className="text-sm text-gray-600">Click to upload video</p>
+                    <p className="text-sm text-gray-600">{t("course:click_to_upload_video")}</p>
                   </div>
                 </label>
               </div>
@@ -112,11 +113,11 @@ const CourseLectures = ({ files, handleAddDataToList, setFiles, isOpen, isReplac
                 Lecture {index + 1}: {lecture.lectureTitleEN}
                 {lecture.freePreview ? (
                   <span className="ml-2 px-2 py-1 bg-green-100 text-green-800 text-sm rounded-full">
-                    Free
+                    {t("course:free")}
                   </span>
                 ) : (
                   <span className="ml-2 px-2 py-1 bg-green-100 text-green-800 text-sm rounded-full">
-                    Paid
+                    {t("course:paid")}
                   </span>
                 )}
               </>
@@ -124,11 +125,11 @@ const CourseLectures = ({ files, handleAddDataToList, setFiles, isOpen, isReplac
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label>Arabic Name</Label>
+                <Label>{t("course:arabic_title")}</Label>
                 <p className="text-sm text-gray-600 mt-1">{lecture.lectureTitleAR}</p>
               </div>
               <div>
-                <Label>English Name</Label>
+                <Label>{t("course:english_title")}</Label>
                 <p className="text-sm text-gray-600 mt-1">{lecture.lectureTitleEN}</p>
               </div>
             </div>
@@ -144,7 +145,7 @@ const CourseLectures = ({ files, handleAddDataToList, setFiles, isOpen, isReplac
                 />
                 <div className="flex items-center justify-center gap-2">
                   <ReusableButton
-                    btnText="Replace Video"
+                    btnText={t("course:replace_video")}
                     isLoading={isLoadingCancel && replacingIndex === index}
                     onClick={() => handleReplaceVideo(index)}
                     type="button"
@@ -152,7 +153,7 @@ const CourseLectures = ({ files, handleAddDataToList, setFiles, isOpen, isReplac
                     <Upload className="w-4 h-4" />
                   </ReusableButton>
                   <ReusableButton
-                    btnText="Delete Lecture"
+                    btnText={t("course:delete_lecture")}
                     isLoading={isLoadingCancel && getParam("button") === "delete"}
                     onClick={() => handleDeleteLecture(index)}
 
@@ -178,7 +179,7 @@ const CourseLectures = ({ files, handleAddDataToList, setFiles, isOpen, isReplac
             <label htmlFor="video-upload-current">
               <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:border-blue-500 transition-colors">
                 <Video className="mx-auto h-12 w-12 text-gray-400 mb-2" />
-                <p className="text-sm text-gray-600">Click to upload video</p>
+                <p className="text-sm text-gray-600">{t("course:click_to_upload_video")}</p>
               </div>
             </label>
           </div>

@@ -1,9 +1,12 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import { lazy } from "react";
 import { useLanguageDirection } from "./hooks/language/useLanguageDirection";
 import PersistLogin from "./utils/PersistLogin";
 import AuthLayout from "./layouts/AuthLayout";
 import SuspenseFallback from "./components/feedback/SuspenseFallback";
+import RequireAuth from "./utils/RequireAuth";
+import { ROLES } from "./config/roles";
+import RoleRedirect from "./utils/RoleRedirect";
 // import RGlobalLoader from './RComponents/RGlobalLoader/RGlobalLoader';
 
 // Lazy-loaded components
@@ -66,6 +69,16 @@ function App() {
       element: <PersistLogin />,
       children: [
         {
+          path: "/redirect",
+          element: <RequireAuth allowedRoles={[ROLES.Admin,ROLES.Student,ROLES.Teacher]} />
+          , children: [
+            {
+              index: true,
+              element: <RoleRedirect />
+            }
+          ]
+        },
+        {
           path: "/",
           element: (
             // <SuspenseFallback>
@@ -76,6 +89,11 @@ function App() {
             {
               index: true,
               element: <StudentHomePage />,
+              loader: () => {
+                const token = localStorage.getItem("token");
+                if (token) return <Navigate to="/redirect" replace />;
+                return null;
+              }
             },
             {
               path: "home",
@@ -85,49 +103,61 @@ function App() {
         },
         // Instructor routes
         {
-          path: "/instructor",
-          element: (
-            // <SuspenseFallback>
-              <InstructorDashboardpage />
-            // </SuspenseFallback>
-          ),
-        },
-        {
-          path: "/instructor/add-new-course",
-          element: (
-            // <SuspenseFallback>
-              <AddNewCoursePage />
-            // </SuspenseFallback>
-          ),
-        },
-        {
-          path: "/instructor/edit-course/:courseId",
-          element: (
-            <SuspenseFallback>
-              <AddNewCoursePage />
-            </SuspenseFallback>
-          ),
+          element: <RequireAuth allowedRoles={[ROLES.Teacher, ROLES.Admin]} />,
+          children: [
+            {
+              path: "/instructor",
+              element: (
+                // <SuspenseFallback>
+                <InstructorDashboardpage />
+                // </SuspenseFallback>
+              ),
+            },
+            {
+              path: "/instructor/add-new-course",
+              element: (
+                // <SuspenseFallback>
+                <AddNewCoursePage />
+                // </SuspenseFallback>
+              ),
+            },
+            {
+              path: "/instructor/edit-course/:courseId",
+              element: (
+                <SuspenseFallback>
+                  <AddNewCoursePage />
+                </SuspenseFallback>
+              ),
+            },
+          ]
         },
 
         // Protected student routes
         {
-          element: (
-            // <SuspenseFallback>
-            <StudentViewCommonLayout />
-            // </SuspenseFallback>
-          ),
+          element: <RequireAuth allowedRoles={[ROLES.Admin, ROLES.Student]} />,
+
+          // element: (
+          //   // <SuspenseFallback>
+          //   <StudentViewCommonLayout />
+          //   // </SuspenseFallback>
+          // ),
           children: [
-            { path: "courses", element: <StudentViewCoursesPage /> },
             {
-              path: "course/details/:id",
-              element: <StudentViewCourseDetailsPage />,
-            },
-            { path: "payment-return", element: <PaypalPaymentReturnPage /> },
-            { path: "student-courses", element: <StudentCoursesPage /> },
-            {
-              path: "course-progress/:id",
-              element: <StudentViewCourseProgressPage />,
-            },
+              element: <StudentViewCommonLayout />,
+              children: [
+                { path: "courses", element: <StudentViewCoursesPage /> },
+                {
+                  path: "course/details/:id",
+                  element: <StudentViewCourseDetailsPage />,
+                },
+                { path: "payment-return", element: <PaypalPaymentReturnPage /> },
+                { path: "student-courses", element: <StudentCoursesPage /> },
+                {
+                  path: "course-progress/:id",
+                  element: <StudentViewCourseProgressPage />,
+                },
+              ]
+            }
           ],
         },
       ],
@@ -148,7 +178,7 @@ function App() {
     <>
       <RouterProvider
         router={router}
-        // fallbackElement={<RGlobalLoader />}
+      // fallbackElement={<RGlobalLoader />}
       />
     </>
   );

@@ -1,22 +1,23 @@
 import { ReusableButton, ReusableCard , ReusableDialog ,Flex } from "@/components/Reusable-Components";
 import FileUploader from "@/components/shared/FileUploader";
 import { Label } from "@/components/ui/label";
-import { useCurrentLangIsEnglish } from "@/hooks";
+import { useCurrentLangIsEnglish, useTypedTranslation } from "@/hooks";
 import { ICourseCover } from "@/interfaces/course";
 import { Trash2, Upload } from "lucide-react";
 
 export default function CourseCover({findCategory,findLevel,files, setFiles, isOpen, setIsOpen, image, form, isLoading, lectureLength, handleCoverImageUpload,handleDeleteImage, isLoadingCancel }: ICourseCover) {
     const currentLang = useCurrentLangIsEnglish()
+    const {t} = useTypedTranslation()
     console.log("img", image)
     return (
         <ReusableCard
-            title="Cover Image & Submit"
+            title={t("course:cover_image_submit")}
             titleStyle="text-3xl font-bold text-blue-950"
             styleForCard="shadow-lg"
             styleForContent="space-y-4"
         >
             <div className="text-center">
-                <Label>Course Cover Image</Label>
+                <Label>{t("course:course_cover_image")}</Label>
                 <ReusableDialog
                     isOpen={isOpen}
                     {...{ setIsOpen }}
@@ -37,7 +38,7 @@ export default function CourseCover({findCategory,findLevel,files, setFiles, isO
                                     ) : (
                                         <>
                                             <Upload className="mx-auto h-16 w-16 text-gray-400 mb-4" />
-                                            <p className="text-lg text-gray-600 mb-2">Click to upload cover image</p>
+                                            <p className="text-lg text-gray-600 mb-2">{t("course:click_to_upload_cover_image")}</p>
                                             <p className="text-sm text-gray-500">PNG, JPG, GIF up to 10MB</p>
                                         </>
                                     )}
@@ -68,13 +69,13 @@ export default function CourseCover({findCategory,findLevel,files, setFiles, isO
             </div>
 
             <div className="bg-gray-50 p-6 rounded-lg">
-                <h3 className="text-lg font-semibold mb-4">Course Summary</h3>
+                <h3 className="text-lg font-semibold mb-4">{t("course:course_summary")}</h3>
                 <div className="space-y-2 text-sm">
-                    <p><strong>Lectures:</strong> {lectureLength} lectures added</p>
-                    <p><strong>Title:</strong> {form.watch('titleCourseEN') || 'Not set'}</p>
-                    <p><strong>Category:</strong> {(currentLang ? findCategory?.title?.en : findCategory?.title?.ar) || 'Not set'}</p>
-                    <p><strong>Level:</strong> {(currentLang ? findLevel?.title?.en : findLevel?.title?.ar) || 'Not set'}</p>
-                    <p><strong>Price:</strong> ${form.watch('price') || 0}</p>
+                    <p><strong>{t("course:lectures")}:</strong> {lectureLength} {t("course:lectures_added")}</p>
+                    <p><strong>{t("course:title")}:</strong> {form.watch('titleCourseEN') || 'Not set'}</p>
+                    <p><strong>{t("course:category")}:</strong> {(currentLang ? findCategory?.title?.en : findCategory?.title?.ar) || currentLang ? 'Not set' : "لم يتم اختياره"}</p>
+                    <p><strong>{t("course:level")}:</strong> {(currentLang ? findLevel?.title?.en : findLevel?.title?.ar) || currentLang ? 'Not set' : "لم يتم اختياره"}</p>
+                    <p><strong>{t("course:price")}:</strong> ${form.watch('price') || 0}</p>
                 </div>
             </div>
 
@@ -83,7 +84,7 @@ export default function CourseCover({findCategory,findLevel,files, setFiles, isO
                 type="submit"
                 className="w-full h-12 text-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
                 disabled={isLoading || lectureLength === 0}
-                btnText={isLoading ? "Creating Course..." : "Create Course"}
+                btnText={t("course:create_course")}
             />
         </ReusableCard>
     )

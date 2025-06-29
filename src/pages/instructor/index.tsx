@@ -1,4 +1,6 @@
 import InstructorCourses from "@/components/instructor-view/courses";
+import LanguageSelector from "@/components/LanguageSelector";
+import { Flex } from "@/components/Reusable-Components";
 // import InstructorDashboard from "@/components/instructor-view/dashboard";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
@@ -75,7 +77,10 @@ function InstructorDashboardpage() {
       </aside>
       <main className="flex-1 p-8 overflow-y-auto">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
+          <Flex classes="items-start justify-between">
+            <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
+            <LanguageSelector />
+          </Flex>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             {menuItems.map((menuItem) => (
               <TabsContent key={menuItem.value} value={menuItem.value}>

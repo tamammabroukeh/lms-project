@@ -586,7 +586,7 @@ import RFlex from "@/components/Reusable-Components/Reusable-Flex";
 import { formatFileSize } from "@/utils/formatFileSize";
 import { CircleCheck, PauseCircle, PlayCircle } from "lucide-react";
 
-	        // @ts-ignore
+	// @ts-ignore
 const RFilesList = ({ files,parentFiles, pausedFiles, progress, removeFile, pauseFile, resumeFile }) => {      
 	const mergedArr = parentFiles ? [{...files[0], ...parentFiles[0]}] : files
 	console.log("newArr",mergedArr)

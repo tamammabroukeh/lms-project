@@ -1051,7 +1051,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import FilesList from "./FilesList";
 import styles from "./FileUploader.module.css";
-import { useMutateData, useAuthContext } from "@/hooks";
+import { useMutateData, useAuthContext, useTypedTranslation } from "@/hooks";
 import { readFile } from "@/utils/readFile";
 import { toast } from "react-toastify";
 import uploadFileIcon from "@/assets/img/svg/upload file.svg";
@@ -1103,6 +1103,7 @@ function FileUploader({
 	const [filesFromBackend, setFilesFromBackend] = useState([]);
 	const [pausedFiles, setPausedFiles] = useState({}); // Track paused files
 	const pausedFilesRef = useRef({}); // Ref to track paused files
+	const { t } = useTypedTranslation()
 
 	const cancelUploadMutation = useMutateData({
         // @ts-ignore
@@ -1141,8 +1142,7 @@ function FileUploader({
 	const onDrop = async (acceptedFiles) => {
 		if ((singleFile && acceptedFiles.length > 1) || (singleFile && acceptedFiles.length == 1 && files.length > 0)) {
 			// Display an error message or prevent further processing
-			toast.warning(`${`Multiple files not allowed`}`);
-
+			toast.warning(t(`course:multiple_files_are_not_allowed`));
 			return;
 		}
 		for (const file of acceptedFiles) {
@@ -1296,15 +1296,6 @@ function FileUploader({
 			formData.append("totalChunks", totalChunks);
 			formData.append("uploadId", uploadId);
 
-
-
-
-
-
-
-
-
-
 			for (const [key, value] of formData.entries()) {
 				console.log("formData 123", key, value);
 			}
@@ -1327,7 +1318,7 @@ function FileUploader({
 				console.log("progress");
 				const currentTime = Date.now();
 				const bytesUploaded = event.loaded;
-        // @ts-ignore
+        		// @ts-ignore
 				totalUploadedBytes = uploadedBytesArray.reduce((acc, curr) => acc + curr, 0);
 
 				// Update upload speed
@@ -1514,13 +1505,11 @@ function FileUploader({
 		display: "flex",
 		flexDirection: "column",
 		alignItems: "center",
-
 		borderWidth: 2,
 		borderRadius: 8,
 		borderColor: "#668AD7",
 		borderStyle: "dashed",
 		transition: "border .3s ease-in-out",
-        // @ts-ignore
 		padding: "24px",
 		cursor: "pointer",
 	};
@@ -1535,7 +1524,7 @@ function FileUploader({
 	};
 
 	const rejectStyle = {
-		// borderColor: "#ff1744",
+		borderColor: "#ff1744",
 	};
 
 	const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({
@@ -1553,7 +1542,6 @@ function FileUploader({
 		}),
 		[isDragActive, isDragReject, isDragAccept]
 	);
-
 	return (
 		<section>
 			<div {...getRootProps({ 
@@ -1563,17 +1551,17 @@ function FileUploader({
 				<div className={styles.flex__column}>
 					<img src={uploadFileIcon} width="75px" alt="uploadFileIcon" />
 					<div className="flex gap-[5px] mt-3">
-						<span className="font-semibold text-themePrimary text-[14px]">{`click_here`}</span>
-						<span className="text-[14px]">{`to_upload_you_file_or_drag_and_drop`}</span>
+						<span className="font-semibold text-themePrimary text-[14px]">{t(`course:click_here`)}</span>
+						<span className="text-[14px]">{t(`course:to_upload_your_file_or_drag_and_drop`)}</span>
 					</div>
 					<span className="text-themeLight text-[12px] mt-2">
-						{`max_size_for_uploaded_file_is`} {sizeFile / 1000} GB
+						{t(`course:max_size_for_uploaded_file_is`)} {sizeFile / 1000} GB
 					</span>
 					<div className="flex flex-col items-center gap-[15px] mt-[15px] relative">
 						{showPickFromMyFile || showPickFromCourseFile ? (
 							<>
 								<div className="border-[#D9D9D9] border-b w-[100px] absolute top-[9px] right-[40px]"></div>
-								<span className="text-themeBoldGrey">OR</span>
+								<span className="text-themeBoldGrey">{t("course:or")}</span>
 								<div className="border-[#D9D9D9] border-b w-[100px] absolute top-[9px] left-[40px]"></div>
 							</>
 						) : null}
@@ -1602,7 +1590,7 @@ function FileUploader({
         // @ts-ignore
 						disabled={isEnableToDisableCanceling && Object.values(progress).some((item) => item.progress == 100)}
 					>
-						{("cancel")}
+						{t("course:cancel")}
 					</Button>
 				)}
 				{!hideDoneButton && (
@@ -1611,13 +1599,13 @@ function FileUploader({
 						onClick={() => {
 							handleCloseUploadFile();
 						}}
-        // @ts-ignore
+        				// @ts-ignore
 						disabled={Object.values(progress).some((item) => item.progress != 100)}
 					>
-						{("done")}
+						{t("course:done")}
 					</Button>
 				)}
-			</RFlex>More actions
+			</RFlex>
 		</section>
 	);
 }
