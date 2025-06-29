@@ -10,12 +10,17 @@ import arHome from "./ar/home.json";
 // errors
 import enErrors from "./en/errors.json";
 import arErrors from "./ar/errors.json";
+//admin-dashboard
+import enAdmin from "./en/admin-dashboard.json";
+import arAdmin from "./ar/admin-dashboard.json";
+
 
 const resources = {
   en: {
     auth: enAuth,
     home: enHome,
     errors: enErrors,
+    admin:enAdmin,
   },
   ar: {
     auth: arAuth,
