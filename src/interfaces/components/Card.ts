@@ -1,10 +1,10 @@
 import { LucideProps } from "lucide-react";
 import { ForwardRefExoticComponent, RefAttributes } from "react";
 export interface IReusableCard {
-  title: string;
+  title: string | React.ReactNode;
   titleStyle?: string;
   styleForCard?: string;
-  description: string;
+  description?: string;
   descriptionStyle?: string;
   specificDescription?: string;
   children: React.ReactNode;

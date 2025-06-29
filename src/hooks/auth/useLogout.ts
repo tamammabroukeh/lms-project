@@ -1,5 +1,5 @@
 import { useMutateData, useTypedTranslation, useAuthContext } from "@/hooks";
-import axios, { setAuthToken } from "@/api/axiosInstance";
+import axios from "@/api/axiosInstance";
 import { logoutRoute } from "@/api/routes";
 import { useNavigate } from "react-router-dom";
 const useLogout = () => {
@@ -12,7 +12,6 @@ const useLogout = () => {
     onSuccessFn(data) {
       console.log("data from on success", data);
       setAuth(null);
-      setAuthToken("");
       navigate("/");
     },
   });

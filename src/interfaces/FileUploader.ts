@@ -1,8 +1,8 @@
 import { AxiosRequestConfig } from "axios";
 
 export interface IFiles {
-    file?:File;
-    preview?: boolean;
+  file?:File;
+  preview?: boolean;
 	mimeType?: string;
 	size?: number;
 	uploadId?: string;

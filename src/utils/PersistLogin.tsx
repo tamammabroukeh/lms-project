@@ -1,8 +1,9 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuthContext, useMutateData } from "@/hooks";
-import axios, { setAuthToken } from "@/api/axiosInstance";
+import axios from "@/api/axiosInstance";
 import { refreshRoute } from "@/api/routes";
+import Loader from "@/components/feedback/Loader";
 
 export default function PersistLogin() {
   const navigate = useNavigate();
@@ -17,7 +18,6 @@ export default function PersistLogin() {
       console.log("variables", variables);
       console.log("data", data);
       setAuth(data.data);
-      setAuthToken(data.data.token);
       setLoading(false);
     },
     onErrorFn(error) {
@@ -29,5 +29,5 @@ export default function PersistLogin() {
   useEffect(() => {
     token !== null ? refreshMutation.mutate({}) : setLoading(false);
   }, []);
-  return <>{loading ? <div>Loading...</div> : <Outlet />}</>;
+  return <>{loading ? <Loader /> : <Outlet />}</>;
 }

@@ -9,6 +9,7 @@ export default function ReusableButton({
   disabled,
   isLoading,
   variant,
+  children,
   ...props
 }: IReusableButton) {
   return (
@@ -17,6 +18,7 @@ export default function ReusableButton({
       disabled={disabled || isLoading}
       {...{ variant, type, className }}
     >
+      {children}
       {btnText}
       {isLoading && <Loader2 className="animate-spin" />}
     </Button>

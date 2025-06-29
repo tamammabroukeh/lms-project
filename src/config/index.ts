@@ -110,20 +110,6 @@ export const courseLandingInitialFormData = {
   welcomeMessage: "",
   image: "",
 };
- export interface ICourseurriculumInitialFormData {
-  title: string,
-    videoUrl: string,
-    freePreview: boolean,
-    public_id: string,
- }
-export const courseCurriculumInitialFormData:ICourseurriculumInitialFormData[] = [
-  {
-    title: "",
-    videoUrl: "",
-    freePreview: false,
-    public_id: "",
-  },
-];
 
 export const sortOptions = [
   { id: "price-lowtohigh", label: "Price: Low to High" },

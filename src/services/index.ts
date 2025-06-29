@@ -26,7 +26,7 @@ export async function mediaUploadService(
   formData: FormData,
   onProgressCallback: (value: number) => void
 ) {
-  const { data } = await axiosInstance.post("/media/upload", formData, {
+  const { data } = await axiosInstance.post("/upload/chunk", formData, {
     onUploadProgress: (progressEvent: AxiosProgressEvent) => {
       const percentCompleted = Math.round(
         (progressEvent.loaded * 100) / progressEvent.total!

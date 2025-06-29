@@ -1060,36 +1060,37 @@ import RFlex from "@/components/Reusable-Components/Reusable-Flex";
 import uuid from "react-uuid";
 import { imageTypes } from "@/config/mimeTypes";
 import axiosInstance from "@/api/axiosInstance";
-import { cancelUploadRoute } from "@/api/routes";
+import { deleteFileAfteruploadingRoute } from "@/api/routes";
 
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL_ONLINE;
 
-function RNewFileUploader({
-        // @ts-ignore
+function FileUploader({
+    // @ts-ignore
+    parentFiles,
+    // @ts-ignore
 	parentCallback,
-        // @ts-ignore
-        parentCallbackToFillData,
-        // @ts-ignore
+    // @ts-ignore
+    parentCallbackToFillData,
+    // @ts-ignore
 	handleCloseUploadFile,
-        // @ts-ignore
+    // @ts-ignore
 	typeFile,
 	sizeFile = 5000,
-        // @ts-ignore
+    // @ts-ignore
 	singleFile,
-        // @ts-ignore
+    // @ts-ignore
 	placeholder,
 	value = [],
-        // @ts-ignore
+    // @ts-ignore
 	folderId,
 	customAPI = "",
-	customFormData = null,
 	apiMethod = "POST",
-        // @ts-ignore
+    // @ts-ignore
 	successCallback,
 	showPickFromMyFile = false,
 	showPickFromCourseFile = false,
-        // @ts-ignore
+    // @ts-ignore
 	setIsOpenChooseFile,
 	hideDoneButton = false,
 	hideCancelButton = false,
@@ -1103,7 +1104,8 @@ function RNewFileUploader({
 	const pausedFilesRef = useRef({}); // Ref to track paused files
 
 	const cancelUploadMutation = useMutateData({
-		mutationFn: (data) => axiosInstance.post(cancelUploadRoute,data),
+        // @ts-ignore
+		mutationFn: ({public_id}, resourceType) => axiosInstance.delete(`${deleteFileAfteruploadingRoute}/${public_id}`, {...resourceType}),
 	});
 
 	useEffect(() => {
@@ -1123,11 +1125,13 @@ function RNewFileUploader({
 	}, [value]);
 
 	useEffect(() => {
-		parentCallback(files);
+		parentCallback([...files,...filesFromBackend]);
 	}, [files]);
 
 	useEffect(() => {
 		if (filesFromBackend?.length > 0) parentCallbackToFillData(filesFromBackend);
+		// if (filesFromBackend?.length > 0) parentCallbackToFillData([{
+		// 	...filesFromBackend[0] as Object, ...files[0] as Object}]);
 	}, [filesFromBackend]);
 
 	// - - - - - - - - - - - - - - onDrop Function - - - - - - - - - - - - - -
@@ -1261,7 +1265,7 @@ function RNewFileUploader({
 		console.log(`File upload for ${uploadId} completed.`);
 	};
 
-  const {auth }= useAuthContext()
+  const { auth }= useAuthContext()
 	// - - - - - - - - - - - - - - Upload Chunk Function - - - - - - - - - - - - - -
 	const uploadChunk = (
         // @ts-ignore
@@ -1285,27 +1289,17 @@ function RNewFileUploader({
 	) => {
 		return new Promise((resolve, reject) => {
 			const formData = new FormData();
-			// formData.append("file", chunk);
-			// formData.append("name", chunk.name);
-
-			formData.append("files", chunk);
-			formData.append("name", fileName);
-			formData.append("chunk_number", chunkNumber + 1);
-			formData.append("total_chunks", totalChunks);
-			formData.append("upload_id", uploadId);
-			if (!customFormData) {
-				formData.append("folder", folderId);
-			} else {
-				Object.keys(customFormData).forEach((key) => {
-					formData.append(key, customFormData[key]);
-				});
-			}
+			formData.append("chunk", chunk);
+			formData.append("fileName", fileName);
+			formData.append("chunkNumber", chunkNumber);
+			formData.append("totalChunks", totalChunks);
+			formData.append("uploadId", uploadId);
 			for (const [key, value] of formData.entries()) {
 				console.log("formData 123", key, value);
 			}
-      const token = auth?.accessToken;
-      const xhr = new XMLHttpRequest();
-      const url = customAPI || `${baseUrl}api/file_management/files`;
+			const token = auth?.accessToken;
+			const xhr = new XMLHttpRequest();
+			const url = customAPI || `${baseUrl}/upload/chunk`;
 
 			xhr.open(apiMethod, url, true);
 			xhr.setRequestHeader("Authorization", `Bearer ${token}`);
@@ -1345,23 +1339,27 @@ function RNewFileUploader({
 
 			// Handle response
 			xhr.onload = () => {
+				console.log("response",xhr.response)
 				console.log("JSON.parse(xhr.response)", JSON.parse(xhr.response));
-				if (JSON.parse(xhr.response)?.code == 201) {
+				if (JSON.parse(xhr.response)?.url) {
         // @ts-ignore
 					resolve();
 					onUploadProgress(uploadId, overallProgress, totalUploadedBytes, totalFileSize, remainingTime, null, true);
-					if (JSON.parse(xhr.response)?.data?.id || JSON.parse(xhr.response)?.data?.done) {
+					if (JSON.parse(xhr.response)?.url || JSON.parse(xhr.response)?.api_key
+) {
 						successCallback && successCallback(JSON.parse(xhr.response));
         // @ts-ignore
-						setFilesFromBackend((prevFiles) => [...prevFiles, JSON.parse(xhr.response)?.data]);
+						setFilesFromBackend((prevFiles) => [...prevFiles, JSON.parse(xhr.response)]);
 					}
 				} else if (
-					JSON.parse(xhr.response)?.code == 500 ||
-					JSON.parse(xhr.response)?.code == 404 ||
-					JSON.parse(xhr.response)?.code == 403
+					JSON.parse(xhr.response)?.statusCode == 500 ||
+					JSON.parse(xhr.response)?.statusCode == 404 ||
+					JSON.parse(xhr.response)?.statusCode == 401 ||
+					JSON.parse(xhr.response)?.statusCode == 403
 				) {
+					console.log("hereeeeee")
 					const errorMessage =
-						typeof JSON.parse(xhr.response)?.msg == "string" ? JSON.parse(xhr.response)?.msg : JSON.parse(xhr.response)?.msg[0];
+						typeof JSON.parse(xhr.response)?.message == "string" ? JSON.parse(xhr.response)?.message : JSON.parse(xhr.response)?.message[0];
 					onUploadProgress(uploadId, 0, totalUploadedBytes, totalFileSize, 0, errorMessage, false);
 					reject(xhr.statusText); // Reject the promise if there's an error
 				} else {
@@ -1420,7 +1418,7 @@ function RNewFileUploader({
 
 	// - - - - - - - - - - - - - - Remove File - - - - - - - - - - - - - -
         // @ts-ignore
-	const removeFile = (uploadId) => {
+	const removeFile = ({uploadId,public_id,resourceType}) => {
         // @ts-ignore
 		setFiles((prevFiles) => prevFiles.filter((file) => file?.uploadId !== uploadId));
 
@@ -1444,7 +1442,8 @@ function RNewFileUploader({
 			});
 		}
         // @ts-ignore
-		if (progress[uploadId]?.progress !== 100) cancelUploadMutation.mutate({ upload_id: uploadId });
+		if (progress[uploadId]?.progress == 100)
+			cancelUploadMutation.mutate({ public_id }, resourceType);
 	};
 
 	// - - - - - - - - - - - - - - Pause & Resume File - - - - - - - - - - - - - -
@@ -1494,7 +1493,7 @@ function RNewFileUploader({
         // @ts-ignore
 			if (fileProgress.progress !== 100) {
 				// Call removeFile for each file that is not fully uploaded
-				removeFile(uploadId);
+				removeFile({uploadId, public_id:"", resourceType:""});
 				cancelUploadMutation.mutate({ upload_id: uploadId });
 			}
 		});
@@ -1504,7 +1503,6 @@ function RNewFileUploader({
 		display: "flex",
 		flexDirection: "column",
 		alignItems: "center",
-		padding: "1px",
 		borderWidth: 2,
 		borderRadius: 8,
 		borderColor: "#668AD7",
@@ -1531,7 +1529,7 @@ function RNewFileUploader({
 	const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({
 		onDrop,
 		multiple: singleFile ? false : true,
-		// accept: typeFile ? typeFile : DefaultTypeFile,
+		accept: typeFile ? typeFile : undefined,
 	});
 
 	const style = React.useMemo(
@@ -1568,48 +1566,22 @@ function RNewFileUploader({
 							</>
 						) : null}
 					</div>
-					<RFlex classes="gap-[10px]">
-						{showPickFromCourseFile ? (
-							<Button
-								onClick={(e) => {
-									e.stopPropagation();
-									setIsOpenChooseFile({ type: "course_files", isOpen: true });
-									handleCloseUploadFile();
-								}}
-								variant="outline"
-								className="rounded-[8px] w-[100px]"
-							>
-								{("course_files")}
-							</Button>
-						) : null}
-						{showPickFromMyFile ? (
-							<Button
-								onClick={(e) => {
-									e.stopPropagation();
-									setIsOpenChooseFile({ type: "my_files", isOpen: true });
-									handleCloseUploadFile();
-								}}
-								variant="outline"
-								className="rounded-[8px] w-[100px]"
-							>
-								{("my_files")}
-							</Button>
-						) : null}
-					</RFlex>
 				</div>
 			</div>
 			<FilesList
 				files={files}
+				parentFiles={filesFromBackend}
 				pausedFiles={pausedFiles}
 				progress={progress}
 				removeFile={removeFile}
 				pauseFile={pauseFile}
 				resumeFile={resumeFile}
 			/>
-			<RFlex classes="w-full mt-4">
+			<RFlex classes="w-full gap-2 mt-4">
 				{!hideCancelButton && (
 					<Button
-						className="w-[50%] text-[16px] h-[44px] rounded-[8px] text-black bg-white border border-themeLight"
+					variant={"secondary"}
+						className="w-[50%] text-[16px] h-[44px] rounded-[8px] text-black bg-white border border-gray-400"
 						// disabled={!Object.values(progress).some(item => item.progress != 100)}
 						onClick={() => {
 							handleCloseUploadFile();
@@ -1638,4 +1610,4 @@ function RNewFileUploader({
 	);
 }
 
-export default RNewFileUploader;
+export default FileUploader;
