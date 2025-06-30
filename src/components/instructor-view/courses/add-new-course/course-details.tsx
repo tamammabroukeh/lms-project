@@ -7,7 +7,7 @@ import { useCurrentLangIsEnglish, useTypedTranslation } from '@/hooks';
 import { ICategory, ICourseDetails, ILevel } from '@/interfaces/course';
 export default function CourseDetails({ form, categories, levels }: ICourseDetails) {
     const currentLang = useCurrentLangIsEnglish()
-    const {t} = useTypedTranslation()
+    const { t } = useTypedTranslation()
     console.log("data", categories)
     console.log("levels", levels)
     return (
@@ -120,11 +120,11 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                                 </FormControl>
                                 <SelectContent>
                                     {(categories as ICategory[])?.map((category) => {
-                                        const { title: {en, ar} } = category;
+                                        const { title: { en, ar } } = category;
                                         return <SelectItem key={category._id} value={currentLang ? category.title.en : category.title.ar}>
                                             {currentLang ? en : ar}
                                         </SelectItem>
-                                        }
+                                    }
                                     )}
                                 </SelectContent>
                             </Select>
@@ -146,11 +146,11 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                                 </FormControl>
                                 <SelectContent>
                                     {(levels as ILevel[])?.map((level) => {
-                                        const { title: {en, ar} } = level;
+                                        const { title: { en, ar } } = level;
                                         return <SelectItem key={level._id} value={currentLang ? level.title.en : level.title.ar}>
-                                                {currentLang ? en : ar}
-                                            </SelectItem>
-                                        }
+                                            {currentLang ? en : ar}
+                                        </SelectItem>
+                                    }
                                     )}
                                 </SelectContent>
                             </Select>
@@ -195,16 +195,16 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                                     {currentLang ? <>
                                         <SelectItem value="Arabic">Arabic</SelectItem>
                                         <SelectItem value="English">English</SelectItem>
-                                        <SelectItem value="both">both of them</SelectItem> 
-                                    
+                                        <SelectItem value="both">both of them</SelectItem>
+
                                     </>
-                                    :
-                                    <>
-                                    
-                                    <SelectItem value="ar">عربي</SelectItem>
-                                    <SelectItem value="en">إنجليزي</SelectItem>
-                                    <SelectItem value="both">كلاهما</SelectItem>
-                                    </>
+                                        :
+                                        <>
+
+                                            <SelectItem value="ar">عربي</SelectItem>
+                                            <SelectItem value="en">إنجليزي</SelectItem>
+                                            <SelectItem value="both">كلاهما</SelectItem>
+                                        </>
                                     }
                                 </SelectContent>
                             </Select>

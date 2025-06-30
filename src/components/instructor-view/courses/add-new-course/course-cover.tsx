@@ -5,7 +5,7 @@ import { useCurrentLangIsEnglish, useTypedTranslation } from "@/hooks";
 import { ICourseCover } from "@/interfaces/course";
 import { Trash2, Upload } from "lucide-react";
 
-export default function CourseCover({findCategory,findLevel,files, setFiles, isOpen, setIsOpen, image, form, isLoading, lectureLength, handleCoverImageUpload,handleDeleteImage, isLoadingCancel }: ICourseCover) {
+export default function CourseCover({files, setFiles, isOpen, setIsOpen, image, form, isLoading, lectureLength, handleCoverImageUpload,handleDeleteImage, isLoadingCancel }: ICourseCover) {
     const currentLang = useCurrentLangIsEnglish()
     const {t} = useTypedTranslation()
     console.log("img", image)
@@ -74,9 +74,7 @@ export default function CourseCover({findCategory,findLevel,files, setFiles, isO
                     <p><strong>{t("course:lectures")}:</strong> {lectureLength} {t("course:lectures_added")}</p>
                     <p><strong>{t("course:title")}:</strong> {form.watch('titleCourseEN') || (currentLang ? 'Not set' : "لم يتم اختياره")}</p>
                     <p><strong>{t("course:category")}:</strong> {form.watch("category") || (currentLang ? 'Not set' : "لم يتم اختياره")}</p>
-                    {/* <p><strong>{t("course:category")}:</strong> {(currentLang ? findCategory?.title?.en : findCategory?.title?.ar) || currentLang ? 'Not set' : "لم يتم اختياره"}</p> */}
                     <p><strong>{t("course:level")}:</strong> {form.watch("level") || (currentLang ? 'Not set' : "لم يتم اختياره")}</p>
-                    {/* <p><strong>{t("course:level")}:</strong> {(currentLang ? findLevel?.title?.en : findLevel?.title?.ar) || currentLang ? 'Not set' : "لم يتم اختياره"}</p> */}
                     <p><strong>{t("course:price")}:</strong> ${form.watch('price') || 0}</p>
                 </div>
             </div>
