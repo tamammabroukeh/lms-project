@@ -1,5 +1,5 @@
 import InstructorCourses from "@/components/instructor-view/courses";
-import InstructorDashboard from "@/components/instructor-view/dashboard";
+// import InstructorDashboard from "@/components/instructor-view/dashboard";
 import LanguageSelector from "@/components/LanguageSelector";
 import { Flex, ReusableButton } from "@/components/Reusable-Components";
 // import InstructorDashboard from "@/components/instructor-view/dashboard";
