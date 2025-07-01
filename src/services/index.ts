@@ -197,4 +197,21 @@ export async function adminDashboardTotals(
   return data;
 }
 
+export async function userGrowth(
+
+) {
+  const { data } = await axiosInstance.get(
+    `/user/stats/growth`
+  );
+  return data;
+}
+
+export async function coursePublishStats(
+
+) {
+  const { data } = await axiosInstance.get(
+    `/course/stats/publication-status`
+  );
+  return data;
+}
 

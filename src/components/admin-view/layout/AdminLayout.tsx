@@ -9,7 +9,8 @@ export default function AdminLayout() {
     <div className="flex h-screen bg-white text-gray-900">
       {/* Mobile sidebar toggle */}
       <button
-        className="md:hidden fixed top-4 left-4 z-50 p-2 rounded-md bg-black text-white"
+        className={`md:hidden fixed top-4 z-50 p-2 rounded-md bg-black text-white transition-all duration-300
+          ${sidebarOpen ? 'left-64 ml-4' : 'left-4'}`}
         onClick={() => setSidebarOpen(!sidebarOpen)}
       >
         {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
@@ -62,7 +63,7 @@ export default function AdminLayout() {
       </aside>
 
       {/* Main content area */}
-      <main className="flex-1 overflow-auto md:ml-64">
+      <main className="flex-1 overflow-auto md:ml-64 pt-16 md:pt-0">
         <div className="p-6">
           <Outlet />
         </div>

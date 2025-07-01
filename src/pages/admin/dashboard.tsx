@@ -1,4 +1,4 @@
-import { adminDashboardTotals } from '@/services';
+import { adminDashboardTotals, userGrowth, coursePublishStats } from '@/services';
 import { DataCard } from '../../components/admin-view/dashboard/DataCard';
 import { BarChart } from '../../components/charts/BarChart';
 import { PieChart } from '../../components/charts/PieChart';
@@ -15,50 +15,96 @@ export default function AdminDashboardPage() {
         totalCourses: 0,
         totalRevenue: 0,
     });
-
+    const [userGrowthData, setUserGrowthData] = useState<{ name: string; value: number }[]>([]);
+    const [courseDistributionData, setCourseDistributionData] = useState<{ name: string; value: number }[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     
     useEffect(() => {
-        const fetchMetrics = async () => {
+        const fetchDashboardData = async () => {
             try {
                 setLoading(true);
-                // Using the mock adminDashboardTotals function directly within this file
-                const response = await adminDashboardTotals();
-                if (response) {
+                setError('');
+
+                const [totalsResponse, growthResponse, courseStatsResponse] = await Promise.all([
+                    adminDashboardTotals(),
+                    userGrowth(),
+                    coursePublishStats(),
+                ]);
+
+                if (totalsResponse) {
                     setMetrics({
-                        totalUsers: response.totalUsers || 0,
-                        totalTeachers: response.totalTeachers || 0,
-                        totalStudents: response.totalStudents || 0,
-                        totalCourses: response.totalCourses || 0,
-                        totalRevenue: response.totalRevenue || 0,
+                        totalUsers: totalsResponse.totalUsers || 0,
+                        totalTeachers: totalsResponse.totalTeachers || 0,
+                        totalStudents: totalsResponse.totalStudents || 0,
+                        totalCourses: totalsResponse.totalCourses || 0,
+                        totalRevenue: totalsResponse.totalRevenue || 0,
                     });
                 }
-            } catch (err) {
-                console.error('Failed to fetch dashboard totals:', err);
+
+                if (growthResponse) {
+                    const formattedGrowthData = growthResponse.map(item => ({
+                        name: t(`admin:${item.month.toLowerCase().slice(0, 3)}`),
+                        value: item.count,
+                    }));
+                    setUserGrowthData(formattedGrowthData);
+                }
+
+                if (courseStatsResponse) {
+                    const formattedCourseData = courseStatsResponse.map(item => ({
+                        name: t(`admin:${item.status.toLowerCase()}`),
+                        value: item.count,
+                    }));
+                    setCourseDistributionData(formattedCourseData);
+                }
+            } catch (err: any) {
+                console.error('Failed to fetch dashboard data:', err);
                 setError('Failed to load dashboard data. Please try again later.');
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchMetrics();
-    }, []);
+        fetchDashboardData();
+    }, [t]);
 
-    const userGrowthData = [
-        { name: t('admin:jan'), value: 400 }, // Translated month names
-        { name: t('admin:feb'), value: 300 },
-        { name: t('admin:mar'), value: 600 }, 
-        { name: t('admin:apr'), value: 800 }, 
-        { name: t('admin:may'), value: 500 },
-        { name: t('admin:jun'), value: 900 }, 
-    ];
+    if (loading) {
+        return (
+            <div className="space-y-8 animate-pulse">
+                <header className="border-b border-gray-200 pb-4">
+                    <div className="h-8 bg-gray-300 rounded w-1/3"></div>
+                    <div className="h-4 bg-gray-300 rounded w-1/2 mt-2"></div>
+                </header>
 
-    const courseDistributionData = [
-        { name: t('admin:published'), value: 35 }, // Translated status names
-        { name: t('admin:draft'), value: 12 },
-        { name: t('admin:archived'), value: 9 },
-    ];
+                <section>
+                    <div className="h-6 bg-gray-300 rounded w-1/4 mb-4"></div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                            <div key={i} className="h-24 bg-gray-300 rounded-lg"></div>
+                        ))}
+                    </div>
+                </section>
+
+                <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div className="bg-gray-300 p-4 rounded-lg h-80"></div>
+                    <div className="bg-gray-300 p-4 rounded-lg h-80"></div>
+                </section>
+
+                <section>
+                    <div className="h-6 bg-gray-300 rounded w-1/4 mb-4"></div>
+                    <div className="bg-gray-300 rounded-lg h-48"></div>
+                </section>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="flex items-center justify-center h-64 bg-red-50 border border-red-200 rounded-lg p-4 text-red-600">
+                <p>{error}</p>
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-8">
