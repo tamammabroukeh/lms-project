@@ -1,7 +1,7 @@
 import {
-  courseCurriculumInitialFormData,
   courseLandingInitialFormData,
 } from "@/config";
+import { courseCurriculumInitialFormData } from "@/data/course";
 import { IChildren } from "@/interfaces";
 import { createContext, useState } from "react";
 

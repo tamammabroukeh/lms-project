@@ -4,6 +4,7 @@ import {
   ICommonForm,
   IFormControl,
   IReusableForm,
+  IReusableFormItem
 } from "./components/Form";
 
 import { IReusableTabs, IActiveTab } from "./components/Tabs";
@@ -20,6 +21,7 @@ export type {
   IFormControl,
   IReusableForm,
   IinitialSignInFormData,
+  IReusableFormItem
 };
 
 export type { IReusableTabs, IActiveTab };

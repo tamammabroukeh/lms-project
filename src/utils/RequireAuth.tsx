@@ -4,14 +4,16 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 const RequireAuth = ({ allowedRoles }: { allowedRoles: string[] }) => {
   const location = useLocation();
   const { auth } = useAuthContext();
-  console.log("auth", auth)
-  if (!auth?.accessToken && !location.pathname.includes("/auth")) {
-    return <Navigate to="/auth" />;
-  }
+  // console.log("auth", auth)
+  let token = auth?.accessToken
+  let role = auth?.userData?.role
+  // if (!token && !location.pathname.includes("/auth")) {
+  //   return <Navigate to="/auth" />;
+  // }
 
   // if (
-  //   authenticated &&
-  //   user?.role !== "instructor" &&
+  //   token &&
+  //   role === "instructor" &&
   //   (location.pathname.includes("instructor") ||
   //     location.pathname.includes("/auth"))
   // ) {
@@ -26,11 +28,27 @@ const RequireAuth = ({ allowedRoles }: { allowedRoles: string[] }) => {
   //   return <Navigate to="/instructor" />;
   // }
 
-  const content = auth?.userData?.roles.some((role) => allowedRoles.includes(role)) ? (
-    <Outlet />
-  ) : (
-    <Navigate to="/auth" state={{ from: location }} replace />
-  );
+  // const content = allowedRoles.includes(role ?? "") ? (
+  //   <Outlet />
+  // ) : (
+  //   <Navigate to="/auth" state={{ from: location }} replace />
+  // );
+  const content =
+    <>
+      {token ? (
+        allowedRoles.includes(role ?? "") ? (
+          <Outlet />
+        ) : (
+          <Navigate
+            state={{ from: location }}
+            replace
+            to={"/"}
+          />
+        )
+      ) : (
+        <Navigate state={{ from: location }} replace to={"/auth"} />
+      )}
+    </>
   return content;
 };
 

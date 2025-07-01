@@ -1,28 +1,28 @@
 import { useFetchData } from "@/hooks";
 import axios from "@/api/axiosInstance";
-import { courseRoute } from "@/api/routes";
+import { courseLevelsRoute } from "@/api/routes";
 import { useLocation } from "react-router-dom";
-const useGetAllCourses = () => {
+const useGetCourseLevels = () => {
   const location = useLocation()
   const {data,isError,error,isFetching,isLoading,isSuccess} = useFetchData({
-		queryKey: ["getCourses"],
-    queryFn: () => axios.get(courseRoute),
+	  queryKey: ["getCourseLevels"],
+    queryFn: () => axios.get(courseLevelsRoute).then(res => res.data),
     keepPreviousData:true,
     onSuccessFn(data) {
-      console.log("get courses", data);
+      console.log("data from on success", data);
     },
     onErrorFn(errorMessage) {
       console.log("errorMessage", errorMessage);
     },
-		enableCondition: location.pathname.includes("instructor"),
-
+	  enableCondition: location.pathname.includes("course"),
   });
 
   return {
-    error,data,
+    error,
+    data,
     isError,isFetching,
     isLoading,
     isSuccess,
   };
 };
-export default useGetAllCourses;
+export default useGetCourseLevels;

@@ -9,15 +9,15 @@ import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider, StudentProvider, InstructorProvider } from "@/context";
 const queryClient = new QueryClient();
 createRoot(document.getElementById("root")!).render(
-    <AuthProvider>
+  <AuthProvider>
+    <QueryClientProvider client={queryClient}>
       <InstructorProvider>
         <StudentProvider>
-          <QueryClientProvider client={queryClient}>
-            <App />
-            <ReactQueryDevtools initialIsOpen />
-          </QueryClientProvider>
+          <App />
+          <ReactQueryDevtools initialIsOpen />
         </StudentProvider>
       </InstructorProvider>
       <ToastContainer position="top-center" />
-    </AuthProvider>
+    </QueryClientProvider>
+  </AuthProvider>
 );

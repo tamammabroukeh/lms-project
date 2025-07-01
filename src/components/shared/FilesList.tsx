@@ -1,4 +1,4 @@
-// import styles from "./FileUploader.module.css";
+// import styles from "./FileUploader.module.css";More actions
 // import {
 // 	imageTypes,
 // 	fileTypes,
@@ -447,7 +447,7 @@
 //         const fileName = fileObj?.file?.name ?? fileObj?.name ?? "Untitled";
 //         const fileSize = fileObj?.file?.size ?? 0;
 //         const uploadId = fileObj.uploadId ?? `file-${index}`;
-        
+
 //         const fileProgress = progress[uploadId] ?? {};
 //         const { 
 //           progress: percentage = 0, 
@@ -584,14 +584,16 @@ import {
 } from "@/config/mimeTypes";
 import RFlex from "@/components/Reusable-Components/Reusable-Flex";
 import { formatFileSize } from "@/utils/formatFileSize";
-import { CircleCheck, Pause, Play } from "lucide-react";
+import { CircleCheck, PauseCircle, PlayCircle } from "lucide-react";
 
-	        // @ts-ignore
-const RFilesList = ({ files, pausedFiles, progress, removeFile, pauseFile, resumeFile }) => {
-	        // @ts-ignore
-const thumbs = files?.map((fileObj, index) => {
+	// @ts-ignore
+const RFilesList = ({ files,parentFiles, pausedFiles, progress, removeFile, pauseFile, resumeFile }) => {      
+	const mergedArr = parentFiles ? [{...files[0], ...parentFiles[0]}] : files
+	console.log("newArr",mergedArr)
+	// @ts-ignore
+	const thumbs = Object.keys(mergedArr[0]).length > 0 && mergedArr?.map((fileObj, index) => {
 		// console.log("fileObj 123", fileObj, pausedFiles);
-
+		console.log("files", files)
 		const type = fileObj?.mimeType;
 		const fileName = fileObj?.file?.name ?? fileObj?.name;
 		const fileSize = fileObj?.file?.size;
@@ -629,8 +631,9 @@ const thumbs = files?.map((fileObj, index) => {
 		const isPaused = pausedFiles[uploadId] || false;
 
 		// Progress bar color
-		const timerProgressColor = percentage === 100 && isSuccess ? "bg-success" : "bg-primary";
-		console.log("uploadId", uploadId);
+		const timerProgressColor = percentage === 100 && isSuccess ? "bg-green-500" : "bg-primary";
+		console.log("isSuccess", isSuccess);
+
 		return (
 			<div
 				key={index}
@@ -655,9 +658,9 @@ const thumbs = files?.map((fileObj, index) => {
 							{/* {fileName} */}
 							{fileName?.length > 30 ? `${fileName.substring(0, 30)} ..` : fileName}
 						</div>
-						<RFlex>
+						<RFlex classes="gap-1">
 							{percentage == 100 && isSuccess ? (
-								<CircleCheck className={" text-success text-[19px]"} />
+								<CircleCheck className={" text-green-500 text-[19px]"} />
 							) : (
 								<>
 									{percentage != 100 && (
@@ -669,7 +672,7 @@ const thumbs = files?.map((fileObj, index) => {
 													className="flex items-center justify-center border-2 border-primary rounded-full bg-secondary w-[20px] h-[20px]"
 												>
 													<span className="text-primary font-bold text-[12px]">
-														<Pause className={"text-primary text-[12px]"} />
+														<PauseCircle className={"text-primary text-[12px]"} />
 													</span>
 												</button>
 											) : (
@@ -677,10 +680,10 @@ const thumbs = files?.map((fileObj, index) => {
 													type="button"
 													disabled={percentage == 100}
 													onClick={() => resumeFile(uploadId)}
-													className="flex items-center justify-center border-2 border-primary rounded-full bg-themeSecondary w-[20px] h-[20px]"
+													className="flex items-center justify-center border-2 border-primary rounded-full bg-secondary w-[20px] h-[20px]"
 												>
-													<span className="text-themePrimary font-bold text-[12px]">
-														<Play className={"text-themePrimary text-[12px]"} />
+													<span className="text-primary font-bold text-[12px]">
+														<PlayCircle className={"text-primary text-[8px]"} />
 													</span>
 												</button>
 											)}
@@ -688,21 +691,23 @@ const thumbs = files?.map((fileObj, index) => {
 									)}
 								</>
 							)}
-							{percentage != 100 && !isSuccess && (
+							{/* {percentage != 100 && !isSuccess && ( */}
 								<button
 									type="button"
 									// disabled={percentage == 100}
-									onClick={() => removeFile(uploadId)}
-									className="flex items-center justify-center border-2 border-themeZinc rounded-full bg-themeSecondary w-[20px] h-[20px]"
+									onClick={() => removeFile({uploadId,public_id:mergedArr?.public_id, resourceType:mergedArr?.resourceType})}
+									className="flex items-center justify-center border-2 border-zinc-500 rounded-full bg-secondary w-[20px] h-[20px]"
 								>
-									<span className="text-themeZinc font-bold text-[12px]">x</span>
+									<span className="text-zinc-500 font-bold text-[12px]">
+										X
+									</span>
 								</button>
-							)}
+							{/* )} */}
 						</RFlex>
 					</RFlex>
 
 					{/* Uploaded size / total size */}
-					<span className="text-[12px] text-themeLight">
+					<span className="text-[12px] text-gray-900">
 						{`${formatFileSize(percentage == 100 ? total : uploaded)} / ${formatFileSize(total)}`}
 					</span>
 
@@ -712,7 +717,7 @@ const thumbs = files?.map((fileObj, index) => {
 							<div className={`${timerProgressColor} h-full transition-all duration-500`} style={{ width: `${percentage}%` }} />
 						</div>
 						<div
-							className={`${percentage === 100 && isSuccess ? "text-themeSuccess" : errorMessage ? "text-themeDanger" : "text-themeLight"}`}
+							className={`text-sm ${percentage === 100 && isSuccess ? "text-green-500" : errorMessage ? "text-red-500" : "text-gray-900"}`}
 						>
 							{errorMessage ? "Error" : percentage + "%"}
 						</div>
@@ -722,7 +727,7 @@ const thumbs = files?.map((fileObj, index) => {
 					<span className="text-[12px]">
 						{/* Status message */}
 						{errorMessage ? (
-							<span className="text-themeDanger">{errorMessage}</span>
+							<span className="text-red-500">{errorMessage}</span>
 						) : (
 							<>
 								{percentage === 100 && isSuccess

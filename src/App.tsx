@@ -5,6 +5,8 @@ import PersistLogin from './utils/PersistLogin';
 import AuthLayout from './layouts/AuthLayout';
 import SuspenseFallback from './components/feedback/SuspenseFallback';
 import RequireAuth from './utils/RequireAuth';
+import { ROLES } from './config/roles';
+import RoleRedirect from './utils/RoleRedirect';
 // import RGlobalLoader from './RComponents/RGlobalLoader/RGlobalLoader';
 
 // Lazy-loaded components
@@ -21,13 +23,13 @@ const PaypalPaymentReturnPage = lazy(() => import('./pages/student/payment-retur
 const StudentCoursesPage = lazy(() => import('./pages/student/student-courses'));
 const StudentViewCourseProgressPage = lazy(() => import('./pages/student/course-progress'));
 const NotFoundPage = lazy(() => import('./pages/not-found'));
- 
-//Admin 
-const AdminLayout = lazy(() => import("./components/admin-view/layout/AdminLayout.tsx"));
-const AdminDashboardPage = lazy(() => import("./pages/admin/dashboard.tsx"));
-const AdminUsersPage = lazy(() => import("./pages/admin/users.tsx"));
-const AdminAnalyticsPage = lazy(() => import("./pages/admin/analytics.tsx"));
-const AdminCoursesPage = lazy(() => import("./pages/admin/courses.tsx"));
+
+//Admin
+const AdminLayout = lazy(() => import('./components/admin-view/layout/AdminLayout.tsx'));
+const AdminDashboardPage = lazy(() => import('./pages/admin/dashboard.tsx'));
+const AdminUsersPage = lazy(() => import('./pages/admin/users.tsx'));
+const AdminAnalyticsPage = lazy(() => import('./pages/admin/analytics.tsx'));
+const AdminCoursesPage = lazy(() => import('./pages/admin/courses.tsx'));
 
 function App() {
     useLanguageDirection();
@@ -62,6 +64,16 @@ function App() {
             element: <PersistLogin />,
             children: [
                 {
+                    path: '/redirect',
+                    element: <RequireAuth allowedRoles={[ROLES.Admin, ROLES.Student, ROLES.Teacher]} />,
+                    children: [
+                        {
+                            index: true,
+                            element: <RoleRedirect />,
+                        },
+                    ],
+                },
+                {
                     path: '/',
                     element: (
                         // <SuspenseFallback>
@@ -72,6 +84,11 @@ function App() {
                         {
                             index: true,
                             element: <StudentHomePage />,
+                            loader: () => {
+                                const token = localStorage.getItem('token');
+                                if (token) return <Navigate to="/redirect" replace />;
+                                return null;
+                            },
                         },
                         {
                             path: 'home',
@@ -81,60 +98,71 @@ function App() {
                 },
                 // Instructor routes
                 {
-                    path: '/instructor',
-                    element: (
-                        // <SuspenseFallback>
-                        <InstructorDashboardpage />
-                        // </SuspenseFallback>
-                    ),
-                },
-                {
-                    path: '/instructor/add-new-course',
-                    element: (
-                        // <SuspenseFallback>
-                        <AddNewCoursePage />
-                        // </SuspenseFallback>
-                    ),
-                },
-                {
-                    path: '/instructor/edit-course/:courseId',
-                    element: (
-                        <SuspenseFallback>
-                            <AddNewCoursePage />
-                        </SuspenseFallback>
-                    ),
+                    element: <RequireAuth allowedRoles={[ROLES.Teacher, ROLES.Admin]} />,
+                    children: [
+                        {
+                            path: '/instructor',
+                            element: (
+                                // <SuspenseFallback>
+                                <InstructorDashboardpage />
+                                // </SuspenseFallback>
+                            ),
+                        },
+                        {
+                            path: '/instructor/add-new-course',
+                            element: (
+                                // <SuspenseFallback>
+                                <AddNewCoursePage />
+                                // </SuspenseFallback>
+                            ),
+                        },
+                        {
+                            path: '/instructor/edit-course/:courseId',
+                            element: (
+                                <SuspenseFallback>
+                                    <AddNewCoursePage />
+                                </SuspenseFallback>
+                            ),
+                        },
+                    ],
                 },
 
                 // Protected student routes
                 {
-                    element: (
-                        // <SuspenseFallback>
-                        <StudentViewCommonLayout />
-                        // </SuspenseFallback>
-                    ),
+                    element: <RequireAuth allowedRoles={[ROLES.Admin, ROLES.Student]} />,
+
+                    // element: (
+                    //   // <SuspenseFallback>
+                    //   <StudentViewCommonLayout />
+                    //   // </SuspenseFallback>
+                    // ),
                     children: [
-                        { path: 'courses', element: <StudentViewCoursesPage /> },
                         {
-                            path: 'course/details/:id',
-                            element: <StudentViewCourseDetailsPage />,
-                        },
-                        { path: 'payment-return', element: <PaypalPaymentReturnPage /> },
-                        { path: 'student-courses', element: <StudentCoursesPage /> },
-                        {
-                            path: 'course-progress/:id',
-                            element: <StudentViewCourseProgressPage />,
+                            element: <StudentViewCommonLayout />,
+                            children: [
+                                { path: 'courses', element: <StudentViewCoursesPage /> },
+                                {
+                                    path: 'course/details/:id',
+                                    element: <StudentViewCourseDetailsPage />,
+                                },
+                                { path: 'payment-return', element: <PaypalPaymentReturnPage /> },
+                                { path: 'student-courses', element: <StudentCoursesPage /> },
+                                {
+                                    path: 'course-progress/:id',
+                                    element: <StudentViewCourseProgressPage />,
+                                },
+                            ],
                         },
                     ],
                 },
             ],
         },
-
         // Admin routes (protected by admin role)
         {
             path: '/admin',
             element: (
                 // <RequireAuth allowedRoles={[ROLES.ADMIN]}>
-                    <AdminLayout />
+                <AdminLayout />
                 // </RequireAuth>
             ),
             children: [

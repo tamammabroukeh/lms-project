@@ -15,6 +15,7 @@ export interface IReusableForm<T extends FieldValues> {
   form: UseFormReturn<T>;
   className?: string;
   errors: FieldErrors<T>;
+  children?:React.ReactNode;
   renderCustomField?: (
     field: any,
     inputConfig: ISignFormControls,
@@ -28,7 +29,7 @@ export interface IReusableForm<T extends FieldValues> {
 }
 
 export interface ISignFormControls {
-  name: TNameSignFormControl;
+  name?: TNameSignFormControl;
   label: string;
   placeholder: string;
   type: React.HTMLInputTypeAttribute;
@@ -49,4 +50,17 @@ export interface ICommonForm<T> {
     React.SetStateAction<T extends FormData ? any : any>
   >;
   isButtonDisabled: boolean;
+}
+
+// Form item
+export interface IReusableFormItem{
+  input:ISignFormControls;
+  name:any;
+  form:UseFormReturn;
+  renderCustomField?: (
+    field: any,
+    inputConfig: ISignFormControls,
+    methods: UseFormReturn
+  ) => React.ReactNode;
+  fieldError: any
 }

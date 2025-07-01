@@ -3,10 +3,12 @@ export type TNameSignFormControl =
   | "userEmail"
   | "password"
   | "newPassword"
-  | "resetCode";
+  | "resetCode"
+  | "title.en"
+  | "title.ar";
 
 export type TAuthData = {
   userName: string;
   userEmail: string;
   password: string;
-};
+}

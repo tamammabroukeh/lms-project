@@ -8,10 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  courseCurriculumInitialFormData,
-  courseLandingInitialFormData,
-} from "@/config";
+import { courseLandingInitialFormData } from "@/config";
 import { InstructorContext } from "@/context/instructor-context";
 import { Delete, Edit } from "lucide-react";
 import { useContext } from "react";
@@ -37,7 +34,7 @@ function InstructorCourses({ listOfCourses }) {
           onClick={() => {
             setCurrentEditedCourseId(null);
             setCourseLandingFormData(courseLandingInitialFormData);
-            setCourseCurriculumFormData(courseCurriculumInitialFormData);
+            // setCourseCurriculumFormData(courseCurriculumInitialFormData);
             navigate("/instructor/add-new-course");
           }}
           className="p-6"

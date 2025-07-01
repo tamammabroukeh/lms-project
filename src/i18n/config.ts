@@ -14,18 +14,22 @@ import arErrors from "./ar/errors.json";
 import enAdmin from "./en/admin.json";
 import arAdmin from "./ar/admin.json";
 
-
+// course
+import enCourse from "./en/course.json";
+import arCourse from "./ar/course.json";
 const resources = {
   en: {
     auth: enAuth,
     home: enHome,
     errors: enErrors,
+    course:enCourse,
     admin:enAdmin,
   },
   ar: {
     auth: arAuth,
     home: arHome,
     errors: arErrors,
+    course: arCourse,
     admin:arAdmin,
   },
 } as const;
