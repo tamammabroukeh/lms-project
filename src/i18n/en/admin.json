@@ -1,0 +1,30 @@
+{
+    "admin": {
+      "jan": "Jan",
+      "feb": "Feb",
+      "mar": "Mar",
+      "apr": "Apr",
+      "may": "May",
+      "jun": "Jun",
+      "published": "Published",
+      "draft": "Draft",
+      "archived": "Archived",
+      "dashboardOverview": "Dashboard Overview",
+      "welcomeAdmin": "Welcome back, Admin",
+      "keyMetrics": "Key Metrics",
+      "totalUsers": "Total Users",
+      "instructors": "Teachers",
+      "courses": "Courses",
+      "enrollments": "Enrollments",
+      "revenue": "Revenue",
+      "userGrowth": "User Growth (Last 6 Months)",
+      "courseDistribution": "Course Distribution",
+      "recentActivity": "Recent Activity",
+      "event": "Event",
+      "user": "User",
+      "time": "Time",
+      "newCourseCreated": "New course created",
+      "userRegistered": "User registered",
+      "courseEnrollment": "Course enrollment"
+    }
+  }

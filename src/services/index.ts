@@ -187,3 +187,14 @@ export async function resetCourseProgressService(
 
   return data;
 }
+
+export async function adminDashboardTotals(
+
+) {
+  const { data } = await axiosInstance.get(
+    `/user/stats`
+  );
+  return data;
+}
+
+

@@ -1,0 +1,31 @@
+{
+    "admin": {
+      "jan": "يناير",
+      "feb": "فبراير",
+      "mar": "مارس",
+      "apr": "أبريل",
+      "may": "مايو",
+      "jun": "يونيو",
+      "published": "منشور",
+      "draft": "مسودة",
+      "archived": "مؤرشف",
+      "dashboardOverview": "نظرة عامة على لوحة التحكم",
+      "welcomeAdmin": "مرحبًا بعودتك، المسؤول",
+      "keyMetrics": "المقاييس الرئيسية",
+      "totalUsers": "إجمالي المستخدمين",
+      "instructors": "المدرسين",
+      "courses": "الدورات",
+      "enrollments": "التسجيلات",
+      "revenue": "الإيرادات",
+      "userGrowth": "نمو المستخدمين (آخر 6 أشهر)",
+      "courseDistribution": "توزيع الدورات",
+      "recentActivity": "النشاط الأخير",
+      "event": "الحدث",
+      "user": "المستخدم",
+      "time": "الوقت",
+      "newCourseCreated": "تم إنشاء دورة جديدة",
+      "userRegistered": "تم تسجيل مستخدم",
+      "courseEnrollment": "تسجيل الدورة"
+    }
+  }
+  

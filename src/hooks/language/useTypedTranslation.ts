@@ -22,12 +22,15 @@ type NestedKeyOf<T> = RemoveTrailingDot<PathsToStringProps<T>>;
 type AuthKeys = NestedKeyOf<typeof authEn>;
 type HomeKeys = NestedKeyOf<typeof homeEn>;
 type ErrorKeys = NestedKeyOf<typeof errorsEn>;
+type AdminKeys = NestedKeyOf<typeof adminEn>;
+
 
 // Create union type for all possible keys
 type TranslationKeys =
   | `auth:${AuthKeys}`
   | `home:${HomeKeys}`
-  | `errors:${ErrorKeys}`;
+  | `errors:${ErrorKeys}`
+  | `admin:${AdminKeys}`;
 
 export interface TypedTFunction {
   (key: TranslationKeys, options?: Record<string, unknown>): string;
