@@ -6,7 +6,7 @@ import CourseCover from "@/components/instructor-view/courses/add-new-course/cou
 import CourseLectures from "@/components/instructor-view/courses/add-new-course/course-lectures";
 import CourseDetails from "@/components/instructor-view/courses/add-new-course/course-details";
 const AddNewCoursePage = () => {
-  const { activeTab, handleTabChange, t, form, navigate, submitHandler, isLoading, files, handleAddDataToList, handleAddLecture, handleCancelReplace, handleCoverImageUpload, handleDeleteLecture, handleReplaceVideo, isOpen, setFiles, currentLecture, lectures, isCurrentLectureValid, isReplacing, replacingIndex, setCurrentLecture, setIsOpen, coverImagePreview, getParam, isLoadingCancel, image, handleDeleteImage, categories, levels, findLevel, findCategory } = useCreateCourse()
+  const { activeTab, handleTabChange, t, form, navigate, submitHandler, isLoading, files, handleAddDataToList, handleAddLecture, handleCancelReplace, handleCoverImageUpload, handleDeleteLecture, handleReplaceVideo, isOpen, setFiles, currentLecture, lectures, isCurrentLectureValid, isReplacing, replacingIndex, setCurrentLecture, setIsOpen, getParam, isLoadingCancel, image, handleDeleteImage, categories, levels, findLevel, findCategory, errors, isLoadingEdit } = useCreateCourse()
   console.log("current lecture", currentLecture)
   console.log("lecture", lectures)
 
@@ -41,12 +41,12 @@ const AddNewCoursePage = () => {
                 },
                 {
                   value: "details",
-                  children: <CourseDetails {...{ categories, levels, form }} />
+                  children: <CourseDetails {...{ errors, categories, levels, form }} />
                 },
                 {
                   value: "cover",
                   children: <CourseCover
-                    {...{ findLevel, findCategory, handleDeleteImage, isLoadingCancel, files, setFiles, isOpen, setIsOpen, coverImagePreview, image, form, handleCoverImageUpload, isLoading }}
+                    {...{ findLevel, findCategory, handleDeleteImage, isLoadingCancel, files, setFiles, isOpen, setIsOpen, image, form, handleCoverImageUpload, isLoading, isLoadingEdit }}
                     lectureLength={lectures.length}
                   />
                 },

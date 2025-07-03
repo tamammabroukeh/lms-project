@@ -4,10 +4,11 @@ import { BarChart } from '@/components/charts/BarChart';
 import { PieChart } from '@/components/charts/PieChart';
 import { useTypedTranslation } from '@/hooks'; // Keep useLocalStorage as it was in the original
 import { useEffect, useState } from 'react';
+import { TranslationKeys } from '@/hooks/language/useTypedTranslation';
 
 
 export default function AdminDashboardPage() {
-    const { t } = useTypedTranslation(); // Initialize the translation hook
+    const { t, } = useTypedTranslation(); // Initialize the translation hook
     const [metrics, setMetrics] = useState({
         totalUsers: 0,
         totalTeachers: 0,
@@ -19,7 +20,7 @@ export default function AdminDashboardPage() {
     const [courseDistributionData, setCourseDistributionData] = useState<{ name: string; value: number }[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    
+
     useEffect(() => {
         const fetchDashboardData = async () => {
             try {
@@ -43,16 +44,17 @@ export default function AdminDashboardPage() {
                 }
 
                 if (growthResponse) {
-                    const formattedGrowthData = growthResponse.map(item => ({
-                        name: `${item.month.toLowerCase().slice(0, 3)}`,
+                    const formattedGrowthData = growthResponse.map((item: { month: string; count: string }) => ({
+                        name: t(`admin:${item.month.toLowerCase().slice(0, 3)}` as TranslationKeys),
                         value: item.count,
                     }));
                     setUserGrowthData(formattedGrowthData);
                 }
 
                 if (courseStatsResponse) {
-                    const formattedCourseData = courseStatsResponse.map(item => ({
-                        name: `admin:${item.status.toLowerCase()}`,
+                    const formattedCourseData = courseStatsResponse.map((item: { status: string; count: string }) => ({
+                        name: t(`admin:${item.status.toLowerCase()
+                            }` as TranslationKeys),
                         value: item.count,
                     }));
                     setCourseDistributionData(formattedCourseData);

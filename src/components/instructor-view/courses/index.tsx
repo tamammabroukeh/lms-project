@@ -1,3 +1,4 @@
+import ReusableAlertDialog from "@/components/Reusable-Components/Reusable-AlertDialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -8,64 +9,55 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { courseLandingInitialFormData } from "@/config";
-import { InstructorContext } from "@/context/instructor-context";
+import { useTypedTranslation } from "@/hooks";
+import useDeleteCourse from "@/hooks/course/useDeleteCourse";
 import { Delete, Edit } from "lucide-react";
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 // @ts-ignore
 function InstructorCourses({ listOfCourses }) {
   const navigate = useNavigate();
-  const {
-    // @ts-ignore
-    setCurrentEditedCourseId,
-    // @ts-ignore
-    setCourseLandingFormData,
-    // @ts-ignore
-    setCourseCurriculumFormData,
-  } = useContext(InstructorContext);
-
+  const { t } = useTypedTranslation();
+  console.log("listOfCourses", listOfCourses)
+  const { isLoading, submitHandler, setCourseId, open, setOpen } = useDeleteCourse()
   return (
-    <Card>
-      <CardHeader className="flex justify-between flex-row items-center">
-        <CardTitle className="text-3xl font-extrabold">All Courses</CardTitle>
-        <Button
-          onClick={() => {
-            setCurrentEditedCourseId(null);
-            setCourseLandingFormData(courseLandingInitialFormData);
-            // setCourseCurriculumFormData(courseCurriculumInitialFormData);
-            navigate("/instructor/add-new-course");
-          }}
-          className="p-6"
-        >
-          Create New Course
-        </Button>
-      </CardHeader>
-      <CardContent>
-        <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Course</TableHead>
-                <TableHead>Students</TableHead>
-                <TableHead>Revenue</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {listOfCourses && listOfCourses.length > 0
-                ? // @ts-ignore
-                  listOfCourses.map((course) => (
-                    <TableRow>
+    <>
+      <Card>
+        <CardHeader className="flex justify-between flex-row items-center">
+          <CardTitle className="text-3xl font-extrabold">{t("course:all_courses")}</CardTitle>
+          <Button
+            onClick={() => {
+              navigate("/instructor/add-new-course");
+            }}
+            className="p-6"
+          >
+            {t("course:create_new_course")}
+          </Button>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>{t("course:course")}</TableHead>
+                  <TableHead className="text-center">{t("course:students")}</TableHead>
+                  <TableHead className="text-center">{t("course:revenue")}</TableHead>
+                  <TableHead className="text-center">{t("course:actions")}</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {listOfCourses?.courses && listOfCourses?.courses?.length > 0
+                  ? // @ts-ignore
+                  listOfCourses?.courses?.map((course) => (
+                    <TableRow key={course?._id}>
                       <TableCell className="font-medium">
-                        {course?.title}
+                        {course?.title?.en}
                       </TableCell>
-                      <TableCell>{course?.students?.length}</TableCell>
-                      <TableCell>
+                      <TableCell className="text-center">{course?.students?.length}</TableCell>
+                      <TableCell className="text-center">
                         ${course?.students?.length * course?.pricing}
                       </TableCell>
-                      <TableCell className="text-right">
+                      <TableCell className="text-center">
                         <Button
                           onClick={() => {
                             navigate(`/instructor/edit-course/${course?._id}`);
@@ -75,18 +67,21 @@ function InstructorCourses({ listOfCourses }) {
                         >
                           <Edit className="h-6 w-6" />
                         </Button>
-                        <Button variant="ghost" size="sm">
-                          <Delete className="h-6 w-6" />
-                        </Button>
+                        <ReusableAlertDialog {...{ open, setOpen, isLoading, submitHandler }} triggerComponent={
+                          <Button onClick={() => { setOpen(true); setCourseId(course?._id) }} variant="ghost" size="sm">
+                            <Delete className="h-6 w-6" />
+                          </Button>
+                        } />
                       </TableCell>
                     </TableRow>
                   ))
-                : null}
-            </TableBody>
-          </Table>
-        </div>
-      </CardContent>
-    </Card>
+                  : null}
+              </TableBody>
+            </Table>
+          </div>
+        </CardContent>
+      </Card>
+    </>
   );
 }
 

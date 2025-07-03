@@ -51,5 +51,22 @@
   "create_course": "إنشاء الكورس",
   "course_category":"فئة الكورس",
   "course_level":"مستوى الكورس",
-  "primary_language":"اللغة الأساسية"
+  "primary_language":"اللغة الأساسية",
+  "course_title":"عنوان الكورس",
+  "student_name":"اسم الطالب",
+  "student_email":"ايميل الطالب",
+  "students_list":"لائحة الطلاب",
+  "all_courses":"كل الكورسات",
+  "create_new_course":"أنشئ كورس جديد",
+  "students":"الطلاب",
+  "revenue":"الأرباح"
+  ,"actions":"الاعدادات"
+,  "course":"كورس",
+  "instructor_view":"واجهة المدرس",
+  "dashboard":"لوحة التحكم",
+  "courses":"الكورسات",
+  "arabic":"عربي",
+  "english":"إنكليزي",
+  "both":"كلاهما",
+  "student_gender":"جنس الطالب"
 }

@@ -7,8 +7,6 @@ import homeEn from "@/i18n/en/home.json";
 import courseEn from "@/i18n/en/course.json";
 import adminEn from "@/i18n/en/admin.json";
 
-
-
 // Helper type to generate dot-separated paths for nested objects
 type PathsToStringProps<T> = T extends string
   ? ""
@@ -30,7 +28,7 @@ type AdminKeys = NestedKeyOf<typeof adminEn>;
 type CourseKeys = NestedKeyOf<typeof courseEn>;
 
 // Create union type for all possible keys
-type TranslationKeys =
+export type TranslationKeys =
   | `auth:${AuthKeys}`
   | `home:${HomeKeys}`
   | `errors:${ErrorKeys}`

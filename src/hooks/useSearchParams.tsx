@@ -53,7 +53,6 @@ export const useSearchParams = (): {
     },
     [searchParams, navigate, location.pathname]
   );
-
   /**
    * Delete a parameter
    * @param {string} key - The parameter key to remove

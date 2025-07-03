@@ -53,9 +53,9 @@ export default function AdminUsersPage() {
     return () => clearTimeout(debounceTimer);
   }, [searchTerm, currentPage]);
 
-  const filteredUsers = usersData.users.filter(user => 
-    user.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.userEmail.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredUsers = users.filter(user =>
+    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handlePageChange = (newPage: number) => {
@@ -126,62 +126,46 @@ export default function AdminUsersPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {loading ? (
-              // Loading skeleton
-              Array.from({ length: itemsPerPage }).map((_, index) => (
-                <TableRow key={index}>
-                  <TableCell><Skeleton className="h-4 w-[150px]" /></TableCell>
-                  <TableCell><Skeleton className="h-4 w-[200px]" /></TableCell>
-                  <TableCell><Skeleton className="h-4 w-[80px]" /></TableCell>
-                  <TableCell><Skeleton className="h-4 w-[80px]" /></TableCell>
-                  <TableCell className="text-right">
-                    <Skeleton className="h-4 w-[40px]" />
-                  </TableCell>
-                </TableRow>
-              ))
-            ) : (
-              filteredUsers.map((user) => (
-                <TableRow key={user.id}>
-                  <TableCell className="font-medium">{user.userName}</TableCell>
-                  <TableCell>{user.userEmail}</TableCell>
-                  <TableCell>
-                    <span className={`px-2 py-1 rounded-full text-xs ${
-                      user.role === 'admin' ? 'bg-blue-100 text-blue-800' :
-                      user.role === 'teacher' ? 'bg-purple-100 text-purple-800' :
-                      'bg-green-100 text-green-800'
+            {currentUsers.map((user) => (
+              <TableRow key={user.id}>
+                <TableCell className="font-medium">{user.name}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>
+                  <span className={`px-2 py-1 rounded-full text-xs ${user.role === 'Admin' ? 'bg-blue-100 text-blue-800' :
+                      user.role === 'Instructor' ? 'bg-purple-100 text-purple-800' :
+                        'bg-green-100 text-green-800'
                     }`}>
-                      {user.role}
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    <span className={`px-2 py-1 rounded-full text-xs ${
-                      user.isAccountverified ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                    {user.role}
+                  </span>
+                </TableCell>
+                <TableCell>{user.joined}</TableCell>
+                <TableCell>
+                  <span className={`px-2 py-1 rounded-full text-xs ${user.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
                     }`}>
-                      {user.isAccountverified ? 'Verified' : 'Not Verified'}
-                    </span>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                          <MoreVertical size={16} />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem className="cursor-pointer">
-                          <Edit className="mr-2" size={14} />
-                          Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer text-red-600">
-                          <Trash2 className="mr-2" size={14} />
-                          Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
+                    {user.status}
+                  </span>
+                </TableCell>
+                <TableCell className="text-right">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="icon">
+                        <MoreVertical size={16} />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem className="cursor-pointer">
+                        <Edit className="mr-2" size={14} />
+                        Edit
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="cursor-pointer text-red-600">
+                        <Trash2 className="mr-2" size={14} />
+                        Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </div>
@@ -189,22 +173,22 @@ export default function AdminUsersPage() {
       <Pagination>
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious 
-              onClick={() => handlePageChange(currentPage - 1)} 
-              disabled={currentPage === 1 || loading}
+            <PaginationPrevious
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              hidden={currentPage === 1}
             />
           </PaginationItem>
-          
+
           <PaginationItem>
             <span className="text-sm">
               Page {currentPage} of {usersData.totalPages}
             </span>
           </PaginationItem>
-          
+
           <PaginationItem>
-            <PaginationNext 
-              onClick={() => handlePageChange(currentPage + 1)} 
-              disabled={currentPage === usersData.totalPages || loading}
+            <PaginationNext
+              onClick={() => setCurrentPage(p => Math.min(pageCount, p + 1))}
+              hidden={currentPage === pageCount}
             />
           </PaginationItem>
         </PaginationContent>

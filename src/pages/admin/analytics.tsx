@@ -3,7 +3,7 @@ import { BarChart } from '@/components/charts/BarChart';
 import { PieChart } from '@/components/charts/PieChart';
 import { LineChart } from '@/components/charts/LineChart';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
-import { CartesianGrid, Line, ResponsiveContainer, Tooltip, XAxis, YAxis, LineChart as RechartsLineChart} from 'recharts';
+// import { CartesianGrid, Line, ResponsiveContainer, Tooltip, XAxis, YAxis, LineChart as RechartsLineChart} from 'recharts';
 
 export default function AdminAnalyticsPage() {
     const [timeRange, setTimeRange] = useState('last_month');

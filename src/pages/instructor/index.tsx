@@ -1,11 +1,9 @@
 import InstructorCourses from "@/components/instructor-view/courses";
-// import InstructorDashboard from "@/components/instructor-view/dashboard";
+import InstructorDashboard from "@/components/instructor-view/dashboard";
 import LanguageSelector from "@/components/LanguageSelector";
 import { Flex, ReusableButton } from "@/components/Reusable-Components";
-// import InstructorDashboard from "@/components/instructor-view/dashboard";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
-// import { AuthContext } from "@/context/auth-context";
-// import { InstructorContext } from "@/context/instructor-context";
 import { useAuthContext } from "@/hooks/auth/useAuth";
 import useLogout from "@/hooks/auth/useLogout";
 import useGetAllCourses from "@/hooks/course/useGetAllCourses";
@@ -16,30 +14,24 @@ function InstructorDashboardpage() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const { logoutHandler, isLoading } = useLogout();
   const { setAuth } = useAuthContext();
-  const {data,error,isError,isFetching,isSuccess} = useGetAllCourses()
-  console.log("data",data)
-  console.log("error",error)
-  console.log("isError",isError)
-  console.log("isFetching",isFetching)
-  console.log("isLoading",isLoading)
-  console.log("isSuccess",isSuccess)
+  const { data, isFetching, t } = useGetAllCourses()
 
   const menuItems = [
     {
       icon: BarChart,
-      label: "Dashboard",
+      label: t("course:dashboard"),
       value: "dashboard",
-      // component: <InstructorDashboard listOfCourses={data} />,
+      component: <InstructorDashboard listOfCourses={data?.data} />,
     },
     {
       icon: Book,
-      label: "Courses",
+      label: t("course:courses"),
       value: "courses",
-      component: <InstructorCourses listOfCourses={data} />,
+      component: <InstructorCourses listOfCourses={data?.data} />,
     },
     {
       icon: LogOut,
-      label: "Logout",
+      label: t("auth:signout"),
       value: "logout",
       component: null,
     },
@@ -56,11 +48,11 @@ function InstructorDashboardpage() {
     <div className="flex h-full min-h-screen bg-gray-100">
       <aside className="w-64 bg-white shadow-md hidden md:block">
         <div className="p-4">
-          <h2 className="text-2xl font-bold mb-4">Instructor View</h2>
+          <h2 className="text-2xl font-bold mb-4">{t("course:instructor_view")}</h2>
           <nav>
             {menuItems.map((menuItem) => (
               <ReusableButton
-              btnText={menuItem.label}
+                btnText={menuItem.label}
                 isLoading={menuItem.value === "logout" && isLoading}
                 className="w-full justify-start mb-2"
                 key={menuItem.value}
@@ -80,15 +72,25 @@ function InstructorDashboardpage() {
       <main className="flex-1 p-8 overflow-y-auto">
         <div className="max-w-7xl mx-auto">
           <Flex classes="items-start justify-between">
-            <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
+            <h1 className="text-3xl font-bold mb-8">{t("course:dashboard")}</h1>
             <LanguageSelector />
           </Flex>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            {menuItems.map((menuItem) => (
-              <TabsContent key={menuItem.value} value={menuItem.value}>
-                {menuItem.component !== null ? menuItem.component : null}
-              </TabsContent>
-            ))}
+            {isFetching ?
+
+              <div className="flex flex-col gap-5">
+                <div className="flex gap-5">
+                  <Skeleton className="w-[50%] h-28" />
+                  <Skeleton className="w-[50%] h-28" />
+                </div>
+                <Skeleton className="w-[100%] h-36" />
+              </div>
+
+              : menuItems.map((menuItem) => (
+                <TabsContent key={menuItem.value} value={menuItem.value}>
+                  {menuItem.component !== null ? menuItem.component : null}
+                </TabsContent>
+              ))}
           </Tabs>
         </div>
       </main>

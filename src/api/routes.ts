@@ -11,6 +11,9 @@ const ResetPassRoute = userRoute + "/reset-password";
 // courses
 const courseRoute = "/course"
 const createCourseRoute = courseRoute + "/add-course"
+const editCourseRoute = courseRoute + "/update"
+const courseByIdRoute = courseRoute + "/getCourseById"
+const deleteCourseRoute = courseRoute + "/delete"
 const studentCoursesRoute = courseRoute
 const courseCategoriesRoute = courseRoute + "/categories"
 const courseLevelsRoute = courseRoute + "/levels"
@@ -32,7 +35,7 @@ export {
   ResetPassRoute,
 };
 
-export {studentCoursesRoute ,courseLevelsRoute, courseCategoriesRoute,createCourseRoute}
+export {studentCoursesRoute,courseByIdRoute,editCourseRoute,deleteCourseRoute ,courseLevelsRoute, courseCategoriesRoute,createCourseRoute}
 
 export {instructorRoute}
 

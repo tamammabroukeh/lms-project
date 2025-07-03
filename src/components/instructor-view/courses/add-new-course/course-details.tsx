@@ -1,11 +1,11 @@
 import { ReusableCard } from '@/components/Reusable-Components'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from '@/components/ui/input';
+import { ReusableInput } from '@/components/Reusable-Components';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from '@/components/ui/textarea';
 import { useCurrentLangIsEnglish, useTypedTranslation } from '@/hooks';
 import { ICategory, ICourseDetails, ILevel } from '@/interfaces/course';
-export default function CourseDetails({ form, categories, levels }: ICourseDetails) {
+export default function CourseDetails({ errors, form, categories, levels }: ICourseDetails) {
     const currentLang = useCurrentLangIsEnglish()
     const { t } = useTypedTranslation()
     console.log("data", categories)
@@ -26,9 +26,14 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                         <FormItem>
                             <FormLabel>{t("course:course_title_in_arabic")}</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder={t("course:course_title_in_arabic")} />
+                                <ReusableInput
+                                    className={`bg-white w-full h-10`}
+                                    hasError={!!errors[field.name]}
+                                    placeholder={t("course:course_title_in_arabic")}
+                                    {...field}
+                                />
                             </FormControl>
-                            <FormMessage />
+                            {errors[field.name] && <FormMessage>{errors[field.name] as any}</FormMessage>}
                         </FormItem>
                     )}
                 />
@@ -39,9 +44,14 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                         <FormItem>
                             <FormLabel>{t("course:course_title_in_english")}</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder={t("course:course_title_in_english")} />
+                                <ReusableInput
+                                    className={`bg-white w-full h-10`}
+                                    hasError={!!errors[field.name]}
+                                    placeholder={t("course:course_title_in_english")}
+                                    {...field}
+                                />
                             </FormControl>
-                            <FormMessage />
+                            {errors[field.name] && <FormMessage>{errors[field.name] as any}</FormMessage>}
                         </FormItem>
                     )}
                 />
@@ -55,9 +65,14 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                         <FormItem>
                             <FormLabel>{t("course:sub_title_in_arabic")}</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder={t("course:sub_title_in_arabic")} />
+                                <ReusableInput
+                                    className={`bg-white w-full h-10`}
+                                    hasError={!!errors[field.name]}
+                                    placeholder={t("course:sub_title_in_arabic")}
+                                    {...field}
+                                />
                             </FormControl>
-                            <FormMessage />
+                            {errors[field.name] && <FormMessage>{errors[field.name] as any}</FormMessage>}
                         </FormItem>
                     )}
                 />
@@ -68,9 +83,14 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                         <FormItem>
                             <FormLabel>{t("course:sub_title_in_english")}</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder={t("course:sub_title_in_english")} />
+                                <ReusableInput
+                                    className={`bg-white w-full h-10`}
+                                    hasError={!!errors[field.name]}
+                                    placeholder={t("course:sub_title_in_english")}
+                                    {...field}
+                                />
                             </FormControl>
-                            <FormMessage />
+                            {errors[field.name] && <FormMessage>{errors[field.name] as any}</FormMessage>}
                         </FormItem>
                     )}
                 />
@@ -86,7 +106,7 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                             <FormControl>
                                 <Textarea {...field} placeholder={t("course:description_in_arabic")} rows={4} />
                             </FormControl>
-                            <FormMessage />
+                            {errors[field.name] && <FormMessage>{errors[field.name] as any}</FormMessage>}
                         </FormItem>
                     )}
                 />
@@ -168,14 +188,16 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                         <FormItem>
                             <FormLabel>{t("course:price")} ($)</FormLabel>
                             <FormControl>
-                                <Input
+                                <ReusableInput
                                     {...field}
+                                    className={`bg-white w-full h-10`}
+                                    hasError={!!errors[field.name]}
                                     type="number"
                                     placeholder="0.00"
                                     onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
                                 />
                             </FormControl>
-                            <FormMessage />
+                            {errors[field.name] && <FormMessage>{errors[field.name] as any}</FormMessage>}
                         </FormItem>
                     )}
                 />
@@ -193,22 +215,22 @@ export default function CourseDetails({ form, categories, levels }: ICourseDetai
                                 </FormControl>
                                 <SelectContent>
                                     {currentLang ? <>
-                                        <SelectItem value="Arabic">Arabic</SelectItem>
-                                        <SelectItem value="English">English</SelectItem>
-                                        <SelectItem value="both">both of them</SelectItem>
+                                        <SelectItem value="Arabic">{t("course:arabic")}</SelectItem>
+                                        <SelectItem value="English">{t("course:english")}</SelectItem>
+                                        <SelectItem value="both">{t("course:both")}</SelectItem>
 
                                     </>
                                         :
                                         <>
 
-                                            <SelectItem value="ar">عربي</SelectItem>
-                                            <SelectItem value="en">إنجليزي</SelectItem>
-                                            <SelectItem value="both">كلاهما</SelectItem>
+                                            <SelectItem value="ar">{t("course:arabic")}</SelectItem>
+                                            <SelectItem value="en">{t("course:english")}</SelectItem>
+                                            <SelectItem value="both">{t("course:both")}</SelectItem>
                                         </>
                                     }
                                 </SelectContent>
                             </Select>
-                            <FormMessage />
+                            {errors[field.name] && <FormMessage>{errors[field.name] as any}</FormMessage>}
                         </FormItem>
                     )}
                 />

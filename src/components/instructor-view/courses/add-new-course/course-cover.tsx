@@ -1,13 +1,13 @@
-import { ReusableButton, ReusableCard , ReusableDialog ,Flex } from "@/components/Reusable-Components";
+import { ReusableButton, ReusableCard, ReusableDialog, Flex } from "@/components/Reusable-Components";
 import FileUploader from "@/components/shared/FileUploader";
 import { Label } from "@/components/ui/label";
 import { useCurrentLangIsEnglish, useTypedTranslation } from "@/hooks";
 import { ICourseCover } from "@/interfaces/course";
 import { Trash2, Upload } from "lucide-react";
 
-export default function CourseCover({files, setFiles, isOpen, setIsOpen, image, form, isLoading, lectureLength, handleCoverImageUpload,handleDeleteImage, isLoadingCancel }: ICourseCover) {
+export default function CourseCover({ isLoadingEdit, files, setFiles, isOpen, setIsOpen, image, form, isLoading, lectureLength, handleCoverImageUpload, handleDeleteImage, isLoadingCancel }: ICourseCover) {
     const currentLang = useCurrentLangIsEnglish()
-    const {t} = useTypedTranslation()
+    const { t } = useTypedTranslation()
     console.log("img", image)
     return (
         <ReusableCard
@@ -27,10 +27,10 @@ export default function CourseCover({files, setFiles, isOpen, setIsOpen, image, 
                             className="mt-2">
                             <label htmlFor="cover-upload">
                                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-500 transition-colors">
-                                    {image && image.url ? (
+                                    {image && (image.url || typeof image === "string") ? (
                                         <Flex>
                                             <img
-                                                src={image.url}
+                                                src={image.url ?? image}
                                                 alt="Cover preview"
                                                 className="mx-auto rounded-lg shadow-md"
                                             />
@@ -48,7 +48,7 @@ export default function CourseCover({files, setFiles, isOpen, setIsOpen, image, 
                     }
                     dialogBody={
                         // @ts-ignore
-                        <FileUploader singleFile={true} typeFile={{"image/*":[]}}
+                        <FileUploader singleFile={true} typeFile={{ "image/*": [] }}
                             parentCallback={setFiles}
                             parentFiles={files}
                             handleCloseUploadFile={() => setIsOpen(false)}
@@ -56,7 +56,7 @@ export default function CourseCover({files, setFiles, isOpen, setIsOpen, image, 
                     }
                     contentClassName="max-w-[450px] max-h-screen overflow-auto"
                 />
-                {image && image.url && <ReusableButton
+                {image && (image.url || typeof image === "string") && <ReusableButton
                     btnText=""
                     isLoading={isLoadingCancel}
                     onClick={() => handleDeleteImage()}
@@ -72,18 +72,18 @@ export default function CourseCover({files, setFiles, isOpen, setIsOpen, image, 
                 <h3 className="text-lg font-semibold mb-4">{t("course:course_summary")}</h3>
                 <div className="space-y-2 text-sm">
                     <p><strong>{t("course:lectures")}:</strong> {lectureLength} {t("course:lectures_added")}</p>
-                    <p><strong>{t("course:title")}:</strong> {form.watch('titleCourseEN') || (currentLang ? 'Not set' : "لم يتم اختياره")}</p>
-                    <p><strong>{t("course:category")}:</strong> {form.watch("category") || (currentLang ? 'Not set' : "لم يتم اختياره")}</p>
-                    <p><strong>{t("course:level")}:</strong> {form.watch("level") || (currentLang ? 'Not set' : "لم يتم اختياره")}</p>
-                    <p><strong>{t("course:price")}:</strong> ${form.watch('price') || 0}</p>
+                    <p><strong>{t("course:title")}:</strong> {form?.watch('titleCourseEN') || (currentLang ? 'Not set' : "لم يتم اختياره")}</p>
+                    <p><strong>{t("course:category")}:</strong> {form?.watch("category") || (currentLang ? 'Not set' : "لم يتم اختياره")}</p>
+                    <p><strong>{t("course:level")}:</strong> {form?.watch("level") || (currentLang ? 'Not set' : "لم يتم اختياره")}</p>
+                    <p><strong>{t("course:price")}:</strong> ${form?.watch('price') || 0}</p>
                 </div>
             </div>
 
             <ReusableButton
-                {...{ isLoading }}
+                isLoading={isLoadingEdit || isLoading}
                 type="submit"
                 className="w-full h-12 text-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
-                disabled={isLoading || lectureLength === 0}
+                disabled={isLoadingEdit || isLoading || lectureLength === 0}
                 btnText={t("course:create_course")}
             />
         </ReusableCard>

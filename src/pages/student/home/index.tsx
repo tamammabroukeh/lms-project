@@ -9,11 +9,16 @@ import { Button } from "@/components/ui/button";
 // } from "@/services";
 // import { AuthContext } from "@/context/auth-context";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "@/hooks";
+import useGetAllCourses from "@/hooks/course/useGetAllCourses";
+import { ICourse } from "@/interfaces/course";
+import Course from "../courses/course";
+import ReusablePagination from "@/components/Reusable-Components/Reusable-Pagination";
 
 function StudentHomePage() {
   // const { studentViewCoursesList, setStudentViewCoursesList } =
   //   useContext(StudentContext);
-  // const { auth } = useContext(AuthContext);
+  const { auth } = useAuthContext();
   const navigate = useNavigate();
 
   function handleNavigateToCoursesPage(getCurrentId: string) {
@@ -27,7 +32,10 @@ function StudentHomePage() {
 
     navigate("/courses");
   }
-
+  const { data, setPage, page, searchParams, setSearchParams } = useGetAllCourses()
+  console.log("data", data)
+  console.log("page", page)
+  console.log("auth", auth)
   // async function fetchAllStudentViewCourses() {
   //   const response = await fetchStudentViewCourseListService();
   //   if (response?.success) setStudentViewCoursesList(response?.data);
@@ -70,6 +78,27 @@ function StudentHomePage() {
           />
         </div>
       </section>
+
+      <section className="py-12 px-4 lg:px-8">
+        <h2 className="text-2xl font-bold mb-6">Featured Courses</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {data?.data && data?.data?.courses && data?.data?.courses?.length > 0 ? (
+            data?.data?.courses?.map((course: ICourse) => (
+              <Course {...{ course }} />
+            ))
+          ) : (
+            <h1>No Courses Found</h1>
+          )}
+        </div>
+        {data?.data?.courses?.length > 0 && <ReusablePagination
+          currentPage={data?.data.currentPage}
+          totalPages={data?.data?.totalPages}
+          setPage={setPage}
+          searchParams={searchParams}
+          setSearchParams={setSearchParams}
+        />
+        }
+      </section>
       <section className="py-8 px-4 lg:px-8 bg-gray-100">
         <h2 className="text-2xl font-bold mb-6">Course Categories</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
@@ -83,37 +112,6 @@ function StudentHomePage() {
               {categoryItem.label}
             </Button>
           ))}
-        </div>
-      </section>
-      <section className="py-12 px-4 lg:px-8">
-        <h2 className="text-2xl font-bold mb-6">Featured COourses</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* {studentViewCoursesList && studentViewCoursesList.length > 0 ? (
-            studentViewCoursesList.map((courseItem) => (
-              <div
-                onClick={() => handleCourseNavigate(courseItem?._id)}
-                className="border rounded-lg overflow-hidden shadow cursor-pointer"
-              >
-                <img
-                  src={courseItem?.image}
-                  width={300}
-                  height={150}
-                  className="w-full h-40 object-cover"
-                />
-                <div className="p-4">
-                  <h3 className="font-bold mb-2">{courseItem?.title}</h3>
-                  <p className="text-sm text-gray-700 mb-2">
-                    {courseItem?.instructorName}
-                  </p>
-                  <p className="font-bold text-[16px]">
-                    ${courseItem?.pricing}
-                  </p>
-                </div>
-              </div>
-            ))
-          ) : (
-            <h1>No Courses Found</h1>
-          )} */}
         </div>
       </section>
     </div>

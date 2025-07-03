@@ -1,9 +1,10 @@
 import { useMutateData, useTypedTranslation, useAuthContext } from "@/hooks";
 import axios from "@/api/axiosInstance";
 import { logoutRoute } from "@/api/routes";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 const useLogout = () => {
   const { setAuth, auth } = useAuthContext();
+  const pathname = useLocation()?.pathname
   const { t } = useTypedTranslation();
   const navigate = useNavigate();
   console.log("auth",auth)
@@ -12,8 +13,7 @@ const useLogout = () => {
     onSuccessFn(data) {
       console.log("data from on success", data);
       setAuth(null);
-
-      navigate("/");
+      pathname.includes("instructor") ? navigate("/auth") : navigate("/");
     },
   });
 
