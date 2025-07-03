@@ -51,5 +51,22 @@
   "create_course": "Create Course",
   "course_category":"Course Category",
   "course_level":"Course Level",
-  "primary_language":"Primary Language"
+  "primary_language":"Primary Language",
+  "course_title":"Course Title",
+  "student_name":"Student Name",
+  "student_email":"Student Email",
+  "students_list":"Students List",
+  "all_courses":"All Courses",
+  "create_new_course":"Create new course",
+  "students":"Students",
+  "revenue":"Revenue"
+  ,"actions":"Actions",
+  "course":"Course",
+  "instructor_view":"Instructor View",
+  "dashboard":"Dashboard",
+  "courses":"Courses",
+  "arabic":"Arabic",
+  "english":"English",
+  "both":"Both of them",
+  "student_gender":"Student Gender"
 }

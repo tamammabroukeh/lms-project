@@ -4,11 +4,14 @@ import { Button } from "../ui/button";
 import useLogout from "@/hooks/auth/useLogout";
 import { ReusableButton } from "../Reusable-Components";
 import LanguageSelector from "../LanguageSelector";
+import { useAuthContext } from "@/hooks";
 
 function StudentViewCommonHeader() {
   const navigate = useNavigate();
   const { btnText, handleLoginOrLogout, isLoading } = useLogout();
-
+  const { auth } = useAuthContext()
+  let role = auth?.userData?.role
+  let isTeacher = role === "teacher"
   return (
     <header className="flex items-center justify-between p-4 border-b relative">
       <div className="flex items-center space-x-4">
@@ -31,6 +34,12 @@ function StudentViewCommonHeader() {
             Explore Courses
           </Button>
           <LanguageSelector />
+          {(isTeacher || role === "admin") && <ReusableButton
+            isLoading={false}
+            btnText="My dashboard"
+            onClick={() => navigate(isTeacher ? "/instructor" : "/admin")}
+          />}
+
         </div>
       </div>
       <div className="flex items-center space-x-4">

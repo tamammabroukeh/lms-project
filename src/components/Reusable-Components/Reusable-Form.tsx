@@ -28,11 +28,12 @@ const ReusableForm = <T extends FieldValues>({
         onSubmit={form.handleSubmit(submitHandler)}
       >
         {children}
-        {inputs.map((input) => {
+        {inputs.map((input, index) => {
           const fieldError = errors[input.name as keyof FieldErrors<T>];
           return (
             <ReusableFormItem
               name={input.name}
+              key={index}
               fieldError={fieldError}
               form={form as UseFormReturn}
               input={input}

@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutateData, useTypedTranslation, useSearchParams, useGetCourseCategories, useGetCourseLevels } from "@/hooks";
 import axios from "@/api/axiosInstance";
-import { createCourseRoute, deleteFileAfteruploadingRoute } from "@/api/routes";
+import { createCourseRoute, deleteFileAfteruploadingRoute, editCourseRoute } from "@/api/routes";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { objToFormData } from "@/utils/objToFormData";
@@ -11,15 +11,46 @@ import { CreateCourseSchema, CreateCourseType } from "@/schemas/CreateCourseSche
 import { courseContentInitialObj } from "@/data/course";
 import axiosInstance from "@/api/axiosInstance";
 import { ICategory, ILevel } from "@/interfaces/course";
+import useGetCourseById from "./useGetCourseById";
 const useCreateCourse = () => {
   const { t } = useTypedTranslation();
+  const createCourseSchema = useMemo(() => CreateCourseSchema(t), [t]);
+  
+  const form = useForm<CreateCourseType>({
+    mode: "all",
+    resolver: zodResolver(createCourseSchema),
+    defaultValues: courseContentInitialObj,
+  });
+
+  const course = useGetCourseById(form)?.data
+  // const course = {
+  //     titleCourseEN: data?.title?.en ?? "",
+  //     titleCourseAR:  data?.title?.ar ?? "",
+  //     category: data?.category ?? "",
+  //     level:data?.level ?? "",
+  //     primaryLanguage:data?.primaryLanguage ?? "en",
+  //     subtitleCourseAR: data?.subtitle?.ar ?? "",
+  //     subtitleCourseEN: data?.subtitle?.en ?? "",
+  //     descriptionAR: data?.description?.ar ?? "",
+  //     descriptionEN: data?.description?.en ?? "",
+  //     price: data?.pricing ?? 0,
+  //     objectivesAR: data?.objectives?.ar ?? "",
+  //     objectivesEN: data?.objectives?.en ?? "",
+  //     welcomeMessageAR: data?.welcomeMessage?.ar ?? "",
+  //     welcomeMessageEN: data?.welcomeMessage?.en ?? "",
+  //     coverImage:{
+  //       url: data?.image ?? "",
+  //       resourceType: "",
+  //       public_id: "",
+  //     },
+  //     lectures: data?.curriculum ?? [],
+  // }
   const { setParam, getParam } = useSearchParams();
   const navigate = useNavigate();
   // states
   const [activeTab, setActiveTab] = useState("lectures")
   const [isOpen, setIsOpen] = useState(false)
   const [files, setFiles] = useState([])
-  const [coverImagePreview, setCoverImagePreview] = useState<string>("");
   const [isReplacing, setIsReplacing] = useState(false);
   const [replacingIndex, setReplacingIndex] = useState<number | null>(null);
   const [originalVideoData, setOriginalVideoData] = useState<any>(null)
@@ -30,19 +61,12 @@ const useCreateCourse = () => {
     freePreview: false,
   });
 
-  const createCourseSchema = useMemo(() => CreateCourseSchema(t), [t]);
+  console.log("courseById", course?.data)
 
   function handleTabChange(value: string) {
     setActiveTab(value);
     setIsOpen(false);
   }
-
-  const form = useForm<CreateCourseType>({
-    mode: "all",
-    resolver: zodResolver(createCourseSchema),
-    defaultValues: courseContentInitialObj,
-  });
-
 
   const handleAddLecture = () => {
     setIsOpen(false)
@@ -71,7 +95,18 @@ const useCreateCourse = () => {
     onSuccessFn(data, variables) {
       console.log("data from on success", data);
       console.log("variables from on success", variables);
-      // form.reset();
+      form.reset();
+      navigate("/instructor")
+    },
+  });
+
+  const editCourseMutation = useMutateData({
+    mutationFn: (data) =>
+      axios.patch(`${editCourseRoute}/${course?.data?._id}`, data),
+    onSuccessFn(data, variables) {
+      console.log("data from on success", data);
+      console.log("variables from on success", variables);
+      navigate("/instructor")
     },
   });
 
@@ -188,6 +223,7 @@ const useCreateCourse = () => {
   // })))
   // // console.log("errors", form.formState.errors)
   // // console.log("form", form.getValues())
+  console.log("errors",form.formState.errors)
   const submitHandler: SubmitHandler<CreateCourseType> = async (
     data
   ) => {
@@ -231,6 +267,7 @@ const useCreateCourse = () => {
     console.log("new data", newData)
     // const formData = objToFormData(data);
     const formData = objToFormData(newData);
+    course?.data?._id ? await editCourseMutation.mutateAsync(formData) : 
     await createCourseMutation.mutateAsync(formData);
   };
 
@@ -244,10 +281,14 @@ const useCreateCourse = () => {
 
   return {
     error: createCourseMutation.error,
+    ErrorEdit:editCourseMutation.error,
     isError: createCourseMutation.isError,
+    isErrorEdit: editCourseMutation.isError,
     isLoading: createCourseMutation.isLoading,
-    isLoadingCancel: cancelUploadMutation.isLoading,
+    isLoadingEdit: editCourseMutation.isLoading,
     isSuccess: createCourseMutation.isSuccess,
+    isSuccessEdit: editCourseMutation.isSuccess,
+    isLoadingCancel: cancelUploadMutation.isLoading,
     errors: form.formState.errors,
     submitHandler,
     form,
@@ -265,10 +306,10 @@ const useCreateCourse = () => {
     isReplacing,
     files,
     currentLecture, replacingIndex,
-    lectures: form.getValues().lectures,
+    lectures: course?.data?.curriculum?.map((lecture: any) => ({...lecture, public_id:`${lecture.public_id}`})) ?? form.getValues().lectures,
     isCurrentLectureValid,
-    coverImagePreview, setCoverImagePreview, getParam,
-    image: form.getValues().coverImage!,
+    getParam,
+    image: course?.data?.image ?? form.getValues().coverImage!,
     handleDeleteImage,
     navigate,
     categories,

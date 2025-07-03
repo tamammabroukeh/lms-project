@@ -10,7 +10,7 @@ import ReactPlayer from "react-player";
 
 const CourseLectures = ({ files, handleAddDataToList, setFiles, isOpen, isReplacing, setIsOpen, setCurrentLecture, currentLecture, lectures, handleAddLecture, handleCancelReplace, handleDeleteLecture, handleReplaceVideo, isCurrentLectureValid, replacingIndex, getParam, isLoadingCancel
 }: ICourseLectures) => {
-  const {t} = useTypedTranslation()
+  const { t } = useTypedTranslation()
   return (
     <>
       <ReusableCard
@@ -69,8 +69,8 @@ const CourseLectures = ({ files, handleAddDataToList, setFiles, isOpen, isReplac
             }
             dialogBody={
               // @ts-ignore
-              <FileUploader singleFile={true} 
-              typeFile={{"video/*":[]}}
+              <FileUploader singleFile={true}
+                typeFile={{ "video/*": [] }}
                 parentCallback={setFiles}
                 parentFiles={files}
                 handleCloseUploadFile={() => setIsOpen(false)}
@@ -102,6 +102,7 @@ const CourseLectures = ({ files, handleAddDataToList, setFiles, isOpen, isReplac
         />
         {/* Existing Lectures */}
         {lectures.map((lecture, index) => {
+          console.log("lecture", lecture)
           return <ReusableCard
             styleForCard="shadow-lg"
             titleStyle="text-xl"
@@ -188,7 +189,7 @@ const CourseLectures = ({ files, handleAddDataToList, setFiles, isOpen, isReplac
           // @ts-ignore
           <FileUploader
             singleFile={true}
-            typeFile={{"video/*":[]}}
+            typeFile={{ "video/*": [] }}
             parentCallback={setFiles}
             parentFiles={files}
             handleCloseUploadFile={handleCancelReplace}

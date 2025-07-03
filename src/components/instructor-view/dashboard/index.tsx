@@ -7,12 +7,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useTypedTranslation } from "@/hooks";
 import { DollarSign, Users } from "lucide-react";
 
 // @ts-ignore
 function InstructorDashboard({ listOfCourses }) {
+  console.log("list, ", listOfCourses)
+  const { t } = useTypedTranslation();
   function calculateTotalStudentsAndProfit() {
-    const { totalStudents, totalProfit, studentList } = listOfCourses?.reduce(
+    const result = listOfCourses?.courses?.reduce(
       // @ts-ignore
       (acc, course) => {
         const studentCount = course.students.length;
@@ -22,9 +25,10 @@ function InstructorDashboard({ listOfCourses }) {
         // @ts-ignore
         course.students.forEach((student) => {
           acc.studentList.push({
-            courseTitle: course.title,
-            studentName: student.studentName,
-            studentEmail: student.studentEmail,
+            courseTitle: course.title.en,
+            studentName: student.userName,
+            studentEmail: student.userEmail,
+            studentGender: student.gender,
           });
         });
 
@@ -36,26 +40,21 @@ function InstructorDashboard({ listOfCourses }) {
         studentList: [],
       }
     );
-
-    return {
-      totalProfit,
-      totalStudents,
-      studentList,
-    };
+    return result
   }
 
-  console.log(calculateTotalStudentsAndProfit());
+  console.log("calculateTotalStudentsAndProfit", calculateTotalStudentsAndProfit());
 
   const config = [
     {
       icon: Users,
       label: "Total Students",
-      value: calculateTotalStudentsAndProfit().totalStudents,
+      value: calculateTotalStudentsAndProfit()?.totalStudents,
     },
     {
       icon: DollarSign,
       label: "Total Revenue",
-      value: calculateTotalStudentsAndProfit().totalProfit,
+      value: calculateTotalStudentsAndProfit()?.totalProfit,
     },
   ];
 
@@ -78,20 +77,21 @@ function InstructorDashboard({ listOfCourses }) {
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>Students List</CardTitle>
+          <CardTitle>{t("course:students_list")}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
             <Table className="w-full">
               <TableHeader>
                 <TableRow>
-                  <TableHead>Course Name</TableHead>
-                  <TableHead>Student Name</TableHead>
-                  <TableHead>Student Email</TableHead>
+                  <TableHead>{t("course:course_title")}</TableHead>
+                  <TableHead>{t("course:student_name")}</TableHead>
+                  <TableHead>{t("course:student_email")}</TableHead>
+                  <TableHead>{t("course:student_gender")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {calculateTotalStudentsAndProfit().studentList.map(
+                {calculateTotalStudentsAndProfit()?.studentList.map(
                   // @ts-ignore
                   (studentItem, index) => (
                     <TableRow key={index}>
@@ -100,6 +100,7 @@ function InstructorDashboard({ listOfCourses }) {
                       </TableCell>
                       <TableCell>{studentItem.studentName}</TableCell>
                       <TableCell>{studentItem.studentEmail}</TableCell>
+                      <TableCell>{studentItem.studentGender}</TableCell>
                     </TableRow>
                   )
                 )}
