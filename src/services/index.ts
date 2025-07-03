@@ -215,3 +215,11 @@ export async function coursePublishStats(
   return data;
 }
 
+export async function usersDashboardData(
+
+) {
+  const { data } = await axiosInstance.get(
+    `/admin/dashboard-users`
+  );
+  return data;
+}

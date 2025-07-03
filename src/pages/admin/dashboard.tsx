@@ -1,8 +1,8 @@
 import { adminDashboardTotals, userGrowth, coursePublishStats } from '@/services';
-import { DataCard } from '../../components/admin-view/dashboard/DataCard';
-import { BarChart } from '../../components/charts/BarChart';
-import { PieChart } from '../../components/charts/PieChart';
-import { useTypedTranslation } from '../../hooks'; // Keep useLocalStorage as it was in the original
+import { DataCard } from '@/components/admin-view/dashboard/DataCard';
+import { BarChart } from '@/components/charts/BarChart';
+import { PieChart } from '@/components/charts/PieChart';
+import { useTypedTranslation } from '@/hooks'; // Keep useLocalStorage as it was in the original
 import { useEffect, useState } from 'react';
 
 
@@ -44,7 +44,7 @@ export default function AdminDashboardPage() {
 
                 if (growthResponse) {
                     const formattedGrowthData = growthResponse.map(item => ({
-                        name: t(`admin:${item.month.toLowerCase().slice(0, 3)}`),
+                        name: `${item.month.toLowerCase().slice(0, 3)}`,
                         value: item.count,
                     }));
                     setUserGrowthData(formattedGrowthData);
@@ -52,7 +52,7 @@ export default function AdminDashboardPage() {
 
                 if (courseStatsResponse) {
                     const formattedCourseData = courseStatsResponse.map(item => ({
-                        name: t(`admin:${item.status.toLowerCase()}`),
+                        name: `admin:${item.status.toLowerCase()}`,
                         value: item.count,
                     }));
                     setCourseDistributionData(formattedCourseData);
@@ -118,7 +118,7 @@ export default function AdminDashboardPage() {
                 <h2 className="text-lg font-semibold mb-4">{t('admin:keyMetrics')}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
                     <DataCard title={t('admin:totalUsers')} value={metrics.totalUsers} />
-                    <DataCard title={t('admin:insturctors')} value={metrics.totalTeachers} />
+                    <DataCard title={t('admin:instructors')} value={metrics.totalTeachers} />
                     <DataCard title={t('admin:enrollments')} value={metrics.totalStudents} />
                     <DataCard title={t('admin:courses')} value={metrics.totalCourses} />
                     <DataCard title={t('admin:revenue')} value={metrics.totalRevenue} />
