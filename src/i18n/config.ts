@@ -10,6 +10,10 @@ import arHome from "./ar/home.json";
 // errors
 import enErrors from "./en/errors.json";
 import arErrors from "./ar/errors.json";
+//admin-dashboard
+import enAdmin from "./en/admin.json";
+import arAdmin from "./ar/admin.json";
+
 // course
 import enCourse from "./en/course.json";
 import arCourse from "./ar/course.json";
@@ -18,13 +22,15 @@ const resources = {
     auth: enAuth,
     home: enHome,
     errors: enErrors,
-    course:enCourse
+    course:enCourse,
+    admin:enAdmin,
   },
   ar: {
     auth: arAuth,
     home: arHome,
     errors: arErrors,
     course: arCourse,
+    admin:arAdmin,
   },
 } as const;
 

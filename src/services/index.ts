@@ -187,3 +187,31 @@ export async function resetCourseProgressService(
 
   return data;
 }
+
+export async function adminDashboardTotals(
+
+) {
+  const { data } = await axiosInstance.get(
+    `/user/stats`
+  );
+  return data;
+}
+
+export async function userGrowth(
+
+) {
+  const { data } = await axiosInstance.get(
+    `/user/stats/growth`
+  );
+  return data;
+}
+
+export async function coursePublishStats(
+
+) {
+  const { data } = await axiosInstance.get(
+    `/course/stats/publication-status`
+  );
+  return data;
+}
+
