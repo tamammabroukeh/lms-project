@@ -21,7 +21,7 @@ export default function AdminUsersPage() {
     status: i % 4 === 0 ? 'Inactive' : 'Active',
   }));
 
-  const filteredUsers = users.filter(user => 
+  const filteredUsers = users.filter(user =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -79,19 +79,17 @@ export default function AdminUsersPage() {
                 <TableCell className="font-medium">{user.name}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>
-                  <span className={`px-2 py-1 rounded-full text-xs ${
-                    user.role === 'Admin' ? 'bg-blue-100 text-blue-800' :
-                    user.role === 'Instructor' ? 'bg-purple-100 text-purple-800' :
-                    'bg-green-100 text-green-800'
-                  }`}>
+                  <span className={`px-2 py-1 rounded-full text-xs ${user.role === 'Admin' ? 'bg-blue-100 text-blue-800' :
+                      user.role === 'Instructor' ? 'bg-purple-100 text-purple-800' :
+                        'bg-green-100 text-green-800'
+                    }`}>
                     {user.role}
                   </span>
                 </TableCell>
                 <TableCell>{user.joined}</TableCell>
                 <TableCell>
-                  <span className={`px-2 py-1 rounded-full text-xs ${
-                    user.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                  }`}>
+                  <span className={`px-2 py-1 rounded-full text-xs ${user.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                    }`}>
                     {user.status}
                   </span>
                 </TableCell>
@@ -123,22 +121,22 @@ export default function AdminUsersPage() {
       <Pagination>
         <PaginationContent>
           <PaginationItem>
-            <PaginationPrevious 
-              onClick={() => setCurrentPage(p => Math.max(1, p - 1))} 
-              disabled={currentPage === 1}
+            <PaginationPrevious
+              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+              hidden={currentPage === 1}
             />
           </PaginationItem>
-          
+
           <PaginationItem>
             <span className="text-sm">
               Page {currentPage} of {pageCount}
             </span>
           </PaginationItem>
-          
+
           <PaginationItem>
-            <PaginationNext 
-              onClick={() => setCurrentPage(p => Math.min(pageCount, p + 1))} 
-              disabled={currentPage === pageCount}
+            <PaginationNext
+              onClick={() => setCurrentPage(p => Math.min(pageCount, p + 1))}
+              hidden={currentPage === pageCount}
             />
           </PaginationItem>
         </PaginationContent>

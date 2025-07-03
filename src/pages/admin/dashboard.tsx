@@ -19,7 +19,7 @@ export default function AdminDashboardPage() {
     const [courseDistributionData, setCourseDistributionData] = useState<{ name: string; value: number }[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    
+
     useEffect(() => {
         const fetchDashboardData = async () => {
             try {
@@ -43,7 +43,7 @@ export default function AdminDashboardPage() {
                 }
 
                 if (growthResponse) {
-                    const formattedGrowthData = growthResponse.map(item => ({
+                    const formattedGrowthData = growthResponse.map((item: any) => ({
                         name: t(`admin:${item.month.toLowerCase().slice(0, 3)}`),
                         value: item.count,
                     }));
@@ -51,7 +51,7 @@ export default function AdminDashboardPage() {
                 }
 
                 if (courseStatsResponse) {
-                    const formattedCourseData = courseStatsResponse.map(item => ({
+                    const formattedCourseData = courseStatsResponse.map((item: any) => ({
                         name: t(`admin:${item.status.toLowerCase()}`),
                         value: item.count,
                     }));
