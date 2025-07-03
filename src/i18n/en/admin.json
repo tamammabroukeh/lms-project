@@ -1,5 +1,4 @@
 {
-    "admin": {
       "jan": "Jan",
       "feb": "Feb",
       "mar": "Mar",
@@ -25,6 +24,5 @@
       "time": "Time",
       "newCourseCreated": "New course created",
       "userRegistered": "User registered",
-      "courseEnrollment": "Course enrollment"
-    }
-  }
+      "courseEnrollment": "Course enrollment",
+}

@@ -29,7 +29,7 @@ type AdminKeys = NestedKeyOf<typeof adminEn>;
 type CourseKeys = NestedKeyOf<typeof courseEn>;
 
 // Create union type for all possible keys
-type TranslationKeys =
+export type TranslationKeys =
   | `auth:${AuthKeys}`
   | `home:${HomeKeys}`
   | `errors:${ErrorKeys}`
