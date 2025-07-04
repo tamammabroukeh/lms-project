@@ -1,9 +1,9 @@
 import { ICourse } from "@/interfaces/course";
 
-export default function Course({course:{level,category,image, pricing,instructorName,title}}:{course:ICourse}) {
+export default function Course({ onClick, course: { level, category, image, pricing, instructorName, title, } }: { course: ICourse; onClick: () => void }) {
     return (
         <div
-            // onClick={() => handleCourseNavigate(courseItem?._id)}
+            onClick={onClick}
             className="border rounded-lg overflow-hidden shadow cursor-pointer"
         >
             <img
@@ -15,12 +15,12 @@ export default function Course({course:{level,category,image, pricing,instructor
             <div className="p-4">
                 <h3 className="font-bold mb-2">{title}</h3>
                 <div className="flex justify-between">
-                <p className="text-sm text-gray-700 mb-2">
-                    {instructorName}
-                </p>
-                <p className="text-sm text-gray-700 mb-2">
-                    {level.en}
-                </p>
+                    <p className="text-sm text-gray-700 mb-2">
+                        {instructorName}
+                    </p>
+                    <p className="text-sm text-gray-700 mb-2">
+                        {level.en}
+                    </p>
                 </div>
                 <div className="flex justify-between">
                     <p className="font-bold text-[16px]">

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Search, Filter, MoreVertical, Edit, Trash2 } from 'lucide-react';
+// import { Search, Filter, MoreVertical, Edit, Trash2 } from 'lucide-react';
+import { Search, Filter, MoreVertical } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Table, TableHeader, TableHead, TableBody, TableRow, TableCell } from '@/components/ui/table';
@@ -80,8 +81,8 @@ export default function AdminUsersPage() {
       <div className="flex items-center justify-center h-64">
         <div className="text-center text-red-500">
           {error}
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             className="mt-4"
             onClick={() => {
               setError('');
@@ -154,18 +155,16 @@ export default function AdminUsersPage() {
                   <TableCell className="font-medium">{user.userName}</TableCell>
                   <TableCell>{user.userEmail}</TableCell>
                   <TableCell>
-                    <span className={`px-2 py-1 rounded-full text-xs ${
-                      user.role === 'admin' ? 'bg-blue-100 text-blue-800' :
-                      user.role === 'instructor' ? 'bg-purple-100 text-purple-800' :
-                      'bg-green-100 text-green-800'
-                    }`}>
+                    <span className={`px-2 py-1 rounded-full text-xs ${user.role === 'admin' ? 'bg-blue-100 text-blue-800' :
+                        user.role === 'instructor' ? 'bg-purple-100 text-purple-800' :
+                          'bg-green-100 text-green-800'
+                      }`}>
                       {t(`admin:roles.${user.role}` as TranslationKeys)}
                     </span>
                   </TableCell>
                   <TableCell>
-                    <span className={`px-2 py-1 rounded-full text-xs ${
-                      user.isAccountverified ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                    }`}>
+                    <span className={`px-2 py-1 rounded-full text-xs ${user.isAccountverified ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                      }`}>
                       {user.isAccountverified ? t('admin:verified') : t('admin:notVerified')}
                     </span>
                   </TableCell>
@@ -215,8 +214,8 @@ export default function AdminUsersPage() {
             </PaginationItem>
 
             <PaginationItem>
-              <PaginationNext 
-                onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))} 
+              <PaginationNext
+                onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
               />
             </PaginationItem>
           </PaginationContent>

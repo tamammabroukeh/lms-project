@@ -14,6 +14,7 @@ export default function PersistLogin() {
 
   const refreshMutation = useMutateData({
     mutationFn: () => axios.get(refreshRoute),
+    
     onSuccessFn(data, variables) {
       console.log("variables", variables);
       console.log("data", data);

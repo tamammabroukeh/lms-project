@@ -41,20 +41,20 @@ function StudentHomePage() {
   //   if (response?.success) setStudentViewCoursesList(response?.data);
   // }
 
-  // async function handleCourseNavigate(getCurrentCourseId) {
-  //   const response = await checkCoursePurchaseInfoService(
-  //     getCurrentCourseId,
-  //     auth?.user?._id
-  //   );
+  function handleCourseNavigate(getCurrentCourseId: string) {
+    // const response = await checkCoursePurchaseInfoService(
+    //   getCurrentCourseId,
+    //   auth?.user?._id
+    // );
 
-  //   if (response?.success) {
-  //     if (response?.data) {
-  //       navigate(`/course-progress/${getCurrentCourseId}`);
-  //     } else {
-  //       navigate(`/course/details/${getCurrentCourseId}`);
-  //     }
-  //   }
-  // }
+    // if (response?.success) {
+    // if (response?.data) {
+    // navigate(`/course-progress/${getCurrentCourseId}`);
+    // } else {
+    navigate(`/course/details/${getCurrentCourseId}`);
+    // }
+    // }
+  }
 
   // useEffect(() => {
   //   fetchAllStudentViewCourses();
@@ -84,7 +84,7 @@ function StudentHomePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {data?.data && data?.data?.courses && data?.data?.courses?.length > 0 ? (
             data?.data?.courses?.map((course: ICourse) => (
-              <Course {...{ course }} />
+              <Course {...{ course }} onClick={() => handleCourseNavigate(course?._id)} />
             ))
           ) : (
             <h1>No Courses Found</h1>

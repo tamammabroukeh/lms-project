@@ -112,6 +112,7 @@ export type UseMutateDataOptions<
   mutationKey?: MutationKey;
   invalidateKeys?: InvalidateQueryFilters[]; // QueryKey[] is valid for invalidation
   displaySuccess?: boolean; // Whether to display a success message
+  displayError?: boolean; // Whether to display a error message
   navigateToPath?: string; // Path to navigate after success
   onSuccessFn?: (data: TData, variables: TVariables) => void; // Custom onSuccess handler
   onErrorFn?: (errorMessage: TError, variables: TVariables) => void; // Custom onError handler
