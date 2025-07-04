@@ -12,7 +12,7 @@ import { DataCard } from '@/components/admin-view/dashboard/DataCard';
 
 export default function AdminAnalyticsPage() {
     const { t } = useTypedTranslation();
-    const [timeRange, setTimeRange] = useState('last_month');
+    // const [timeRange] = useState('last_month');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -99,7 +99,7 @@ export default function AdminAnalyticsPage() {
         };
 
         fetchAnalyticsData();
-    }, [timeRange, t]);
+    }, [t]);
 
     if (loading) {
         return (
