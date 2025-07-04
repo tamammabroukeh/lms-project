@@ -57,7 +57,7 @@ export default function AdminAnalyticsPage() {
                 // Set other data
                 if (userGrowthResponse) {
                     setUserGrowthData(
-                        userGrowthResponse.map((item) => ({
+                        userGrowthResponse.map((item: { month: string; count: any; }) => ({
                             name: t(`admin:${item.month.toLowerCase()}` as TranslationKeys),
                             value: item.count,
                         }))
@@ -75,7 +75,7 @@ export default function AdminAnalyticsPage() {
 
                 if (courseDistResponse) {
                     setCourseDistribution(
-                        courseDistResponse.map((item) => ({
+                        courseDistResponse.map((item: { status: string; count: any; }) => ({
                             name: t(`admin:${item.status.toLowerCase()}` as TranslationKeys),
                             value: item.count,
                         }))

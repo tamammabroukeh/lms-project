@@ -19,13 +19,6 @@ type User = {
   createdAt?: string;
 };
 
-type UsersData = {
-  users: User[];
-  total: number;
-  page: number;
-  limit: number;
-  totalPages: number;
-};
 
 export default function AdminUsersPage() {
   const { t } = useTypedTranslation();
