@@ -199,7 +199,7 @@ export default function AdminCoursesPage() {
                                 </CardContent>
 
                                 <CardFooter className="pt-4 pb-2">
-                                    <Button variant="destructive" size="sm" className="gap-2 w-full">
+                                    <Button variant="destructive" size="sm" className="gap-2 mb-2">
                                         <Trash2 className="h-4 w-4" />
                                         {t('admin:delete')}
                                     </Button>
