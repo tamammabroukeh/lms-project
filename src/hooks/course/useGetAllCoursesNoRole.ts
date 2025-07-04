@@ -10,7 +10,7 @@ const useGetAllCoursesNoRole = () => {
   const [page, setPage] = useState<number>(Number(currentPage) ?? 1);
   const {data, isError, error, isFetching, isLoading, isSuccess} = useFetchData({
     queryKey: ["getCoursesNoRole", page], // dynamic queryKey
-    queryFn: () => axios.get(`${courseRoute}/all-no-filter?page=${page}`), // pass page param
+    queryFn: () => axios.get(`${courseRoute}/all-filter?sortBy=title-atoz&page=${page}`), // pass page param
     keepPreviousData: true,
     onSuccessFn(data) {
       console.log("get courses", data);
