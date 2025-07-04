@@ -17,6 +17,10 @@ import arAdmin from "./ar/admin.json";
 // course
 import enCourse from "./en/course.json";
 import arCourse from "./ar/course.json";
+
+import enCommon from "./en/common.json";
+import arCommon from "./ar/common.json";
+
 const resources = {
   en: {
     auth: enAuth,
@@ -24,6 +28,7 @@ const resources = {
     errors: enErrors,
     course:enCourse,
     admin:enAdmin,
+    common:enCommon,
   },
   ar: {
     auth: arAuth,
@@ -31,6 +36,7 @@ const resources = {
     errors: arErrors,
     course: arCourse,
     admin:arAdmin,
+    common:arCommon,
   },
 } as const;
 

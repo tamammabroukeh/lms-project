@@ -8,10 +8,10 @@ const useGetAllCoursesNoRole = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const currentPage = searchParams.get("page")
   const [page, setPage] = useState<number>(Number(currentPage) ?? 1);
-  const {data,isError,error,isFetching,isLoading,isSuccess} = useFetchData({
-		queryKey: ["getCoursesNoRole"],
-    queryFn: () => axios.get(`${courseRoute}/all-no-filter`),
-    keepPreviousData:true,
+  const {data, isError, error, isFetching, isLoading, isSuccess} = useFetchData({
+    queryKey: ["getCoursesNoRole", page], // dynamic queryKey
+    queryFn: () => axios.get(`${courseRoute}/all-no-filter?page=${page}`), // pass page param
+    keepPreviousData: true,
     onSuccessFn(data) {
       console.log("get courses", data);
     },
@@ -19,6 +19,7 @@ const useGetAllCoursesNoRole = () => {
       console.log("errorMessage", errorMessage);
     },
   });
+  
 
   let pagesArray: number[];
   pagesArray = Array(page)

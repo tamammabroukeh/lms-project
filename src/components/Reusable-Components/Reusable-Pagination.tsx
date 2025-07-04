@@ -102,6 +102,7 @@ import {
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 interface IPagination {
   currentPage: number;
   totalPages: number;
@@ -118,7 +119,6 @@ export default function ReusablePagination({
   setSearchParams,
 }: IPagination) {
   const navigate = useNavigate();
-
   const handlePageChange = (newPage: number) => {
     if (newPage < 1 || newPage > totalPages) return;
     setPage(newPage);
