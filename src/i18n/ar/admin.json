@@ -1,5 +1,4 @@
 {
-    "adminPanel": "لوحة القيادة",
     "published": "منشور",
     "unpublished": "غير منشور",
     "draft": "مسودة",
@@ -24,23 +23,61 @@
     "newCourseCreated": "تم إنشاء دورة جديدة",
     "userRegistered": "تم تسجيل مستخدم",
     "courseEnrollment": "تسجيل الدورة",
+    "retry": "إعادة المحاولة",
+    "filters": "الفلاتر",
+    "verified": "مفعل",
+    "notVerified": "غير مفعل",
+    "actionsDisabled": "الإجراءات معطلة",
+    "noResultsFound": "لا توجد نتائج مطابقة لبحثك",
+    "pageInfo": "الصفحة {{current}} من {{total}}",
+    "platformAnalytics": "تحليلات المنصة",
+    "detailedInsights": "رؤى ومقاييس مفصلة",
+    "revenueTrends": "اتجاهات الإيرادات",
+    "userDistribution": "توزيع المستخدمين",
+    "students": "الطلاب",
+    "admins": "المدراء",
+    "january": "يناير",
+    "february": "فبراير",
+    "march": "مارس",
+    "april": "أبريل",
+    "may": "مايو",
+    "june": "يونيو",
+    "july": "يوليو",
+    "august": "أغسطس",
+    "september": "سبتمبر",
+    "october": "أكتوبر",
+    "november": "نوفمبر",
+    "december": "ديسمبر",
+    "delete": "حذف",
+    "by": "بواسطة",
+    "previous": "السابق",
+    "next": "التالي",
+    "courseManagement": {
+        "title": "إدارة الدورات",
+        "subtitle": "إدارة جميع دورات المنصة",
+        "createCourse": "إنشاء دورة جديدة",
+        "searchPlaceholder": "ابحث عن الدورات...",
+        "fetchError": "فشل تحميل بيانات الدورات. يرجى المحاولة مرة أخرى لاحقًا.",
+        "unpublished": "غير منشور",
+        "uncategorized": "غير مصنف"
+    },
     "userManagement": {
-      "title": "إدارة المستخدمين",
-      "subtitle": "إدارة جميع مستخدمي المنصة",
-      "addUser": "إضافة مستخدم جديد",
-      "searchPlaceholder": "ابحث عن المستخدمين...",
-      "fetchError": "فشل تحميل بيانات المستخدمين. يرجى المحاولة مرة أخرى لاحقًا.",
-      "columns": {
-        "user": "المستخدم",
-        "email": "البريد الإلكتروني",
-        "role": "الدور",
-        "verified": "مفعل",
-        "actions": "الإجراءات"
-      }
+        "title": "إدارة المستخدمين",
+        "subtitle": "إدارة جميع مستخدمي المنصة",
+        "addUser": "إضافة مستخدم جديد",
+        "searchPlaceholder": "ابحث عن المستخدمين...",
+        "fetchError": "فشل تحميل بيانات المستخدمين. يرجى المحاولة مرة أخرى لاحقًا.",
+        "columns": {
+            "user": "المستخدم",
+            "email": "البريد الإلكتروني",
+            "role": "الدور",
+            "verified": "مفعل",
+            "actions": "الإجراءات"
+        }
     },
     "roles": {
-      "admin": "مدير",
-      "teacher": "مدرس",
-      "student": "طالب"
+        "admin": "مدير",
+        "instructor": "مدرس",
+        "student": "طالب"
     }
-  }
+}

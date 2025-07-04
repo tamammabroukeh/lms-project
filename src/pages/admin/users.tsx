@@ -8,8 +8,8 @@ import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, Pagi
 import { usersDashboardData } from '@/services';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useTypedTranslation } from '@/hooks';
+import { TranslationKeys } from '@/hooks/language/useTypedTranslation';
 
-// Define types for user data
 type User = {
   _id: string;
   userName: string;
@@ -52,9 +52,9 @@ export default function AdminUsersPage() {
         setLoading(true);
         const data = await usersDashboardData();
         setAllUsers(data.users);
-        setFilteredUsers(data.users); // Initialize filtered users with all users
+        setFilteredUsers(data.users);
       } catch (err) {
-        setError('Failed to fetch users. Please try again later.');
+        setError(t('admin:userManagement.fetchError'));
         console.error('Error fetching users:', err);
       } finally {
         setLoading(false);
@@ -62,10 +62,9 @@ export default function AdminUsersPage() {
     };
 
     fetchUsers();
-  }, []);
+  }, [t]);
 
   useEffect(() => {
-    // Filter users based on search term
     if (searchTerm.trim() === '') {
       setFilteredUsers(allUsers);
     } else {
@@ -76,7 +75,6 @@ export default function AdminUsersPage() {
       );
       setFilteredUsers(filtered);
     }
-    // Reset to first page when search term changes
     setCurrentPage(1);
   }, [searchTerm, allUsers]);
 
@@ -97,7 +95,7 @@ export default function AdminUsersPage() {
               setCurrentPage(1);
             }}
           >
-            Retry
+            {t('admin:retry')}
           </Button>
         </div>
       </div>
@@ -108,11 +106,11 @@ export default function AdminUsersPage() {
     <div className="space-y-6">
       <header className="flex flex-col sm:flex-row justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold">User Management</h1>
-          <p className="text-gray-600">Manage all platform users</p>
+          <h1 className="text-2xl font-bold">{t('admin:userManagement.title')}</h1>
+          <p className="text-gray-600">{t('admin:userManagement.subtitle')}</p>
         </div>
         <Button className="bg-black text-white hover:bg-gray-800">
-          Add New User
+          {t('admin:userManagement.addUser')}
         </Button>
       </header>
 
@@ -121,7 +119,7 @@ export default function AdminUsersPage() {
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
           <Input
             type="text"
-            placeholder="Search users..."
+            placeholder={t('admin:userManagement.searchPlaceholder')}
             className="pl-10"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -129,7 +127,7 @@ export default function AdminUsersPage() {
         </div>
         <Button variant="outline" className="border-gray-300">
           <Filter className="mr-2" size={16} />
-          Filters
+          {t('admin:filters')}
         </Button>
       </div>
 
@@ -137,11 +135,11 @@ export default function AdminUsersPage() {
         <Table>
           <TableHeader className="bg-gray-50">
             <TableRow>
-              <TableHead>User</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Role</TableHead>
-              <TableHead>Verified</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
+              <TableHead>{t('admin:userManagement.columns.user')}</TableHead>
+              <TableHead>{t('admin:userManagement.columns.email')}</TableHead>
+              <TableHead>{t('admin:userManagement.columns.role')}</TableHead>
+              <TableHead>{t('admin:userManagement.columns.verified')}</TableHead>
+              <TableHead className="text-right">{t('admin:userManagement.columns.actions')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -168,14 +166,14 @@ export default function AdminUsersPage() {
                       user.role === 'instructor' ? 'bg-purple-100 text-purple-800' :
                       'bg-green-100 text-green-800'
                     }`}>
-                      {user.role}
+                      {t(`admin:roles.${user.role}` as TranslationKeys)}
                     </span>
                   </TableCell>
                   <TableCell>
                     <span className={`px-2 py-1 rounded-full text-xs ${
                       user.isAccountverified ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
                     }`}>
-                      {user.isAccountverified ? 'Verified' : 'Not Verified'}
+                      {user.isAccountverified ? t('admin:verified') : t('admin:notVerified')}
                     </span>
                   </TableCell>
                   <TableCell className="text-right">
@@ -186,17 +184,8 @@ export default function AdminUsersPage() {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
-                        {/* Commented out actions for now */}
-                        {/* <DropdownMenuItem className="cursor-pointer">
-                          <Edit className="mr-2" size={14} />
-                          Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer text-red-600">
-                          <Trash2 className="mr-2" size={14} />
-                          Delete
-                        </DropdownMenuItem> */}
                         <DropdownMenuItem className="cursor-pointer text-gray-400">
-                          Actions disabled
+                          {t('admin:actionsDisabled')}
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -206,7 +195,7 @@ export default function AdminUsersPage() {
             ) : (
               <TableRow>
                 <TableCell colSpan={5} className="text-center py-8 text-gray-500">
-                  No users found matching your search criteria
+                  {t('admin:noResultsFound')}
                 </TableCell>
               </TableRow>
             )}
@@ -225,7 +214,10 @@ export default function AdminUsersPage() {
 
             <PaginationItem>
               <span className="text-sm">
-                Page {currentPage} of {totalPages}
+                {t(`admin:pageInfo`, {
+                  current: currentPage,
+                  total: totalPages
+                })}
               </span>
             </PaginationItem>
 

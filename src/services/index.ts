@@ -173,3 +173,24 @@ export async function revenueAnalytics() {
   const { data } = await axiosInstance.get(`/admin/revenue-trends`);
   return data;
 }
+
+// services/courseService.ts
+export async function getAllCourses(
+  page: number = 1,
+  limit: number = 10,
+  filters?: {
+    search?: string;
+    categoryId?: string;
+    instructorId?: string;
+    isPublished?: boolean;
+  }
+) {
+  const { data } = await axiosInstance.get(`/admin/courses`, {
+    params: {
+      page,
+      limit,
+      ...filters
+    }
+  });
+  return data;
+}
