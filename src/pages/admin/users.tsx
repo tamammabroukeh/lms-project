@@ -9,34 +9,50 @@ import { usersDashboardData } from '@/services';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useTypedTranslation } from '@/hooks';
 
+// Define types for user data
+type User = {
+  _id: string;
+  userName: string;
+  userEmail: string;
+  role: 'admin' | 'instructor' | 'student';
+  isAccountverified: boolean;
+  createdAt?: string;
+};
+
+type UsersData = {
+  users: User[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+};
+
 export default function AdminUsersPage() {
-  const {t} = useTypedTranslation();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [usersData, setUsersData] = useState({
-    users: [],
-    total: 0,
-    page: 1,
-    limit: 8,
-    totalPages: 1
-  });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const { t } = useTypedTranslation();
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [allUsers, setAllUsers] = useState<User[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>('');
 
   const itemsPerPage = 8;
+
+  // Calculate pagination values
+  const totalUsers = filteredUsers.length;
+  const totalPages = Math.ceil(totalUsers / itemsPerPage);
+  const paginatedUsers = filteredUsers.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         setLoading(true);
         const data = await usersDashboardData();
-        setUsersData({
-          users: data.users,
-          total: data.total,
-          page: data.page,
-          limit: data.limit,
-          totalPages: data.totalPages
-        });
+        setAllUsers(data.users);
+        setFilteredUsers(data.users); // Initialize filtered users with all users
       } catch (err) {
         setError('Failed to fetch users. Please try again later.');
         console.error('Error fetching users:', err);
@@ -45,18 +61,24 @@ export default function AdminUsersPage() {
       }
     };
 
-    // Add debounce for search to prevent too many API calls
-    const debounceTimer = setTimeout(() => {
-      fetchUsers();
-    }, 300);
+    fetchUsers();
+  }, []);
 
-    return () => clearTimeout(debounceTimer);
-  }, [searchTerm, currentPage]);
-
-  const filteredUsers = users.filter(user =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.email.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  useEffect(() => {
+    // Filter users based on search term
+    if (searchTerm.trim() === '') {
+      setFilteredUsers(allUsers);
+    } else {
+      const filtered = allUsers.filter(user =>
+        user.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.userEmail.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.role.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredUsers(filtered);
+    }
+    // Reset to first page when search term changes
+    setCurrentPage(1);
+  }, [searchTerm, allUsers]);
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
@@ -102,10 +124,7 @@ export default function AdminUsersPage() {
             placeholder="Search users..."
             className="pl-10"
             value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-              setCurrentPage(1); // Reset to first page when searching
-            }}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
         <Button variant="outline" className="border-gray-300">
@@ -126,73 +145,98 @@ export default function AdminUsersPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {currentUsers.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell className="font-medium">{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-                <TableCell>
-                  <span className={`px-2 py-1 rounded-full text-xs ${user.role === 'Admin' ? 'bg-blue-100 text-blue-800' :
-                      user.role === 'Instructor' ? 'bg-purple-100 text-purple-800' :
-                        'bg-green-100 text-green-800'
+            {loading ? (
+              Array.from({ length: 5 }).map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell><Skeleton className="h-4 w-32" /></TableCell>
+                  <TableCell><Skeleton className="h-4 w-48" /></TableCell>
+                  <TableCell><Skeleton className="h-4 w-24" /></TableCell>
+                  <TableCell><Skeleton className="h-4 w-20" /></TableCell>
+                  <TableCell className="text-right">
+                    <Skeleton className="h-8 w-8 rounded-full" />
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : paginatedUsers.length > 0 ? (
+              paginatedUsers.map((user: User) => (
+                <TableRow key={user._id}>
+                  <TableCell className="font-medium">{user.userName}</TableCell>
+                  <TableCell>{user.userEmail}</TableCell>
+                  <TableCell>
+                    <span className={`px-2 py-1 rounded-full text-xs ${
+                      user.role === 'admin' ? 'bg-blue-100 text-blue-800' :
+                      user.role === 'instructor' ? 'bg-purple-100 text-purple-800' :
+                      'bg-green-100 text-green-800'
                     }`}>
-                    {user.role}
-                  </span>
-                </TableCell>
-                <TableCell>{user.joined}</TableCell>
-                <TableCell>
-                  <span className={`px-2 py-1 rounded-full text-xs ${user.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                      {user.role}
+                    </span>
+                  </TableCell>
+                  <TableCell>
+                    <span className={`px-2 py-1 rounded-full text-xs ${
+                      user.isAccountverified ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
                     }`}>
-                    {user.status}
-                  </span>
-                </TableCell>
-                <TableCell className="text-right">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon">
-                        <MoreVertical size={16} />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem className="cursor-pointer">
-                        <Edit className="mr-2" size={14} />
-                        Edit
-                      </DropdownMenuItem>
-                      <DropdownMenuItem className="cursor-pointer text-red-600">
-                        <Trash2 className="mr-2" size={14} />
-                        Delete
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                      {user.isAccountverified ? 'Verified' : 'Not Verified'}
+                    </span>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="icon">
+                          <MoreVertical size={16} />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        {/* Commented out actions for now */}
+                        {/* <DropdownMenuItem className="cursor-pointer">
+                          <Edit className="mr-2" size={14} />
+                          Edit
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="cursor-pointer text-red-600">
+                          <Trash2 className="mr-2" size={14} />
+                          Delete
+                        </DropdownMenuItem> */}
+                        <DropdownMenuItem className="cursor-pointer text-gray-400">
+                          Actions disabled
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={5} className="text-center py-8 text-gray-500">
+                  No users found matching your search criteria
                 </TableCell>
               </TableRow>
-            ))}
+            )}
           </TableBody>
         </Table>
       </div>
 
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-              hidden={currentPage === 1}
-            />
-          </PaginationItem>
+      {!loading && filteredUsers.length > 0 && (
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+              />
+            </PaginationItem>
 
-          <PaginationItem>
-            <span className="text-sm">
-              Page {currentPage} of {usersData.totalPages}
-            </span>
-          </PaginationItem>
+            <PaginationItem>
+              <span className="text-sm">
+                Page {currentPage} of {totalPages}
+              </span>
+            </PaginationItem>
 
-          <PaginationItem>
-            <PaginationNext
-              onClick={() => setCurrentPage(p => Math.min(pageCount, p + 1))}
-              hidden={currentPage === pageCount}
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+            <PaginationItem>
+              <PaginationNext 
+                onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))} 
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { adminDashboardTotals, userGrowth, coursePublishStats } from '@/services';
+import { adminDashboardTotals, userGrowthAnalytics, coursePublishStats } from '@/services';
 import { DataCard } from '@/components/admin-view/dashboard/DataCard';
 import { BarChart } from '@/components/charts/BarChart';
 import { PieChart } from '@/components/charts/PieChart';
@@ -6,9 +6,8 @@ import { useTypedTranslation } from '@/hooks'; // Keep useLocalStorage as it was
 import { useEffect, useState } from 'react';
 import { TranslationKeys } from '@/hooks/language/useTypedTranslation';
 
-
 export default function AdminDashboardPage() {
-    const { t, } = useTypedTranslation(); // Initialize the translation hook
+    const { t } = useTypedTranslation(); // Initialize the translation hook
     const [metrics, setMetrics] = useState({
         totalUsers: 0,
         totalTeachers: 0,
@@ -29,7 +28,7 @@ export default function AdminDashboardPage() {
 
                 const [totalsResponse, growthResponse, courseStatsResponse] = await Promise.all([
                     adminDashboardTotals(),
-                    userGrowth(),
+                    userGrowthAnalytics(),
                     coursePublishStats(),
                 ]);
 
@@ -53,8 +52,7 @@ export default function AdminDashboardPage() {
 
                 if (courseStatsResponse) {
                     const formattedCourseData = courseStatsResponse.map((item: { status: string; count: string }) => ({
-                        name: t(`admin:${item.status.toLowerCase()
-                            }` as TranslationKeys),
+                        name: t(`admin:${item.status.toLowerCase()}` as TranslationKeys),
                         value: item.count,
                     }));
                     setCourseDistributionData(formattedCourseData);
@@ -145,43 +143,6 @@ export default function AdminDashboardPage() {
             </section>
 
             {/* Recent Activity */}
-            <section>
-                <h2 className="text-lg font-semibold mb-4">{t('admin:recentActivity')}</h2>
-                <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-                    <table className="min-w-full divide-y divide-gray-200">
-                        <thead className="bg-gray-50">
-                            <tr>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    {t('admin:event')}
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    {t('admin:user')}
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    {t('admin:time')}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
-                            <tr>
-                                <td className="px-6 py-4 whitespace-nowrap">{t('admin:newCourseCreated')}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">John Doe</td> {/* Mock data, not translated */}
-                                <td className="px-6 py-4 whitespace-nowrap">2 hours ago</td> {/* Mock data, not translated */}
-                            </tr>
-                            <tr>
-                                <td className="px-6 py-4 whitespace-nowrap">{t('admin:userRegistered')}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">Jane Smith</td> {/* Mock data, not translated */}
-                                <td className="px-6 py-4 whitespace-nowrap">5 hours ago</td> {/* Mock data, not translated */}
-                            </tr>
-                            <tr>
-                                <td className="px-6 py-4 whitespace-nowrap">{t('admin:courseEnrollment')}</td>
-                                <td className="px-6 py-4 whitespace-nowrap">Mike Johnson</td> {/* Mock data, not translated */}
-                                <td className="px-6 py-4 whitespace-nowrap">1 day ago</td> {/* Mock data, not translated */}
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
         </div>
     );
 }
