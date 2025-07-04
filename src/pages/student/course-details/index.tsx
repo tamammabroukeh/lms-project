@@ -23,120 +23,119 @@
 // import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 function StudentViewCourseDetailsPage() {
-  //   const {
-  //     studentViewCourseDetails,
-  //     setStudentViewCourseDetails,
-  //     currentCourseDetailsId,
-  //     setCurrentCourseDetailsId,
-  //     loadingState,
-  //     setLoadingState,
-  //   } = useContext(StudentContext);
+  // const [loadingState, setLoadingState] = useState(false)
+  // const {
+  //   studentViewCourseDetails,
+  //   setStudentViewCourseDetails,
+  //   currentCourseDetailsId,
+  //   setCurrentCourseDetailsId,
+  // } = useContext(StudentContext);
 
-  //   const { auth } = useAuthContext();
+  // const { auth } = useAuthContext();
 
-  //   const [displayCurrentVideoFreePreview, setDisplayCurrentVideoFreePreview] =
-  //     useState(null);
-  //   const [showFreePreviewDialog, setShowFreePreviewDialog] = useState(false);
-  //   const [approvalUrl, setApprovalUrl] = useState("");
-  //   const navigate = useNavigate();
-  //   const { id } = useParams();
-  //   const location = useLocation();
+  // const [displayCurrentVideoFreePreview, setDisplayCurrentVideoFreePreview] =
+  //   useState(null);
+  // const [showFreePreviewDialog, setShowFreePreviewDialog] = useState(false);
+  // const [approvalUrl, setApprovalUrl] = useState("");
+  // const navigate = useNavigate();
+  // const { id } = useParams();
+  // const location = useLocation();
 
-  //   async function fetchStudentViewCourseDetails() {
-  //     // const checkCoursePurchaseInfoResponse =
-  //     //   await checkCoursePurchaseInfoService(
-  //     //     currentCourseDetailsId,
-  //     //     auth?.user._id
-  //     //   );
-
-  //     // if (
-  //     //   checkCoursePurchaseInfoResponse?.success &&
-  //     //   checkCoursePurchaseInfoResponse?.data
-  //     // ) {
-  //     //   navigate(`/course-progress/${currentCourseDetailsId}`);
-  //     //   return;
-  //     // }
-
-  //     const response = await fetchStudentViewCourseDetailsService(
-  //       currentCourseDetailsId
+  // async function fetchStudentViewCourseDetails() {
+  //   const checkCoursePurchaseInfoResponse =
+  //     await checkCoursePurchaseInfoService(
+  //       currentCourseDetailsId,
+  //       auth?.userData?._id
   //     );
 
-  //     if (response?.success) {
-  //       setStudentViewCourseDetails(response?.data);
-  //       setLoadingState(false);
-  //     } else {
-  //       setStudentViewCourseDetails(null);
-  //       setLoadingState(false);
-  //     }
+  //   if (
+  //     checkCoursePurchaseInfoResponse?.success &&
+  //     checkCoursePurchaseInfoResponse?.data
+  //   ) {
+  //     navigate(`/course-progress/${currentCourseDetailsId}`);
+  //     return;
   //   }
 
-  //   function handleSetFreePreview(getCurrentVideoInfo) {
-  //     console.log(getCurrentVideoInfo);
-  //     setDisplayCurrentVideoFreePreview(getCurrentVideoInfo?.videoUrl);
+  //   const response = await fetchStudentViewCourseDetailsService(
+  //     currentCourseDetailsId
+  //   );
+
+  //   if (response?.success) {
+  //     setStudentViewCourseDetails(response?.data);
+  //     setLoadingState(false);
+  //   } else {
+  //     setStudentViewCourseDetails(null);
+  //     setLoadingState(false);
   //   }
+  // }
 
-  //   async function handleCreatePayment() {
-  //     const paymentPayload = {
-  //       userId: auth?.user?._id,
-  //       userName: auth?.user?.userName,
-  //       userEmail: auth?.user?.userEmail,
-  //       orderStatus: "pending",
-  //       paymentMethod: "paypal",
-  //       paymentStatus: "initiated",
-  //       orderDate: new Date(),
-  //       paymentId: "",
-  //       payerId: "",
-  //       instructorId: studentViewCourseDetails?.instructorId,
-  //       instructorName: studentViewCourseDetails?.instructorName,
-  //       courseImage: studentViewCourseDetails?.image,
-  //       courseTitle: studentViewCourseDetails?.title,
-  //       courseId: studentViewCourseDetails?._id,
-  //       coursePricing: studentViewCourseDetails?.pricing,
-  //     };
+  // function handleSetFreePreview(getCurrentVideoInfo) {
+  //   console.log(getCurrentVideoInfo);
+  //   setDisplayCurrentVideoFreePreview(getCurrentVideoInfo?.videoUrl);
+  // }
 
-  //     console.log(paymentPayload, "paymentPayload");
-  //     const response = await createPaymentService(paymentPayload);
+  // async function handleCreatePayment() {
+  //   const paymentPayload = {
+  //     userId: auth?.userData?._id,
+  //     userName: auth?.userData?.userName,
+  //     userEmail: auth?.userData?.userEmail,
+  //     orderStatus: "pending",
+  //     paymentMethod: "paypal",
+  //     paymentStatus: "initiated",
+  //     orderDate: new Date(),
+  //     paymentId: "",
+  //     payerId: "",
+  //     instructorId: studentViewCourseDetails?.instructorId,
+  //     instructorName: studentViewCourseDetails?.instructorName,
+  //     courseImage: studentViewCourseDetails?.image,
+  //     courseTitle: studentViewCourseDetails?.title,
+  //     courseId: studentViewCourseDetails?._id,
+  //     coursePricing: studentViewCourseDetails?.pricing,
+  //   };
 
-  //     if (response.success) {
-  //       sessionStorage.setItem(
-  //         "currentOrderId",
-  //         JSON.stringify(response?.data?.orderId)
-  //       );
-  //       setApprovalUrl(response?.data?.approveUrl);
-  //     }
+  //   console.log(paymentPayload, "paymentPayload");
+  //   const response = await createPaymentService(paymentPayload);
+
+  //   if (response.success) {
+  //     sessionStorage.setItem(
+  //       "currentOrderId",
+  //       JSON.stringify(response?.data?.orderId)
+  //     );
+  //     setApprovalUrl(response?.data?.approveUrl);
   //   }
+  // }
 
-  //   useEffect(() => {
-  //     if (displayCurrentVideoFreePreview !== null) setShowFreePreviewDialog(true);
-  //   }, [displayCurrentVideoFreePreview]);
+  // useEffect(() => {
+  //   if (displayCurrentVideoFreePreview !== null) setShowFreePreviewDialog(true);
+  // }, [displayCurrentVideoFreePreview]);
 
-  //   useEffect(() => {
-  //     if (currentCourseDetailsId !== null) fetchStudentViewCourseDetails();
-  //   }, [currentCourseDetailsId]);
+  // useEffect(() => {
+  //   if (currentCourseDetailsId !== null) fetchStudentViewCourseDetails();
+  // }, [currentCourseDetailsId]);
 
-  //   useEffect(() => {
-  //     if (id) setCurrentCourseDetailsId(id);
-  //   }, [id]);
+  // useEffect(() => {
+  //   if (id) setCurrentCourseDetailsId(id);
+  // }, [id]);
 
-  //   useEffect(() => {
-  //     if (!location.pathname.includes("course/details"))
-  //       setStudentViewCourseDetails(null),
-  //         setCurrentCourseDetailsId(null),
-  //         setCoursePurchaseId(null);
-  //   }, [location.pathname]);
+  // useEffect(() => {
+  //   if (!location.pathname.includes("course/details"))
+  //     setStudentViewCourseDetails(null),
+  //       setCurrentCourseDetailsId(null),
+  //       setCoursePurchaseId(null);
+  // }, [location.pathname]);
 
-  //   if (loadingState) return <Skeleton />;
+  // if (loadingState) return <Skeleton />;
 
-  //   if (approvalUrl !== "") {
-  //     window.location.href = approvalUrl;
-  //   }
+  // if (approvalUrl !== "") {
+  //   window.location.href = approvalUrl;
+  // }
 
-  //   const getIndexOfFreePreviewUrl =
-  //     studentViewCourseDetails !== null
-  //       ? studentViewCourseDetails?.curriculum?.findIndex(
-  //           (item) => item.freePreview
-  //         )
-  //       : -1;
+  // const getIndexOfFreePreviewUrl =
+  //   studentViewCourseDetails !== null
+  //     ? studentViewCourseDetails?.curriculum?.findIndex(
+  //       (item) => item.freePreview
+  //     )
+  //     : -1;
 
   return (
     <></>
@@ -195,13 +194,13 @@ function StudentViewCourseDetailsPage() {
     //             (curriculumItem, index) => (
     //               <li
     //                 className={`${curriculumItem?.freePreview
-    //                     ? "cursor-pointer"
-    //                     : "cursor-not-allowed"
+    //                   ? "cursor-pointer"
+    //                   : "cursor-not-allowed"
     //                   } flex items-center mb-4`}
     //                 onClick={
     //                   curriculumItem?.freePreview
     //                     ? () => handleSetFreePreview(curriculumItem)
-    //                     : null
+    //                     : () => { }
     //                 }
     //               >
     //                 {curriculumItem?.freePreview ? (
@@ -221,6 +220,8 @@ function StudentViewCourseDetailsPage() {
     //         <CardContent className="p-6">
     //           <div className="aspect-video mb-4 rounded-lg flex items-center justify-center">
     //             <VideoPlayer
+    //               onProgressUpdate={{}}
+    //               progressData={{}}
     //               url={
     //                 getIndexOfFreePreviewUrl !== -1
     //                   ? studentViewCourseDetails?.curriculum[
@@ -257,6 +258,8 @@ function StudentViewCourseDetailsPage() {
     //       </DialogHeader>
     //       <div className="aspect-video rounded-lg flex items-center justify-center">
     //         <VideoPlayer
+    //           onProgressUpdate={{}}
+    //           progressData={{}}
     //           url={displayCurrentVideoFreePreview}
     //           width="450px"
     //           height="200px"

@@ -155,35 +155,63 @@ function App() {
                         },
                     ],
                 },
+                // Admin routes (protected by admin role)
+                {
+                    element: <RequireAuth allowedRoles={[ROLES.Admin]} />,
+                    children: [
+                        {
+                            element: <AdminLayout />,
+                            children: [
+                                {
+                                    path: "/admin",
+                                    // index: true,
+                                    element: <AdminDashboardPage />,
+                                },
+                                {
+                                    path: '/admin/users',
+                                    element: <AdminUsersPage />,
+                                },
+                                {
+                                    path: '/admin/analytics',
+                                    element: <AdminAnalyticsPage />,
+                                },
+                                {
+                                    path: '/admin/courses',
+                                    element: <AdminCoursesPage />,
+                                },
+                            ],
+                        },
+                    ],
+                },
             ],
         },
         // Admin routes (protected by admin role)
-        {
-            path: '/admin',
-            element: (
-                // <RequireAuth allowedRoles={[ROLES.ADMIN]}>
-                <AdminLayout />
-                // </RequireAuth>
-            ),
-            children: [
-                {
-                    index: true,
-                    element: <AdminDashboardPage />,
-                },
-                {
-                    path: 'users',
-                    element: <AdminUsersPage />,
-                },
-                {
-                    path: 'analytics',
-                    element: <AdminAnalyticsPage />,
-                },
-                {
-                    path: 'courses',
-                    element: <AdminCoursesPage />,
-                },
-            ],
-        },
+        // {
+        //     path: '/admin',
+        //     element: (
+        //         // <RequireAuth allowedRoles={[ROLES.ADMIN]}>
+        //         <AdminLayout />
+        //         // </RequireAuth>
+        //     ),
+        //     children: [
+        //         {
+        //             index: true,
+        //             element: <AdminDashboardPage />,
+        //         },
+        //         {
+        //             path: 'users',
+        //             element: <AdminUsersPage />,
+        //         },
+        //         {
+        //             path: 'analytics',
+        //             element: <AdminAnalyticsPage />,
+        //         },
+        //         {
+        //             path: 'courses',
+        //             element: <AdminCoursesPage />,
+        //         },
+        //     ],
+        // },
 
         // Not found route
         {
@@ -200,7 +228,7 @@ function App() {
         <>
             <RouterProvider
                 router={router}
-                // fallbackElement={<RGlobalLoader />}
+            // fallbackElement={<RGlobalLoader />}
             />
         </>
     );

@@ -1,6 +1,7 @@
 export type TLoginResponse = {
   accessToken: string;
   userData:{
+    _id:string;
     enrolledCourses:string[];
     userName: string;
     userEmail: string;

@@ -10,10 +10,11 @@ import { Button } from "@/components/ui/button";
 // import { AuthContext } from "@/context/auth-context";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "@/hooks";
-import useGetAllCourses from "@/hooks/course/useGetAllCourses";
+// import useGetAllCourses from "@/hooks/course/useGetAllCourses";
 import { ICourse } from "@/interfaces/course";
 import Course from "../courses/course";
 import ReusablePagination from "@/components/Reusable-Components/Reusable-Pagination";
+import useGetAllCoursesNoRole from "@/hooks/course/useGetAllCoursesNoRole";
 
 function StudentHomePage() {
   // const { studentViewCoursesList, setStudentViewCoursesList } =
@@ -32,7 +33,7 @@ function StudentHomePage() {
 
     navigate("/courses");
   }
-  const { data, setPage, page, searchParams, setSearchParams } = useGetAllCourses()
+  const { data, setPage, page, searchParams, setSearchParams } = useGetAllCoursesNoRole()
   console.log("data", data)
   console.log("page", page)
   console.log("auth", auth)
