@@ -1,4 +1,8 @@
 {
+    "adminPanel": "Admin Panel",
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "analytics": "Analytics",
     "published": "Published",
     "draft": "Draft",
     "archived": "Archived",
