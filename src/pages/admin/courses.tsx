@@ -11,10 +11,7 @@ import { useTypedTranslation } from '@/hooks';
 type Course = {
     _id: string;
     title: string;
-    description: {
-        en: string;
-        ar: string;
-    };
+    description: string;
     instructorName: string;
     studentsCount: number;
     isPublished: boolean;
