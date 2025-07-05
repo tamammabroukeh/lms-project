@@ -3,15 +3,14 @@ import axios from "@/api/axiosInstance";
 import { coursesRoute } from "@/api/routes";
 import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
-const useGetAllCoursesNoRole = () => {
+const useGetAllStudentCourses = () => {
   const {t} = useTypedTranslation()
   const [searchParams, setSearchParams] = useSearchParams()
-  const queryString = searchParams.toString();
   const currentPage = searchParams.get("page")
-  const [page, setPage] = useState<number>(Math.max(1, Number(currentPage || '1')));
+  const [page, setPage] = useState<number>(Number(currentPage) ?? 1);
   const {data,isError,error,isFetching,isLoading,isSuccess} = useFetchData({
-		queryKey: ["getCoursesNoRole", page, queryString],
-    queryFn: () => axios.get(`${coursesRoute}?${queryString}`),
+		queryKey: ["getStudentCourses"],
+    queryFn: () => axios.get(`${coursesRoute}`),
     keepPreviousData:true,
     onSuccessFn(data) {
       console.log("get courses", data);
@@ -20,7 +19,6 @@ const useGetAllCoursesNoRole = () => {
       console.log("errorMessage", errorMessage);
     },
   });
-  
 
   let pagesArray: number[];
   pagesArray = Array(page)
@@ -34,4 +32,4 @@ const useGetAllCoursesNoRole = () => {
     isSuccess,searchParams, setSearchParams,page, setPage,t
   };
 };
-export default useGetAllCoursesNoRole;
+export default useGetAllStudentCourses;

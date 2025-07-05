@@ -18,6 +18,12 @@ const studentCoursesRoute = courseRoute
 const courseCategoriesRoute = courseRoute + "/categories"
 const courseLevelsRoute = courseRoute + "/levels"
 
+// student course
+const courseStudentRoute = "/student-course"
+const checkCoursePurchaseInfoRoute = courseStudentRoute + "/check-purchase"
+// public courses
+const coursesRoute = courseRoute + "/all-filter"
+
 // instructor
 const instructorRoute = "/instructor"
 
@@ -25,7 +31,9 @@ const instructorRoute = "/instructor"
 const uploadRoute = "/upload"
 const deleteFileAfteruploadingRoute = uploadRoute+"/file"
 const cancelUploadRoute = uploadRoute+"/cancel"
-
+// order
+const orderRoute = "order"
+const createOrder = orderRoute + "/create-order"
 export {
   registerRoute,courseRoute,
   loginRoute,
@@ -35,8 +43,13 @@ export {
   ResetPassRoute,
 };
 
-export {studentCoursesRoute,courseByIdRoute,editCourseRoute,deleteCourseRoute ,courseLevelsRoute, courseCategoriesRoute,createCourseRoute}
+export {coursesRoute, studentCoursesRoute,courseByIdRoute,editCourseRoute,deleteCourseRoute ,courseLevelsRoute, courseCategoriesRoute,createCourseRoute}
+
+export { checkCoursePurchaseInfoRoute }
+
+export { createOrder }
 
 export {instructorRoute}
 
 export {cancelUploadRoute, deleteFileAfteruploadingRoute}
+

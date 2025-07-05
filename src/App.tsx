@@ -24,6 +24,9 @@ const StudentCoursesPage = lazy(() => import('./pages/student/student-courses'))
 const StudentViewCourseProgressPage = lazy(() => import('./pages/student/course-progress'));
 const NotFoundPage = lazy(() => import('./pages/not-found'));
 
+const AboutPage = lazy(() => import('./pages/about'));
+const ContactPage = lazy(() => import('./pages/contact'));
+
 //Admin
 const AdminLayout = lazy(() => import('./components/admin-view/layout/AdminLayout.tsx'));
 const AdminDashboardPage = lazy(() => import('./pages/admin/dashboard.tsx'));
@@ -94,6 +97,7 @@ function App() {
                             path: 'home',
                             element: <StudentHomePage />,
                         },
+
                     ],
                 },
                 // Instructor routes
@@ -142,13 +146,13 @@ function App() {
                             children: [
                                 { path: 'courses', element: <StudentViewCoursesPage /> },
                                 {
-                                    path: 'course/details/:id',
+                                    path: 'course/details/:courseId',
                                     element: <StudentViewCourseDetailsPage />,
                                 },
                                 { path: 'payment-return', element: <PaypalPaymentReturnPage /> },
                                 { path: 'student-courses', element: <StudentCoursesPage /> },
                                 {
-                                    path: 'course-progress/:id',
+                                    path: 'course-progress/:courseId',
                                     element: <StudentViewCourseProgressPage />,
                                 },
                             ],
@@ -212,7 +216,24 @@ function App() {
         //         },
         //     ],
         // },
-
+        {
+            path: '/',
+            element: (
+                // <SuspenseFallback>
+                <StudentViewCommonLayout />
+                // </SuspenseFallback>
+            ),
+            children: [
+                {
+                    path: '/about',
+                    element: <AboutPage />,
+                },
+                {
+                    path: '/contact',
+                    element: <ContactPage />,
+                },
+            ]
+        },
         // Not found route
         {
             path: '*',
