@@ -15,6 +15,7 @@ import { ICourse } from "@/interfaces/course";
 import Course from "../courses/course";
 import ReusablePagination from "@/components/Reusable-Components/Reusable-Pagination";
 import useGetAllCoursesNoRole from "@/hooks/course/useGetAllCoursesNoRole";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function StudentHomePage() {
   // const { studentViewCoursesList, setStudentViewCoursesList } =
@@ -88,7 +89,9 @@ function StudentHomePage() {
               <Course {...{ course }} onClick={() => handleCourseNavigate(course?._id)} />
             ))
           ) : (
-            <h1>No Courses Found</h1>
+            [0, 1, 2, 3].map(num =>
+              <Skeleton className="w-72 h-72" key={num} />
+            )
           )}
         </div>
         {data?.data?.courses?.length > 0 && <ReusablePagination

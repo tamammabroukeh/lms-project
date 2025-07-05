@@ -52,6 +52,10 @@ export interface ICourseLecture {
     videoUrl: string;
     lectureTitleAR: string;
     lectureTitleEN: string;
+    title?: {
+        en:string;
+        ar:string;
+    };
     public_id?: string | undefined;
     freePreview?: boolean | undefined;
     resource_type?: string | undefined;

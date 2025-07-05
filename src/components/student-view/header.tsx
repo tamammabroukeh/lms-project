@@ -33,6 +33,23 @@ function StudentViewCommonHeader() {
           >
             Explore Courses
           </Button>
+          <Button
+            variant="ghost"
+            onClick={() => navigate("/about")
+            }
+            className="text-[14px] md:text-[16px] font-medium"
+          >
+            About US
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() =>
+              navigate("/contact")
+            }
+            className="text-[14px] md:text-[16px] font-medium"
+          >
+            Contact US
+          </Button>
           <LanguageSelector />
           {(isTeacher || role === "admin") && <ReusableButton
             isLoading={false}
@@ -59,7 +76,7 @@ function StudentViewCommonHeader() {
           />
         </div>
       </div>
-    </header>
+    </header >
   );
 }
 
