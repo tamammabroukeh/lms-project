@@ -10,7 +10,7 @@ const useGetAllCoursesNoRole = () => {
   const currentPage = searchParams.get("page")
   const [page, setPage] = useState<number>(Number(currentPage) ?? 1);
   const {data,isError,error,isFetching,isLoading,isSuccess} = useFetchData({
-		queryKey: ["getCoursesNoRole", queryString],
+		queryKey: ["getCoursesNoRole", page, queryString],
     queryFn: () => axios.get(`${coursesRoute}?${queryString}`),
     keepPreviousData:true,
     onSuccessFn(data) {
@@ -20,6 +20,7 @@ const useGetAllCoursesNoRole = () => {
       console.log("errorMessage", errorMessage);
     },
   });
+  
 
   let pagesArray: number[];
   pagesArray = Array(page)

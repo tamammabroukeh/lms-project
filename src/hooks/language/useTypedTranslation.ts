@@ -6,6 +6,7 @@ import errorsEn from "@/i18n/en/errors.json";
 import homeEn from "@/i18n/en/home.json";
 import courseEn from "@/i18n/en/course.json";
 import adminEn from "@/i18n/en/admin.json";
+import commonEn from "@/i18n/en/common.json";
 
 // Helper type to generate dot-separated paths for nested objects
 type PathsToStringProps<T> = T extends string
@@ -26,6 +27,8 @@ type HomeKeys = NestedKeyOf<typeof homeEn>;
 type ErrorKeys = NestedKeyOf<typeof errorsEn>;
 type AdminKeys = NestedKeyOf<typeof adminEn>;
 type CourseKeys = NestedKeyOf<typeof courseEn>;
+type CommonKeys = NestedKeyOf<typeof commonEn>;
+
 
 // Create union type for all possible keys
 export type TranslationKeys =
@@ -33,7 +36,8 @@ export type TranslationKeys =
   | `home:${HomeKeys}`
   | `errors:${ErrorKeys}`
   | `admin:${AdminKeys}`
-  | `course:${CourseKeys}`;
+  | `course:${CourseKeys}`
+  | `common:${CommonKeys}`;
 
 export interface TypedTFunction {
   (key: TranslationKeys, options?: Record<string, unknown>): string;

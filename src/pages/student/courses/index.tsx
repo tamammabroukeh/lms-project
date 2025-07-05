@@ -17,10 +17,10 @@ import { ArrowUpDownIcon } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useCurrentLangIsEnglish } from '@/hooks';
 import { ICategory, ICourse, ILevel } from "@/interfaces/course";
+import { useEffect } from "react";
 function StudentViewCoursesPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-
   // Get filter values from URL params
   const sort = searchParams.get('sortBy') || 'price-lowtohigh';
   const categoriesParam = searchParams.get('category') || '';
@@ -49,12 +49,16 @@ function StudentViewCoursesPage() {
     } else {
       currentParams.delete(key);
     }
-
     // Reset to first page when filters change
     currentParams.delete('page');
     setSearchParams(currentParams);
   };
 
+  useEffect(() => {
+    const currentParams = new URLSearchParams();
+    currentParams.set("page", "1")
+    setSearchParams(currentParams)
+  }, [])
   // Handle sort changes
   const handleSortChange = (value: string) => {
     const newParams = new URLSearchParams(searchParams);
