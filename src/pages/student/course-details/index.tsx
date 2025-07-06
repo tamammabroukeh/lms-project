@@ -77,16 +77,17 @@ function StudentViewCourseDetailsPage() {
         (item: ICourseLecture) => item.freePreview
       )
       : -1;
-
   const date = new Date(data?.data?.createdAt);
-
+  const objectives: string[] = Object.values(data?.data?.objectives)
+  const currentObjectives: string = isEnglish ? data?.data?.objectives?.en : data?.data?.objectives?.ar
+  console.log("currentObjectives", currentObjectives)
   return (
     <div className=" mx-auto p-4">
       <div className="bg-slate-900 text-white p-8 rounded-t-lg">
         <h1 className="text-3xl font-bold mb-4">
-          {data?.data?.title}
+          {isEnglish ? data?.data?.title?.en : data?.data?.title?.ar}
         </h1>
-        <p className="text-xl mb-4">{data?.data?.subtitle}</p>
+        <p className="text-xl mb-4">{isEnglish ? data?.data?.subtitle?.en : data?.data?.subtitl?.ar}</p>
         <div className="flex items-center space-x-4 mt-2 text-sm">
           <span>{t("course:created_by")} {data?.data?.instructorName} </span>
           <span>{" "} {t("course:created_on")} {date.toLocaleDateString(undefined, {
@@ -114,8 +115,8 @@ function StudentViewCourseDetailsPage() {
             </CardHeader>
             <CardContent>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                {data?.data?.objectives?.length > 0 && data?.data?.objectives
-                  ?.split(",")
+                {objectives?.length > 0 && currentObjectives
+                  ?.split(isEnglish ? "," : "،")
                   .map((objective: string, index: number) => (
                     <li key={index} className="flex items-start">
                       <CheckCircle className="mr-2 h-5 w-5 text-green-500 flex-shrink-0" />
@@ -129,7 +130,7 @@ function StudentViewCourseDetailsPage() {
             <CardHeader>
               <CardTitle>{t("course:course")} {t("course:desription")}</CardTitle>
             </CardHeader>
-            <CardContent>{data?.data?.description}</CardContent>
+            <CardContent>{isEnglish ? data?.data?.description?.en : data?.data?.description?.ar}</CardContent>
           </Card>
           <Card className="mb-8">
             <CardHeader>

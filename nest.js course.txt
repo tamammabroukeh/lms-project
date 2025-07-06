@@ -34,7 +34,7 @@ Learn WebSockets implementation with Nest.js gateways,
 
 Implement request validation and error handling,
 
-Master testing strategies for Nest.js applications,
+Master testing strategies for Nest.js applications
 
 Understand Nest.js architecture and modular design,Learn to create controllers and handle HTTP requests,Master dependency injection and providers in Nest.js,Implement authentication using JWT and Passport,Work with TypeORM or Mongoose for database integration,Create RESTful APIs following best practices,Understand microservices architecture with Nest.js,Learn WebSockets implementation with Nest.js gateways,Implement request validation and error handling,Master testing strategies for Nest.js applications,
 
@@ -56,7 +56,7 @@ Understand Nest.js architecture and modular design,Learn to create controllers a
 
 ÊäİíĞ ÇáÊÍŞŞ ãä ÇáØáÈÇÊ æãÚÇáÌÉ ÇáÃÎØÇÁ¡
 
-ÅÊŞÇä ÇÓÊÑÇÊíÌíÇÊ ÇÎÊÈÇÑ ÊØÈíŞÇÊ Nest.js¡
+ÅÊŞÇä ÇÓÊÑÇÊíÌíÇÊ ÇÎÊÈÇÑ ÊØÈíŞÇÊ Nest.js
 
 welcome:
 ÃåáÇ Èß ÈÚÇáã ÊØæíÑ ÇáæíÈ

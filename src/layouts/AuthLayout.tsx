@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import { Typography } from "@/components/ui/typography";
 import { Link } from "react-router-dom";
 import { GraduationCap } from "lucide-react";
+import LanguageSelector from "@/components/LanguageSelector";
 export default function AuthLayout() {
   return (
     <div className="flex flex-col min-h-screen">
@@ -12,6 +13,7 @@ export default function AuthLayout() {
             LMS LEARN
           </Typography>
         </Link>
+        <LanguageSelector />
       </header>
       <Outlet />
     </div>
