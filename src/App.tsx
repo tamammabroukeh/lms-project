@@ -134,12 +134,6 @@ function App() {
                 // Protected student routes
                 {
                     element: <RequireAuth allowedRoles={[ROLES.Admin, ROLES.Student]} />,
-
-                    // element: (
-                    //   // <SuspenseFallback>
-                    //   <StudentViewCommonLayout />
-                    //   // </SuspenseFallback>
-                    // ),
                     children: [
                         {
                             element: <StudentViewCommonLayout />,
@@ -189,33 +183,6 @@ function App() {
                 },
             ],
         },
-        // Admin routes (protected by admin role)
-        // {
-        //     path: '/admin',
-        //     element: (
-        //         // <RequireAuth allowedRoles={[ROLES.ADMIN]}>
-        //         <AdminLayout />
-        //         // </RequireAuth>
-        //     ),
-        //     children: [
-        //         {
-        //             index: true,
-        //             element: <AdminDashboardPage />,
-        //         },
-        //         {
-        //             path: 'users',
-        //             element: <AdminUsersPage />,
-        //         },
-        //         {
-        //             path: 'analytics',
-        //             element: <AdminAnalyticsPage />,
-        //         },
-        //         {
-        //             path: 'courses',
-        //             element: <AdminCoursesPage />,
-        //         },
-        //     ],
-        // },
         {
             path: '/',
             element: (

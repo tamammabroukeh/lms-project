@@ -1,8 +1,9 @@
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
-import { useTypedTranslation } from '@/hooks';
+import { Loader2, Menu, X } from 'lucide-react';
+import { useLogout, useTypedTranslation } from '@/hooks';
 import i18n from '@/i18n/config'; // Assuming you have an i18n config file
+import { Button } from '@/components/ui/button';
 
 export default function AdminLayout() {
   const { t } = useTypedTranslation();
@@ -23,12 +24,12 @@ export default function AdminLayout() {
   const usersLink = t('admin:users');
   const analyticsLink = t('admin:analytics');
   const coursesLink = t('admin:courses');
-
+  const logout = t('auth:signout');
   // Function to handle language change
   const changeLanguage = (lng: string | undefined) => {
     i18n.changeLanguage(lng);
   };
-
+  const { logoutHandler, isLoading } = useLogout()
   return (
     <div className={`flex h-screen bg-white text-gray-900 ${isRTL ? 'flex-row-reverse' : ''}`}>
       {/* Mobile sidebar toggle */}
@@ -55,36 +56,46 @@ export default function AdminLayout() {
         <nav className="p-4">
           <ul className="space-y-2">
             <li>
-              <a
-                href="/admin"
+              <Link
+                to="/admin"
                 className="block px-4 py-2 rounded hover:bg-gray-800 transition"
               >
                 {dashboardLink}
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/admin/users"
+              <Link
+                to="/admin/users"
                 className="block px-4 py-2 rounded hover:bg-gray-800 transition"
               >
                 {usersLink}
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/admin/analytics"
+              <Link
+                to="/admin/analytics"
                 className="block px-4 py-2 rounded hover:bg-gray-800 transition"
               >
                 {analyticsLink}
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="/admin/courses"
+              <Link
+                to="/admin/courses"
                 className="block px-4 py-2 rounded hover:bg-gray-800 transition"
               >
                 {coursesLink}
-              </a>
+              </Link>
+            </li>
+            <li>
+              <Button
+                variant={"ghost"}
+                onClick={logoutHandler}
+                className="flex items-center justify-start px-4 py-2 w-full text-start hover:text-white rounded hover:bg-gray-800 transition"
+              >
+                {logout}
+                {isLoading && <Loader2 className='animate-spin ' />}
+              </Button>
             </li>
           </ul>
         </nav>

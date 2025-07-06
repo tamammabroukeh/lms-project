@@ -127,11 +127,11 @@ const CourseLectures = ({ files, handleAddDataToList, setFiles, isOpen, isReplac
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <Label>{t("course:arabic_title")}</Label>
-                <p className="text-sm text-gray-600 mt-1">{lecture.lectureTitleAR}</p>
+                <p className="text-sm text-gray-600 mt-1">{lecture.lectureTitleAR ?? lecture.title?.ar}</p>
               </div>
               <div>
                 <Label>{t("course:english_title")}</Label>
-                <p className="text-sm text-gray-600 mt-1">{lecture.lectureTitleEN}</p>
+                <p className="text-sm text-gray-600 mt-1">{lecture.lectureTitleEN ?? lecture.title?.en}</p>
               </div>
             </div>
 

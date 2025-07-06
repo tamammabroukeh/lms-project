@@ -34,6 +34,17 @@ const cancelUploadRoute = uploadRoute+"/cancel"
 // order
 const orderRoute = "order"
 const createOrder = orderRoute + "/create-order"
+// progress
+const progressRoute = "course-progress";
+const markLectureRoute = progressRoute + "/mark-lecture"
+const currentCourseProgressRoute = progressRoute + "/get-current-course-progress"
+const resetCourseProgressRoute = progressRoute + "/reset-course-progress"
+export {
+  markLectureRoute
+  ,currentCourseProgressRoute,resetCourseProgressRoute
+}
+
+
 export {
   registerRoute,courseRoute,
   loginRoute,

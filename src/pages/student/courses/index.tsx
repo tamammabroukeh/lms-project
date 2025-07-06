@@ -11,7 +11,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { sortOptions } from "@/config";
-import { useGetCourseCategories, useGetCourseLevels } from "@/hooks";
+import { useGetCourseCategories, useGetCourseLevels, useTypedTranslation } from "@/hooks";
 import useGetAllCoursesNoRole from "@/hooks/course/useGetAllCoursesNoRole";
 import { ArrowUpDownIcon } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -20,6 +20,7 @@ import { ICategory, ICourse, ILevel } from "@/interfaces/course";
 import { useEffect } from "react";
 function StudentViewCoursesPage() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { t } = useTypedTranslation()
   const navigate = useNavigate();
   // Get filter values from URL params
   const sort = searchParams.get('sortBy') || 'price-lowtohigh';
@@ -78,7 +79,7 @@ function StudentViewCoursesPage() {
   const isEnglish = useCurrentLangIsEnglish()
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">All Courses</h1>
+      <h1 className="text-3xl font-bold mb-4">{t("course:all_courses")}</h1>
       <div className="flex flex-col md:flex-row gap-4">
         <aside className="w-full md:w-64 space-y-4">
           <div>
@@ -134,7 +135,7 @@ function StudentViewCoursesPage() {
                   className="flex items-center gap-2 p-5"
                 >
                   <ArrowUpDownIcon className="h-4 w-4" />
-                  <span className="text-[16px] font-medium">Sort By</span>
+                  <span className="text-[16px] font-medium">{t("course:sort_by")}</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-[180px]">
@@ -154,7 +155,7 @@ function StudentViewCoursesPage() {
               </DropdownMenuContent>
             </DropdownMenu>
             <span className="text-sm text-black font-bold">
-              {data?.data?.courses?.length} Results
+              {data?.data?.courses?.length} {t("course:results")}
             </span>
           </div>
           <div className="space-y-4">
@@ -177,7 +178,7 @@ function StudentViewCoursesPage() {
                         {courseItem?.title}
                       </CardTitle>
                       <p className="text-sm text-gray-600 mb-1">
-                        Created By{" "}
+                        {t("course:created_by")}{" "}
                         <span className="font-bold">
                           {courseItem?.instructorName}
                         </span>
