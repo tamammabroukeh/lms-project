@@ -3,8 +3,8 @@ lecture title:
 before we get started
 
 title:
-ÊÚáã ÊØæíÑ ÇáæÇÌåÉ ÇáÎáİíÉ ÈÇÓÊÎÏÇã nest.js
-learn backend development using nest.js
+ÊÚáã nest.js ãä ÇáÕİÑ
+learn Nest.js from scratch
 
 Sub title:
 ÊÚáã nest.js

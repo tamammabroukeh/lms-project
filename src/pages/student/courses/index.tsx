@@ -40,7 +40,7 @@ function StudentViewCoursesPage() {
   const selectedLevels = levelsParam.split(',').filter(Boolean);
 
   // 2. Pass the 'page' state to your data fetching hook
-  const { data } = useGetAllCoursesNoRole();
+  const { data, isLoading: isLoadingCourses, isFetching: isFetchingCourses } = useGetAllCoursesNoRole();
 
   // Handle filter changes
   const handleFilterChange = (type: 'category' | 'level', id: string) => {
@@ -176,7 +176,7 @@ function StudentViewCoursesPage() {
             </span>
           </div>
           <div className="space-y-4">
-            {data?.data?.courses && data?.data?.courses?.length > 0 ? (
+            {!(isLoadingCourses || isFetchingCourses || isFetchingCategories || isLoadingCategories) ? (
               data?.data?.courses?.map((courseItem: ICourse) => (
                 <Card
                   onClick={() => handleCourseNavigate(courseItem?._id)}
@@ -215,12 +215,8 @@ function StudentViewCoursesPage() {
               ))
             ) : (
               // Display a message or empty state if no courses found after loading
-              !data?.data?.courses && (isFetchingCategories || isLoadingCategories) ? (
-                [0, 1, 2, 3].map(num =>
-                  <Skeleton className="w-full h-48" key={num} />
-                )
-              ) : (
-                <div className="text-center text-gray-600 py-8">No courses found matching your criteria.</div>
+              [0, 1, 2, 3].map(num =>
+                <Skeleton className="w-full h-48" key={num} />
               )
             )}
           </div>
