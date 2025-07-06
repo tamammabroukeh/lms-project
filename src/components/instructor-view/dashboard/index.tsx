@@ -48,12 +48,12 @@ function InstructorDashboard({ listOfCourses }) {
   const config = [
     {
       icon: Users,
-      label: "Total Students",
+      label: t("course:total_students"),
       value: calculateTotalStudentsAndProfit()?.totalStudents,
     },
     {
       icon: DollarSign,
-      label: "Total Revenue",
+      label: t("course:total_revenue"),
       value: calculateTotalStudentsAndProfit()?.totalProfit,
     },
   ];

@@ -101,5 +101,7 @@
   "desription":"Description",
   "preview":"Preview",
   "close":"Close",
-  "buy_now":"Buy Now"
+  "buy_now":"Buy Now",
+  "total_students":"Total Students",
+  "total_revenue":"Total Revenue"
 }

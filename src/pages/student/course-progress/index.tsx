@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import VideoPlayer from "@/components/video-player";
+import { useCurrentLangIsEnglish } from "@/hooks";
 import useGetCurrentCourseProgress from "@/hooks/progress/useGetCurrentCourseProgress";
 import useMarkLecture from "@/hooks/progress/useMarkLecture";
 import useResetCourseProgress from "@/hooks/progress/useResetCourseProgress";
@@ -21,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 function StudentViewCourseProgressPage() {
   const navigate = useNavigate();
   const [isSideBarOpen, setIsSideBarOpen] = useState(true);
+  const isEnglish = useCurrentLangIsEnglish()
   const { data, lockCourse, setShowCourseCompleteDialog, currentLecture, setCurrentLecture, setShowConfetti, showConfetti, studentCurrentCourseProgress, showCourseCompleteDialog, } = useGetCurrentCourseProgress()
   console.log("useGetCurrentCourseProgress", data)
 
@@ -34,7 +36,7 @@ function StudentViewCourseProgressPage() {
   console.log(currentLecture, "currentLecture");
 
   return (
-    <div className="flex flex-col h-screen bg-[#1c1d1f] text-white">
+    <div className="flex flex-col h-screen bg-[#99add6] text-white">
       {showConfetti && <Confetti />}
       <div className="flex items-center justify-between p-4 bg-[#1c1d1f] border-b border-gray-700">
         <div className="flex items-center space-x-4">
@@ -48,7 +50,7 @@ function StudentViewCourseProgressPage() {
             Back to My Courses Page
           </Button>
           <h1 className="text-lg font-bold hidden md:block">
-            {studentCurrentCourseProgress?.courseDetails?.title}
+            {isEnglish ? studentCurrentCourseProgress?.courseDetails?.title?.en : studentCurrentCourseProgress?.courseDetails?.title?.ar}
           </h1>
         </div>
         <Button onClick={() => setIsSideBarOpen(!isSideBarOpen)}>
@@ -72,7 +74,7 @@ function StudentViewCourseProgressPage() {
             progressData={currentLecture}
           />
           <div className="p-6 bg-[#1c1d1f]">
-            <h2 className="text-2xl font-bold mb-2">{currentLecture?.title}</h2>
+            <h2 className="text-2xl font-bold mb-2">{isEnglish ? currentLecture?.title?.en : currentLecture?.title?.ar}</h2>
           </div>
         </div>
         <div
@@ -110,7 +112,7 @@ function StudentViewCourseProgressPage() {
                         ) : (
                           <Play className="h-4 w-4 " />
                         )}
-                        <span>{item?.title}</span>
+                        <span>{isEnglish ? item?.title?.en : item?.title?.ar}</span>
                       </div>
                     )
                   )}
@@ -122,7 +124,7 @@ function StudentViewCourseProgressPage() {
                 <div className="p-4">
                   <h2 className="text-xl font-bold mb-4">About this course</h2>
                   <p className="text-gray-400">
-                    {studentCurrentCourseProgress?.courseDetails?.description}
+                    {isEnglish ? studentCurrentCourseProgress?.courseDetails?.description?.en : studentCurrentCourseProgress?.courseDetails?.description?.ar}
                   </p>
                 </div>
               </ScrollArea>
