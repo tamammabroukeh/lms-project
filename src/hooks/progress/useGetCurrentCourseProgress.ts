@@ -16,27 +16,27 @@ const useGetCurrentCourseProgress = () => {
     keepPreviousData:true,
     onSuccessFn(data) {
       console.log("getCurrentCourseProgress success", data);
-      if(!data?.isPurchased)
+      if(!data?.data?.isPurchased)
         setLockCourse(true);
       else{
         console.log("studentCurrentCourseProgress",studentCurrentCourseProgress)
         console.log("currentLecture",currentLecture)
         setStudentCurrentCourseProgress({
-          courseDetails:data?.courseDetails,
-          progress:data?.progress,
+          courseDetails:data?.data?.courseDetails,
+          progress:data?.data?.progress,
         });
 
-        if (data?.completed) {
-          setCurrentLecture(data?.courseDetails?.curriculum[0]);
+        if (data?.data?.completed) {
+          setCurrentLecture(data?.data?.courseDetails?.curriculum[0]);
           setShowCourseCompleteDialog(true);
           setShowConfetti(true);
           return;
         }
         if (data?.progress?.length === 0) {
-          setCurrentLecture(data?.courseDetails?.curriculum[0]);
+          setCurrentLecture(data?.data?.courseDetails?.curriculum[0]);
         } else {
           console.log("logging here");
-          const lastIndexOfViewedAsTrue = data?.progress.reduceRight(
+          const lastIndexOfViewedAsTrue = data?.data?.progress.reduceRight(
             (acc:number, obj:any, index:number) => {
               return acc === -1 && obj.viewed ? index : acc;
             },
@@ -44,7 +44,7 @@ const useGetCurrentCourseProgress = () => {
           );
 
           setCurrentLecture(
-            data?.courseDetails?.curriculum[
+            data?.data?.courseDetails?.curriculum[
             lastIndexOfViewedAsTrue + 1
             ]
           );

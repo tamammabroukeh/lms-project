@@ -101,5 +101,7 @@
   "desription":"الوصف",
   "preview":"عرض",
   "close":"إغلاق",
-  "buy_now":"إشتري الآن"
+  "buy_now":"إشتري الآن",
+  "total_students":"مجموع الطلاب",
+  "total_revenue":"مجموع الأرباح"
 }
