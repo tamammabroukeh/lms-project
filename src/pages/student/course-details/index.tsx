@@ -10,7 +10,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import VideoPlayer from "@/components/video-player";
-import { useCurrentLangIsEnglish } from "@/hooks";
+import { useCurrentLangIsEnglish, useTypedTranslation } from "@/hooks";
 import { useAuthContext } from "@/hooks/auth/useAuth";
 import useGetCheckCoursePurchaseInfo from "@/hooks/course/useGetCheckCoursePurchaseInfo";
 import useGetCourseById from "@/hooks/course/useGetCourseById";
@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 function StudentViewCourseDetailsPage() {
+  const { t } = useTypedTranslation()
   const isEnglish = useCurrentLangIsEnglish()
   const { auth } = useAuthContext();
   const [displayCurrentVideoFreePreview, setDisplayCurrentVideoFreePreview] =
@@ -76,6 +77,9 @@ function StudentViewCourseDetailsPage() {
         (item: ICourseLecture) => item.freePreview
       )
       : -1;
+
+  const date = new Date(data?.data?.createdAt);
+
   return (
     <div className=" mx-auto p-4">
       <div className="bg-slate-900 text-white p-8 rounded-t-lg">
@@ -84,8 +88,12 @@ function StudentViewCourseDetailsPage() {
         </h1>
         <p className="text-xl mb-4">{data?.data?.subtitle}</p>
         <div className="flex items-center space-x-4 mt-2 text-sm">
-          <span>Created By {data?.data?.instructorName}</span>
-          {/* <span>Created On {data?.data?.date.split("T")[0]}</span> */}
+          <span>{t("course:created_by")} {data?.data?.instructorName} </span>
+          <span>{" "} {t("course:created_on")} {date.toLocaleDateString(undefined, {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })} </span>{" "}
           <span className="flex items-center">
             <Globe className="mr-1 h-4 w-4" />
             {data?.data?.primaryLanguage}
@@ -93,8 +101,8 @@ function StudentViewCourseDetailsPage() {
           <span>
             {data?.data?.students.length}{" "}
             {data?.data?.students.length <= 1
-              ? "Student"
-              : "Students"}
+              ? t("course:student")
+              : t("course:students")}
           </span>
         </div>
       </div>
@@ -102,7 +110,7 @@ function StudentViewCourseDetailsPage() {
         <main className="flex-grow">
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>What you'll learn</CardTitle>
+              <CardTitle>{t("course:what_you_ll_learn")}</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -119,13 +127,13 @@ function StudentViewCourseDetailsPage() {
           </Card>
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Course Description</CardTitle>
+              <CardTitle>{t("course:course")} {t("course:desription")}</CardTitle>
             </CardHeader>
             <CardContent>{data?.data?.description}</CardContent>
           </Card>
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Course Curriculum</CardTitle>
+              <CardTitle>{t("course:course")} {t("course:content")}</CardTitle>
             </CardHeader>
             <CardContent>
               {data?.data?.curriculum?.map(
@@ -176,7 +184,7 @@ function StudentViewCourseDetailsPage() {
               </div>
               <ReusableButton
                 isLoading={isLoadingOrder}
-                btnText="Buy Now"
+                btnText={t("course:buy_now")}
                 className="w-full"
                 onClick={handleCreatePayment}
               />
@@ -193,7 +201,7 @@ function StudentViewCourseDetailsPage() {
       >
         <DialogContent className="w-[800px]">
           <DialogHeader>
-            <DialogTitle>Course Preview</DialogTitle>
+            <DialogTitle>{t("course:course")} {t("course:preview")}</DialogTitle>
           </DialogHeader>
           <div className="aspect-video rounded-lg flex items-center justify-center">
             <VideoPlayer
@@ -219,7 +227,7 @@ function StudentViewCourseDetailsPage() {
           <DialogFooter className="sm:justify-start">
             <DialogClose asChild>
               <Button type="button" variant="secondary">
-                Close
+                {t("course:close")}
               </Button>
             </DialogClose>
           </DialogFooter>

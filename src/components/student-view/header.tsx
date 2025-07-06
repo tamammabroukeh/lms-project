@@ -4,12 +4,13 @@ import { Button } from "../ui/button";
 import useLogout from "@/hooks/auth/useLogout";
 import { ReusableButton } from "../Reusable-Components";
 import LanguageSelector from "../LanguageSelector";
-import { useAuthContext } from "@/hooks";
+import { useAuthContext, useTypedTranslation } from "@/hooks";
 
 function StudentViewCommonHeader() {
   const navigate = useNavigate();
   const { btnText, handleLoginOrLogout, isLoading } = useLogout();
   const { auth } = useAuthContext()
+  const { t } = useTypedTranslation()
   let role = auth?.userData?.role
   let isTeacher = role === "teacher"
   return (
@@ -31,7 +32,7 @@ function StudentViewCommonHeader() {
             }}
             className="text-[14px] md:text-[16px] font-medium"
           >
-            Explore Courses
+            {t("course:explore")} {t("course:courses")}
           </Button>
           <Button
             variant="ghost"
@@ -39,7 +40,7 @@ function StudentViewCommonHeader() {
             }
             className="text-[14px] md:text-[16px] font-medium"
           >
-            About US
+            {t("course:about_us")}
           </Button>
           <Button
             variant="ghost"
@@ -48,12 +49,12 @@ function StudentViewCommonHeader() {
             }
             className="text-[14px] md:text-[16px] font-medium"
           >
-            Contact US
+            {t("course:contact_us")}
           </Button>
           <LanguageSelector />
           {(isTeacher || role === "admin") && <ReusableButton
             isLoading={false}
-            btnText="My dashboard"
+            btnText={t("course:my_dashboard")}
             onClick={() => navigate(isTeacher ? "/instructor" : "/admin")}
           />}
 
@@ -66,7 +67,7 @@ function StudentViewCommonHeader() {
             className="flex cursor-pointer items-center gap-3"
           >
             <span className="font-extrabold md:text-xl text-[14px]">
-              My Courses
+              {t("course:my_courses")}
             </span>
             <TvMinimalPlay className="w-8 h-8 cursor-pointer" />
           </div>

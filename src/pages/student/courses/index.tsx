@@ -11,7 +11,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { sortOptions } from "@/config";
-import { useGetCourseCategories, useGetCourseLevels } from "@/hooks";
+import { useGetCourseCategories, useGetCourseLevels, useTypedTranslation } from "@/hooks";
 import useGetAllCoursesNoRole from "@/hooks/course/useGetAllCoursesNoRole";
 import { ArrowUpDownIcon } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -22,6 +22,7 @@ import ReusablePagination from "@/components/Reusable-Components/Reusable-Pagina
 
 function StudentViewCoursesPage() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const { t } = useTypedTranslation()
   const navigate = useNavigate();
 
   // 1. Manage the 'page' state
@@ -56,7 +57,7 @@ function StudentViewCoursesPage() {
     } else {
       currentParams.delete(key);
     }
-    
+
     // Reset to first page when filters change
     currentParams.set('page', '1'); // <--- Ensure page is reset to 1
     setPage(1); // <--- Also update local state
@@ -95,7 +96,7 @@ function StudentViewCoursesPage() {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4">All Courses</h1>
+      <h1 className="text-3xl font-bold mb-4">{t("course:all_courses")}</h1>
       <div className="flex flex-col md:flex-row gap-4">
         <aside className="w-full md:w-64 space-y-4">
           <div>
@@ -151,7 +152,7 @@ function StudentViewCoursesPage() {
                   className="flex items-center gap-2 p-5"
                 >
                   <ArrowUpDownIcon className="h-4 w-4" />
-                  <span className="text-[16px] font-medium">Sort By</span>
+                  <span className="text-[16px] font-medium">{t("course:sort_by")}</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-[180px]">
@@ -171,7 +172,7 @@ function StudentViewCoursesPage() {
               </DropdownMenuContent>
             </DropdownMenu>
             <span className="text-sm text-black font-bold">
-              {data?.data?.totalCourses || 0} Results {/* Use totalCourses for total count */}
+              {data?.data?.totalCourses || 0} {t("course:results")} {/* Use totalCourses for total count */}
             </span>
           </div>
           <div className="space-y-4">
@@ -194,7 +195,7 @@ function StudentViewCoursesPage() {
                         {courseItem?.title}
                       </CardTitle>
                       <p className="text-sm text-gray-600 mb-1">
-                        Created By{" "}
+                        {t("course:created_by")}{" "}
                         <span className="font-bold">
                           {courseItem?.instructorName}
                         </span>
@@ -215,9 +216,9 @@ function StudentViewCoursesPage() {
             ) : (
               // Display a message or empty state if no courses found after loading
               !data?.data?.courses && (isFetchingCategories || isLoadingCategories) ? (
-                 [0, 1, 2, 3].map(num =>
-                    <Skeleton className="w-full h-48" key={num} />
-                 )
+                [0, 1, 2, 3].map(num =>
+                  <Skeleton className="w-full h-48" key={num} />
+                )
               ) : (
                 <div className="text-center text-gray-600 py-8">No courses found matching your criteria.</div>
               )
