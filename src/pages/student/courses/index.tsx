@@ -101,7 +101,7 @@ function StudentViewCoursesPage() {
         <aside className="w-full md:w-64 space-y-4">
           <div>
             <div className="p-4 border-b">
-              <h3 className="font-bold mb-3">{"categories".toUpperCase()}</h3>
+              <h3 className="font-bold mb-3">{t("course:category").toUpperCase()}</h3>
               <div className="grid gap-2 mt-2">
                 {!isFetchingCategories || !isLoadingCategories ?
                   categories?.map((category: ICategory) => (
@@ -121,7 +121,7 @@ function StudentViewCoursesPage() {
               </div>
             </div>
             <div className="p-4 border-b">
-              <h3 className="font-bold mb-3">{"level".toUpperCase()}</h3>
+              <h3 className="font-bold mb-3">{t("course:level").toUpperCase()}</h3>
               <div className="grid gap-2 mt-2">
                 {!isFetchingLevels || !isLoadingLevels ?
                   levels?.map((level: ILevel) => (

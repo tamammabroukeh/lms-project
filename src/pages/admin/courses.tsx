@@ -7,6 +7,8 @@ import { Badge } from '@/components/ui/badge';
 import { getAllCourses } from '@/services';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useTypedTranslation } from '@/hooks';
+import useDeleteCourse from '@/hooks/course/useDeleteCourse';
+import ReusableAlertDialog from '@/components/Reusable-Components/Reusable-AlertDialog';
 
 type Course = {
     _id: string;
@@ -37,6 +39,7 @@ type CoursesData = {
 export default function AdminCoursesPage() {
     const { t } = useTypedTranslation();
     const [searchTerm, setSearchTerm] = useState('');
+    const { isLoading, submitHandler, setCourseId, open, setOpen, isSuccess } = useDeleteCourse()
     const [currentPage, setCurrentPage] = useState(1);
     const [coursesData, setCoursesData] = useState<CoursesData>({
         courses: [],
@@ -78,7 +81,7 @@ export default function AdminCoursesPage() {
         }, 300);
 
         return () => clearTimeout(debounceTimer);
-    }, [currentPage, searchTerm, t]);
+    }, [currentPage, searchTerm, t, isSuccess]);
 
     const handlePageChange = (newPage: number) => {
         setCurrentPage(newPage);
@@ -196,10 +199,12 @@ export default function AdminCoursesPage() {
                                 </CardContent>
 
                                 <CardFooter className="pt-4 pb-2">
-                                    <Button variant="destructive" size="sm" className="gap-2 mb-2">
-                                        <Trash2 className="h-4 w-4" />
-                                        {t('admin:delete')}
-                                    </Button>
+                                    <ReusableAlertDialog {...{ open, setOpen, isLoading, submitHandler }} triggerComponent={
+                                        <Button onClick={() => { setOpen(true); setCourseId(course?._id) }} variant="destructive" size="sm" className="gap-2 mb-2">
+                                            <Trash2 className="h-4 w-4" />
+                                            {t('admin:delete')}
+                                        </Button>
+                                    } />
                                 </CardFooter>
                             </Card>
                         ))}

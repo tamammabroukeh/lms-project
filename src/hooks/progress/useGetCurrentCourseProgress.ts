@@ -19,6 +19,8 @@ const useGetCurrentCourseProgress = () => {
       if(!data?.isPurchased)
         setLockCourse(true);
       else{
+        console.log("studentCurrentCourseProgress",studentCurrentCourseProgress)
+        console.log("currentLecture",currentLecture)
         setStudentCurrentCourseProgress({
           courseDetails:data?.courseDetails,
           progress:data?.progress,
